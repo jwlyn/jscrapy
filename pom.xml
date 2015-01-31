@@ -1,9 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.github.myspider</groupId>
     <artifactId>myspider</artifactId>
     <packaging>pom</packaging>
@@ -14,8 +10,68 @@
         <module>myspider-contrib</module>
         <module>cloud-config</module>
     </modules>
-    
-    
+    <properties>
+        <!-- 工程变量 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- 插件 -->
+        <maven-java-formatter-plugin.version>0.3.1</maven-java-formatter-plugin.version>
+        <maven-xml-formatter-plugin.version>2.1.0.20111230154050</maven-xml-formatter-plugin.version>
+        <!-- 测试 -->
+        <junit.version>4.8.2</junit.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+                <artifactId>maven-java-formatter-plugin</artifactId>
+                <version>${maven-java-formatter-plugin.version}</version>
+                <configuration>
+                    <lineEnding>LF</lineEnding>
+                    <encoding>UTF-8</encoding>
+                    <configFile>${user.dir}/eclipse_code_format_templete.xml</configFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.technicalsoftwareconfigurationmanagement.maven-plugin</groupId>
+                <artifactId>tscm-maven-plugin</artifactId>
+                <version>${maven-xml-formatter-plugin.version}</version>
+                <configuration>
+                    <includes>
+                        <include>**/*.xml</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/target/**</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>xmlFormatter</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
     <repositories>
         <repository>
             <id>nexus</id>
@@ -40,6 +96,11 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>maven-xml-formatter-plugin</id>
+            <name>Maven2 XML Formatter Plugin repository</name>
+            <url>https://raw.github.com/benalexau/xml-formatter/master/releases/</url>
         </pluginRepository>
     </pluginRepositories>
 </project>
