@@ -9,6 +9,7 @@
         <module>myspider-core</module>
         <module>myspider-contrib</module>
         <module>cloud-config</module>
+        <module>myspider-common</module>
     </modules>
     <properties>
         <!-- 工程变量 -->
