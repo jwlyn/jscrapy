@@ -8,7 +8,6 @@
         <module>myspider-app</module>
         <module>myspider-core</module>
         <module>myspider-contrib</module>
-        <module>cloud-config</module>
         <module>myspider-common</module>
         <module>myspider-cloud</module>
     </modules>
