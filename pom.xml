@@ -10,6 +10,7 @@
         <module>myspider-contrib</module>
         <module>cloud-config</module>
         <module>myspider-common</module>
+        <module>myspider-cloud</module>
     </modules>
     <properties>
         <!-- 工程变量 -->
