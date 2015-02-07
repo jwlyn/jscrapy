@@ -12,34 +12,78 @@
         <module>myspider-cloud</module>
     </modules>
     <properties>
+        <!-- 依赖版本 -->
+        <jfinal.version>1.9</jfinal.version>
+        <spring-boot-starter-web.version>1.2.1.RELEASE</spring-boot-starter-web.version>
+        <spring-boot-starter-jetty.version>1.2.1.RELEASE</spring-boot-starter-jetty.version>
         <!-- 工程变量 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- 插件 -->
         <maven-java-formatter-plugin.version>0.3.1</maven-java-formatter-plugin.version>
         <maven-xml-formatter-plugin.version>2.1.0.20111230154050</maven-xml-formatter-plugin.version>
+        <spring-boot-maven-plugin>1.2.1.RELEASE</spring-boot-maven-plugin>
         <!-- 测试 -->
         <junit.version>4.8.2</junit.version>
+        <!-- provided -->
+        <jfinal-jetty.version>8.1.8</jfinal-jetty.version>
     </properties>
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.jfinal</groupId>
+                <artifactId>jfinal</artifactId>
+                <version>${jfinal.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
-                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.jfinal</groupId>
+                <artifactId>jetty-server</artifactId>
+                <version>${jfinal-jetty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot-starter-web.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jetty</artifactId>
+                <version>${spring-boot-starter-jetty.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+                    <artifactId>maven-java-formatter-plugin</artifactId>
+                    <version>${maven-java-formatter-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.technicalsoftwareconfigurationmanagement.maven-plugin</groupId>
+                    <artifactId>tscm-maven-plugin</artifactId>
+                    <version>${maven-xml-formatter-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot-maven-plugin}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
                 <artifactId>maven-java-formatter-plugin</artifactId>
-                <version>${maven-java-formatter-plugin.version}</version>
                 <configuration>
                     <lineEnding>LF</lineEnding>
                     <encoding>UTF-8</encoding>
-                    <configFile>${user.dir}/eclipse_code_format_templete.xml</configFile>
+                    <configFile>${user.dir}/eclipse_code_format_template.xml</configFile>
                 </configuration>
                 <executions>
                     <execution>
@@ -53,7 +97,6 @@
             <plugin>
                 <groupId>org.technicalsoftwareconfigurationmanagement.maven-plugin</groupId>
                 <artifactId>tscm-maven-plugin</artifactId>
-                <version>${maven-xml-formatter-plugin.version}</version>
                 <configuration>
                     <includes>
                         <include>**/*.xml</include>
@@ -85,6 +128,17 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>spring-snapshots</id>
+            <url>http://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <url>http://repo.spring.io/milestone</url>
+        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -102,6 +156,14 @@
             <id>maven-xml-formatter-plugin</id>
             <name>Maven2 XML Formatter Plugin repository</name>
             <url>https://raw.github.com/benalexau/xml-formatter/master/releases/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-snapshots</id>
+            <url>http://repo.spring.io/snapshot</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <url>http://repo.spring.io/milestone</url>
         </pluginRepository>
     </pluginRepositories>
 </project>

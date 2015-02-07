@@ -6,5 +6,5 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <name>config-client</name>
-    <artifactId>client</artifactId>
+    <artifactId>config-client</artifactId>
 </project>
