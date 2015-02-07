@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><xml/><!-- 使用spring boot, 不用配置任何东西 --><!-- 参考https://github.com/spring-projects/spring-boot/blob/v1.2.1.RELEASE/spring-boot-samples/spring-boot-sample-websocket-jetty/src/main/java/samples/websocket/SampleJettyWebSocketsApplication.java -->
