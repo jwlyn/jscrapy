@@ -1,14 +1,17 @@
 package com.github.myspider.configserver.controller;
 
-import com.jfinal.core.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by cxu on 2015/2/7.
  */
-public class ConfigController extends Controller
+@RestController
+@RequestMapping("/config")
+public class ConfigController
 {
     public void index()
     {
-        renderText("Hello JFinal World.");
+
     }
 }

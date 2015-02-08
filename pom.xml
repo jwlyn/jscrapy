@@ -13,10 +13,10 @@
     </modules>
     <properties>
         <!-- 依赖版本 -->
-        <jfinal.version>1.8</jfinal.version>
         <spring-boot-starter-web.version>1.2.1.RELEASE</spring-boot-starter-web.version>
         <spring-boot-starter-jetty.version>1.2.1.RELEASE</spring-boot-starter-jetty.version>
         <freemarker.version>2.3.20</freemarker.version>
+        <spring.version>4.1.4.RELEASE</spring.version>
         <!-- 工程变量 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- 插件 -->
@@ -30,19 +30,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.jfinal</groupId>
-                <artifactId>jfinal</artifactId>
-                <version>${jfinal.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.jfinal</groupId>
-                <artifactId>jetty-server</artifactId>
-                <version>${jfinal-jetty.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -58,6 +48,19 @@
                 <groupId>org.freemarker</groupId>
                 <artifactId>freemarker</artifactId>
                 <version>${freemarker.version}</version>
+            </dependency>
+            <dependency>
+                <!-- Import dependency management from Spring Boot -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>1.2.1.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-freemarker</artifactId>
+                <version>1.2.1.RELEASE</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
