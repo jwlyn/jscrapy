@@ -17,6 +17,9 @@
         <spring-boot-starter-jetty.version>1.2.1.RELEASE</spring-boot-starter-jetty.version>
         <freemarker.version>2.3.20</freemarker.version>
         <spring.version>4.1.4.RELEASE</spring.version>
+        <derby.version>10.11.1.1</derby.version>
+        <grails.version>2.4.0.RC1</grails.version>
+        <groovy.version>2.4.0</groovy.version>
         <!-- 工程变量 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- 插件 -->
@@ -34,7 +37,7 @@
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
             </dependency>
-            <dependency>
+            <!--<dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring-boot-starter-web.version}</version>
@@ -43,15 +46,15 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-jetty</artifactId>
                 <version>${spring-boot-starter-jetty.version}</version>
-            </dependency>
+            </dependency>-->
             <dependency>
                 <groupId>org.freemarker</groupId>
                 <artifactId>freemarker</artifactId>
                 <version>${freemarker.version}</version>
             </dependency>
+            <!--
             <dependency>
-                <!-- Import dependency management from Spring Boot -->
-                <groupId>org.springframework.boot</groupId>
+               <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>1.2.1.RELEASE</version>
                 <type>pom</type>
@@ -61,6 +64,16 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-freemarker</artifactId>
                 <version>1.2.1.RELEASE</version>
+            </dependency>-->
+            <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derby</artifactId>
+                <version>${derby.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>${groovy.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -111,6 +124,7 @@
                     </includes>
                     <excludes>
                         <exclude>**/target/**</exclude>
+                        <exclude>.idea/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>

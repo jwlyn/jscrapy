@@ -18,3 +18,8 @@ hs_err_pid*
 
 #intellig IDEA
 *.iml
+
+#grails
+plugins
+
+*.log

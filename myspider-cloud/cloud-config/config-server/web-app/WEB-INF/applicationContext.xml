@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean class="org.codehaus.groovy.grails.commons.GrailsApplicationFactoryBean" id="grailsApplication">
+        <description>Grails application factory bean</description>
+        <property name="grailsDescriptor" value="/WEB-INF/grails.xml"/>
+    </bean>
+    <bean class="org.codehaus.groovy.grails.plugins.GrailsPluginManagerFactoryBean" id="pluginManager">
+        <description>A bean that manages Grails plugins</description>
+        <property name="grailsDescriptor" value="/WEB-INF/grails.xml"/>
+        <property name="application" ref="grailsApplication"/>
+    </bean>
+    <bean class="org.codehaus.groovy.grails.commons.spring.GrailsRuntimeConfigurator" id="grailsConfigurator">
+        <constructor-arg>
+            <ref bean="grailsApplication"/>
+        </constructor-arg>
+        <property name="pluginManager" ref="pluginManager"/>
+    </bean>
+    <bean class="org.springframework.web.filter.CharacterEncodingFilter" id="characterEncodingFilter">
+        <property name="encoding">
+            <value>utf-8</value>
+        </property>
+    </bean>
+    <bean class="org.springframework.context.support.ConversionServiceFactoryBean" id="conversionService"/>
+</beans>
