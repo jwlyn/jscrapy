@@ -1,0 +1,1 @@
+include "myspider-common", "myspider-core", "myspider-contrib", "myspider-admin"

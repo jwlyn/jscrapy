@@ -1,0 +1,73 @@
+buildscript {
+    repositories {
+        maven {
+            url "http://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.diffplug.gradle.spotless:spotless:1.1-SNAPSHOT"
+    }
+}
+
+apply plugin: "com.diffplug.gradle.spotless"
+
+spotless {
+    java {
+        eclipseFormatFile 'code_format.xml'
+    }
+}
+group "myspider"
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        maven { url "http://maven.oschina.net/content/groups/public/" }
+        maven { url "http://repo.spring.io/snapshot" }
+
+        mavenCentral()
+        maven { url "http://repo.grails.org/grails/core" }
+    }
+
+    ext {
+        springBootStarterWeb="1.2.1.RELEASE"
+        springBootStarterJetty="1.2.1.RELEASE"
+        freeMarker="2.3.20"
+        spring="4.1.4.RELEASE"
+        groovy="2.4.0"
+        grails="2.4.0.RC1"
+        derby = "10.11.1.1"
+
+        junit="4.8.2"
+
+        javaFormaterPlugin="0.3.1"
+        xmlFormaterPlugin="2.1.0.20111230154050"
+        springBootPlugin="1.2.1.RELEASE"
+
+        gradleWrapperVersion = 2.3
+    }
+
+    dependencies {
+        testCompile "junit:junit:$junit"
+    }
+
+    version "1.0-SNAPSHOT"
+}
+
+dependencies {
+
+	//compile "org.freemarker:freemarker:$freeMarker"
+	//compile "org.codehaus.groovy:groovy-all:$groovy"
+	//compile ""
+	
+	//runtime ""
+	//testCompile "junit:junit:$junit"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = gradleWrapperVersion
+}
+
