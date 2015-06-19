@@ -287,7 +287,7 @@
         <setting id="org.eclipse.jdt.core.formatter.never_indent_block_comments_on_first_column" value="false"/>
         <setting id="org.eclipse.jdt.core.formatter.keep_then_statement_on_same_line" value="false"/>
     </profile>
-    <profile kind="CodeFormatterProfile" name="Tulando" version="12">
+    <profile kind="CodeFormatterProfile" name="Myspider" version="12">
         <setting id="org.eclipse.jdt.core.formatter.comment.insert_new_line_before_root_tags" value="do not insert"/>
         <setting id="org.eclipse.jdt.core.formatter.disabling_tag" value="@formatter:off"/>
         <setting id="org.eclipse.jdt.core.formatter.insert_space_after_comma_in_annotation" value="insert"/>
