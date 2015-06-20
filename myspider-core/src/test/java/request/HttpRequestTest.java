@@ -24,7 +24,7 @@ public class HttpRequestTest {
         };
     }
 
-    @Test(dataProvider = "json_req_provider")
+    @Test(dataProvider = "queue_request_provider")
     public void testBuild(String jsonStr, String url , HttpRequestMethod method) throws IOException {
         HttpRequest req = HttpRequest.build(jsonStr);
         assert req!=null : "jackson parse result can not empty!";
