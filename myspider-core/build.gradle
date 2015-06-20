@@ -3,6 +3,9 @@ dependencies {
     //compile ""
 
     //runtime ""
-    testCompile "junit:junit:$junit"
-
+    //testCompile "junit:junit:$junit"
+    compile "com.fasterxml.jackson.core:jackson-databind:$jackson"
+    compile "com.fasterxml.jackson.core:jackson-core:$jackson"
+    compile "com.fasterxml.jackson.core:jackson-annotations:$jackson"
+    compile "org.apache.commons:commons-lang3:$commonsLang3"
 }
