@@ -31,10 +31,10 @@ public class HttpRequestTest {
 
         assertEquals(req.getUrl(), url);
         assertEquals(req.getHttpMethod(), method);
-        if(req.getFormParameters()!=null) {
-            Map<String, String> map = req.getFormParameters();
-            assertEquals(map.get("site"), "oxf1");
-            assertEquals(map.get("person"), "cxu");
+        if(req.getParameters()!=null) {
+            Map<String, String> map = req.getParameters();
+            assertEquals("oxf1", map.get("site"));
+            assertEquals("cxu", map.get("person"));
         }
     }
 

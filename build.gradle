@@ -23,7 +23,7 @@ allprojects {
     apply plugin: 'idea'
     compileJava.options.encoding = 'UTF-8'
     compileTestJava.options.encoding = 'UTF-8'
-    sourceCompatibility = 1.8
+    sourceCompatibility = 1.7
 
     repositories {
         maven { url "http://maven.oschina.net/content/groups/public/" }
@@ -60,6 +60,11 @@ allprojects {
     }
 
     version "1.0-SNAPSHOT"
+
+    test{
+        useTestNG()
+        //useJUnit()
+    }
 }
 
 task wrapper(type: Wrapper) {

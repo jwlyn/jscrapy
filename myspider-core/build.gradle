@@ -4,6 +4,8 @@ dependencies {
 
     //runtime ""
     //testCompile "junit:junit:$junit"
+    //testCompile "org.testng:testng:$testng"
+
     compile "com.fasterxml.jackson.core:jackson-databind:$jackson"
     compile "com.fasterxml.jackson.core:jackson-core:$jackson"
     compile "com.fasterxml.jackson.core:jackson-annotations:$jackson"

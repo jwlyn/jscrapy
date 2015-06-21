@@ -24,7 +24,7 @@ public interface Request {
      * 如果是POST请求，获取请求的参数
      * @return
      */
-    public Map<String, String> getFormParameters();
+    public Map<String, String> getParameters();
 
 
 

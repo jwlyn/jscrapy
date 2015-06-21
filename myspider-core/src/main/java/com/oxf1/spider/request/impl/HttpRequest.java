@@ -16,7 +16,7 @@ public class HttpRequest implements Request{
 
     private String url;//请求的url
     private HttpRequestMethod httpMethod;//请求的http方法，GET|POST等
-    private Map<String, String> formParameters;//如果是post请求，这里存放请求参数
+    private Map<String, String> parameters;//如果是post请求，这里存放请求参数
 
     /**
      * 从队列里的json字符串来创建一个HttpRequest
@@ -37,12 +37,12 @@ public class HttpRequest implements Request{
      * 构造函数
      * @param url
      * @param httpMethod
-     * @param formParameters
+     * @param parameters
      */
-    private HttpRequest(String url, HttpRequestMethod httpMethod, Map<String, String> formParameters) {
+    private HttpRequest(String url, HttpRequestMethod httpMethod, Map<String, String> parameters) {
         this.url = url;
         this.httpMethod = httpMethod;
-        this.formParameters = formParameters;
+        this.parameters = parameters;
     }
 
     private HttpRequest(){}
@@ -58,8 +58,8 @@ public class HttpRequest implements Request{
     }
 
     @Override
-    public Map<String, String> getFormParameters() {
-        return null;
+    public Map<String, String> getParameters() {
+        return this.parameters;
     }
 
     @JsonProperty("url")
@@ -75,6 +75,6 @@ public class HttpRequest implements Request{
 
     @JsonProperty("post_parms")
     public void SetFormParameters(Map<String,String> params){
-        this.formParameters = params;
+        this.parameters = params;
     }
 }
