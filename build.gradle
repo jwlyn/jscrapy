@@ -1,21 +1,23 @@
-/*buildscript {
+buildscript {
     repositories {
         maven {
             url "http://plugins.gradle.org/m2/"
         }
     }
     dependencies {
-        classpath "com.diffplug.gradle.spotless:spotless:1.1-SNAPSHOT"
+        //classpath "com.diffplug.gradle.spotless:spotless:1.1-SNAPSHOT"
+        classpath 'net.saliman:gradle-properties-plugin:1.4.2'
     }
 }
 
-apply plugin: "com.diffplug.gradle.spotless"
-
-spotless {
+//apply plugin: "com.diffplug.gradle.spotless"
+apply plugin: 'net.saliman.properties'
+/*spotless {
     java {
         eclipseFormatFile 'code_format.xml'
     }
 }*/
+
 group "myspider"
 
 allprojects {
@@ -42,7 +44,10 @@ allprojects {
         grails="2.4.0.RC1"
         derby = "10.11.1.1"
         commonsLang3="3.4"
+        commonsVfs2 = "2.0"
+        commonsIo="2.4"
         jackson="2.6.0-rc2"
+        ehcache = "2.10.0"
 
         junit="4.8.2"
         testng="6.8.21"
@@ -55,7 +60,7 @@ allprojects {
     }
 
     dependencies {
-        testCompile "junit:junit:$junit"
+        //testCompile "junit:junit:$junit"
         testCompile "org.testng:testng:$testng"
     }
 
@@ -63,8 +68,8 @@ allprojects {
 
     test{
         useTestNG()
-        //useJUnit()
     }
+
 }
 
 task wrapper(type: Wrapper) {

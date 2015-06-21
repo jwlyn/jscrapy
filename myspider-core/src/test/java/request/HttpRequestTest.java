@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by cxu on 2015/5/21.
