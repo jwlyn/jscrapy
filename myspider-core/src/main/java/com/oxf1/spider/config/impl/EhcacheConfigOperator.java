@@ -1,6 +1,7 @@
 package com.oxf1.spider.config.impl;
 
 import com.oxf1.spider.TaskId;
+import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.config.ConfigOperator;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
@@ -11,7 +12,7 @@ import net.sf.ehcache.Element;
  */
 public class EhcacheConfigOperator implements ConfigOperator {
 
-    private static String EH_CACHE_NAME = "com.oxf1.myspider.config.task";
+
     private static EhcacheConfigOperator EHCACHE_CONFIG_LOADER = new EhcacheConfigOperator();
 
     private CacheManager cacheManager;
@@ -26,7 +27,7 @@ public class EhcacheConfigOperator implements ConfigOperator {
      */
     private EhcacheConfigOperator(){
         cacheManager = CacheManager.create();
-        ehCache = cacheManager.getCache(EH_CACHE_NAME);
+        ehCache = cacheManager.getCache(ConfigKeys.EH_CACHE_NAME);
     }
 
     /**
