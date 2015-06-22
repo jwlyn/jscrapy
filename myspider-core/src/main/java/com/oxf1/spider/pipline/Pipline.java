@@ -1,20 +1,16 @@
 package com.oxf1.spider.pipline;
 
 import com.oxf1.spider.TaskId;
+import com.oxf1.spider.component.MyspiderComponent;
 import com.oxf1.spider.data.DataItem;
 
 /**
  * Created by cxu on 2014/11/21.
  */
-public abstract class Pipline {
-    private final TaskId taskid;
+public abstract class Pipline extends MyspiderComponent{
 
     public Pipline(TaskId taskid){
-        this.taskid = taskid;
-    }
-
-    protected TaskId getTaskid(){
-        return this.taskid;
+        super(taskid);
     }
 
     /**

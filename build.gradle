@@ -46,6 +46,7 @@ allprojects {
         commonsLang3="3.4"
         commonsVfs2 = "2.0"
         commonsIo="2.4"
+        commonsCodec="1.10"
         jackson="2.6.0-rc2"
         ehcache = "2.10.0"
         slf4jApi = "1.7.12"

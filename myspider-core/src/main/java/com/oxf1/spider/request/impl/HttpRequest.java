@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -73,6 +74,12 @@ public class HttpRequest implements Request{
         }
 
         return null;
+    }
+
+    @Override
+    public String fp() {
+        String s = this.asJson();
+        return DigestUtils.sha1Hex(s);
     }
 
     @JsonProperty("url")

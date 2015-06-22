@@ -29,7 +29,7 @@ public class LocalFilePiplineTest {
 
     @BeforeClass
     public void setup(){
-        taskid = new TaskId("task-id-for-test", "testTask");
+        taskid = new TaskId("task-id-for-test", "testTa");
         EhcacheConfigOperator opr = EhcacheConfigOperator.instance();
         opr.put(taskid, ConfigKeys.LOCAL_FILE_PIPLINE_DATA_SAVE_PATH, dataSavePath);
     }

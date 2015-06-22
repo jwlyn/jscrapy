@@ -28,4 +28,10 @@ public interface Request {
 
     public String asJson();
 
+    /**
+     * 对象的一个md5标识，用于去重
+     * @return
+     */
+    public String fp();
+
 }

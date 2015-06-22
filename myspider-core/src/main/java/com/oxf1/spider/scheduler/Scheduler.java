@@ -1,6 +1,7 @@
 package com.oxf1.spider.scheduler;
 
 import com.oxf1.spider.TaskId;
+import com.oxf1.spider.component.MyspiderComponent;
 import com.oxf1.spider.exception.MySpiderException;
 import com.oxf1.spider.request.Request;
 
@@ -9,16 +10,15 @@ import java.util.List;
 /**
  * Created by cxu on 2014/11/21.
  */
-public abstract class Scheduler {
+public abstract class Scheduler extends MyspiderComponent {
 
-    private TaskId taskId;
-
-    public Scheduler(TaskId taskid){
-        this.taskId = taskid;
+    public Scheduler(TaskId taskid) {
+        super(taskid);
     }
 
     /**
      * 将Request插入到请求队列中
+     *
      * @param requests
      * @return 插入队列的实际Request数目
      */
@@ -26,6 +26,7 @@ public abstract class Scheduler {
 
     /**
      * 从队列中拿出Request
+     *
      * @param n 每次拿出多少个Request
      * @return
      */
@@ -33,15 +34,11 @@ public abstract class Scheduler {
 
     /**
      * 从队列中删除Request
+     *
      * @param requests
      * @return
      */
     public abstract int remove(List<Request> requests);
 
     public abstract void shutdown();
-
-    protected TaskId getTaskId(){
-        return this.taskId;
-    }
-
 }

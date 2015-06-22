@@ -692,8 +692,17 @@
         The defaultCache has an implicit name "default" which is a reserved cache name.
 
     -->
-    <!--<defaultCache maxEntriesLocalHeap="0" eternal="false" timeToIdleSeconds="1200" timeToLiveSeconds="1200">
+<!--    <defaultCache maxEntriesLocalHeap="0" eternal="false" timeToIdleSeconds="1200" timeToLiveSeconds="1200">
         <terracotta/>
+    </defaultCache>-->
+<!--    <defaultCache name="sample"
+           maxElementsInMemory="10000"
+
+           eternal="true"
+           diskPersistent="true"
+           overflowToDisk="true"
+           memoryStoreEvictionPolicy="FIFO"
+           statistics="false">
     </defaultCache>-->
     <!--
 
@@ -713,16 +722,25 @@
 
     -->
     <cache name="com.oxf1.myspider.config.task"
-           maxEntriesLocalHeap="10000"
-           maxEntriesLocalDisk="100000"
+           maxEntriesLocalHeap="1000"
+           maxEntriesLocalDisk="1000000"
            eternal="true"
            diskSpoolBufferSizeMB="20"
-           timeToIdleSeconds="300"
-           timeToLiveSeconds="600"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off"
            overflowToDisk="true">
     </cache>
+
+    <defaultCache name="com.oxf1.myspider.dedupe"
+           maxElementsInMemory="10000"
+
+           eternal="true"
+           diskPersistent="true"
+           overflowToDisk="true"
+           memoryStoreEvictionPolicy="FIFO"
+           statistics="false">
+    </defaultCache>
+
     <!--
 
         Sample cache named sampleCache2
