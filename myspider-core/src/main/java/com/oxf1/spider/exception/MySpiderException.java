@@ -3,15 +3,15 @@ package com.oxf1.spider.exception;
 /**
  * Created by cxu on 2015/6/20.
  */
-public class CommonException {
+public class MySpiderException extends Exception{
 
     private int errorCode;
     private String errorMessage;
 
-    public CommonException(int errorCode, String errorMessage)
+    public MySpiderException(MySpiderExceptionCode errorCode)
     {
-        this.errorCode = errorCode;
-        this.errorMessage = errorMessage;
+        this.errorCode = errorCode.ordinal();
+        this.errorMessage = errorCode.getErrorReason();
     }
 
     public int getErrorCode() {

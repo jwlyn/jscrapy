@@ -41,7 +41,7 @@ public class LocalFilePipline extends Pipline {
 
     @Override
     public void close(){
-        DATA_CONSUMER.stop(this.getTaskid());
+        DATA_CONSUMER.remove(this.getTaskid());
     }
 }
 
@@ -77,10 +77,10 @@ class LocalFileDataConsumer{
     }
 
     /**
-     * 停止任务
+     * 停止消费线程，删除任务相关的资源
      * @param taskId
      */
-    public void stop(TaskId taskId){
+    public void remove(TaskId taskId){
         Future f = this.consumerTask.get(taskId);
         if(f!=null && f.isCancelled()==false){
             f.cancel(true);

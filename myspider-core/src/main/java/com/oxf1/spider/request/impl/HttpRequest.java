@@ -1,6 +1,7 @@
 package com.oxf1.spider.request.impl;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
@@ -39,7 +40,7 @@ public class HttpRequest implements Request{
      * @param httpMethod
      * @param parameters
      */
-    private HttpRequest(String url, HttpRequestMethod httpMethod, Map<String, String> parameters) {
+    public HttpRequest(String url, HttpRequestMethod httpMethod, Map<String, String> parameters) {
         this.url = url;
         this.httpMethod = httpMethod;
         this.parameters = parameters;
@@ -60,6 +61,18 @@ public class HttpRequest implements Request{
     @Override
     public Map<String, String> getParameters() {
         return this.parameters;
+    }
+
+    @Override
+    public String asJson() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();//TODO
+        }
+
+        return null;
     }
 
     @JsonProperty("url")

@@ -26,6 +26,6 @@ public interface Request {
      */
     public Map<String, String> getParameters();
 
-
+    public String asJson();
 
 }

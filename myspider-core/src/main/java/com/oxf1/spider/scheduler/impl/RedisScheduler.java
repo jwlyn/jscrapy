@@ -1,5 +1,6 @@
 package com.oxf1.spider.scheduler.impl;
 
+import com.oxf1.spider.TaskId;
 import com.oxf1.spider.request.Request;
 import com.oxf1.spider.scheduler.Scheduler;
 
@@ -8,7 +9,11 @@ import java.util.List;
 /**
  * Created by cxu on 2015/6/21.
  */
-public class RedisScheduler  implements Scheduler {
+public class RedisScheduler  extends Scheduler {
+    public RedisScheduler(TaskId taskid) {
+        super(taskid);
+    }
+
     @Override
     public int push(List<Request> requests) {
         return 0;
@@ -22,5 +27,10 @@ public class RedisScheduler  implements Scheduler {
     @Override
     public int remove(List<Request> requests) {
         return 0;
+    }
+
+    @Override
+    public void shutdown() {
+
     }
 }

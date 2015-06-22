@@ -29,6 +29,7 @@ allprojects {
     repositories {
         maven { url "http://maven.oschina.net/content/groups/public/" }
         maven { url "http://repo.spring.io/snapshot" }
+        maven { url "https://raw.github.com/bulldog2011/bulldog-repo/master/repo/releases/" }
 
         mavenCentral()
         maven { url "http://repo.grails.org/grails/core" }
@@ -48,6 +49,7 @@ allprojects {
         jackson="2.6.0-rc2"
         ehcache = "2.10.0"
         slf4jApi = "1.7.12"
+        bigqueue="0.7.0"
 
         junit="4.8.2"
         testng="6.8.21"

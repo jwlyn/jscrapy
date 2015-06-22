@@ -22,7 +22,7 @@ public class ConfigTest {
     @BeforeClass
     public void setup()
     {
-        taskid = new TaskId("Task-Id-For-Test");
+        taskid = new TaskId("Task-Id-For-Test", "testTask");
         EhcacheConfigOperator opr = EhcacheConfigOperator.instance();
         opr.put(taskid, "strKey", STR_VALUE);
         opr.put(taskid, "intKey", INTEGER_VALUE);

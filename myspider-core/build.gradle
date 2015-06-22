@@ -13,4 +13,5 @@ dependencies {
     compile "org.apache.commons:commons-vfs2:$commonsVfs2"
     compile "commons-io:commons-io:$commonsIo"
     compile "net.sf.ehcache:ehcache:$ehcache"
+    compile "com.leansoft:bigqueue:$bigqueue"
 }
