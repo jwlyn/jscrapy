@@ -29,7 +29,7 @@ allprojects {
     repositories {
         maven { url "http://maven.oschina.net/content/groups/public/" }
         maven { url "http://repo.spring.io/snapshot" }
-        maven { url "https://raw.github.com/bulldog2011/bulldog-repo/master/repo/releases/" }
+        maven { url "https://raw.github.com/bulldog2011/bulldog-repo/master/repo/releases/" }//bigqueue
 
         mavenCentral()
         maven { url "http://repo.grails.org/grails/core" }
@@ -51,6 +51,7 @@ allprojects {
         ehcache = "2.10.0"
         slf4jApi = "1.7.12"
         bigqueue="0.7.0"
+        jedis="2.7.2"
 
         junit="4.8.2"
         testng="6.8.21"
@@ -63,10 +64,8 @@ allprojects {
     }
 
     dependencies {
-        //testCompile "junit:junit:$junit"
         testCompile "org.testng:testng:$testng"
         compile "org.slf4j:slf4j-api:$slf4jApi"
-
     }
 
     version "1.0-SNAPSHOT"

@@ -11,4 +11,6 @@ public class ConfigKeys {
     /*单机调度队列的磁盘位置*/
     public static final String LOCAL_SCHEDULE_QUEUE_PATH="LOCAL_SCHEDULE_QUEUE_PATH";
 
+    /*redis*/
+    public static final String REDIS_DEDUP_SERVER = "REDIS_DEDUP_SERVER";
 }

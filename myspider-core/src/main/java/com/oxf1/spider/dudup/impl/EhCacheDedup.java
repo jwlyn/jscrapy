@@ -7,9 +7,6 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by cxu on 2015/6/22.
  */
@@ -34,16 +31,5 @@ public class EhCacheDedup extends DeDup {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public List<Request> deDup(List<Request> request) {
-        List<Request> req = new ArrayList<Request>(request.size());
-        for(Request url : request){
-            if(!this.isDup(url)){
-                req.add(url);
-            }
-        }
-        return req;
     }
 }

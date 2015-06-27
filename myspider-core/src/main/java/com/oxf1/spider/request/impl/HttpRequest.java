@@ -82,6 +82,11 @@ public class HttpRequest implements Request{
         return DigestUtils.sha1Hex(s);
     }
 
+    @Override
+    public String toString(){
+        return this.asJson();
+    }
+
     @JsonProperty("url")
     public void setUrl(String url){
         this.url = url;

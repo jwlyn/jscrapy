@@ -4,6 +4,7 @@ import com.oxf1.spider.TaskId;
 import com.oxf1.spider.component.MyspiderComponent;
 import com.oxf1.spider.request.Request;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,5 +29,13 @@ public abstract class DeDup extends MyspiderComponent{
      * @param request
      * @return
      */
-    public abstract List<Request> deDup(List<Request> request);
+    public List<Request> deDup(List<Request> request){
+        List<Request> req = new ArrayList<Request>(request.size());
+        for(Request url : request){
+            if(!this.isDup(url)){
+                req.add(url);
+            }
+        }
+        return req;
+    }
 }
