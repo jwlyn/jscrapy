@@ -25,6 +25,6 @@ plugins
 *.log
 .gradle
 build
-#gradle
-#gradlew
-#gradlew.bat
+gradle
+gradlew
+gradlew.bat
