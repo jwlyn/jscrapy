@@ -1,6 +1,6 @@
 package com.oxf1.spider.config.impl;
 
-import com.oxf1.spider.TaskId;
+import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.config.ConfigOperator;
 import net.sf.ehcache.Cache;
@@ -11,23 +11,21 @@ import net.sf.ehcache.Element;
  * Created by cxu on 2015/6/21.
  */
 public class EhcacheConfigOperator implements ConfigOperator {
-
-
-    private static EhcacheConfigOperator EHCACHE_CONFIG_LOADER = new EhcacheConfigOperator();
-
     private CacheManager cacheManager;
     private Cache ehCache;
-
-    public static EhcacheConfigOperator instance(){
-        return EHCACHE_CONFIG_LOADER;
-    }
 
     /**
      * 构造函数
      */
-    private EhcacheConfigOperator(){
-        cacheManager = CacheManager.create();
-        ehCache = cacheManager.getCache(ConfigKeys.EH_CACHE_NAME);
+    public EhcacheConfigOperator(){
+        if(cacheManager==null){
+            synchronized (EhcacheConfigOperator.class){
+                if(cacheManager==null){
+                    cacheManager = CacheManager.create();
+                    ehCache = cacheManager.getCache(ConfigKeys.MYSPIER_CONFIG_NAME);
+                }
+            }
+        }
     }
 
     /**
@@ -36,7 +34,7 @@ public class EhcacheConfigOperator implements ConfigOperator {
      * @param key
      * @return
      */
-    public String loadString(TaskId taskid, String key){
+    public String loadString(TaskConfig taskid, String key){
         return (String)this.getValue(taskid, key);
     }
 
@@ -46,24 +44,24 @@ public class EhcacheConfigOperator implements ConfigOperator {
      * @param key
      * @return 没有值得情况下返回null
      */
-    public Integer loadInt(TaskId taskid, String key){
+    public Integer loadInt(TaskConfig taskid, String key){
         Integer value = (Integer)this.getValue(taskid, key);
         return value;
     }
 
     @Override
-    public void put(TaskId taskid, String key, Object value) {
+    public void put(TaskConfig taskid, String key, Object value) {
         String ehCacheKey  = this.getEhCacheKey(taskid, key);
         this.ehCache.put(new Element(ehCacheKey, value));
     }
 
-    private Object getValue(TaskId taskid, String key){
+    private Object getValue(TaskConfig taskid, String key){
         String ehCacheKey = getEhCacheKey(taskid, key);
         Element element = this.ehCache.get(ehCacheKey);
         return (Object) element.getObjectValue();
     }
 
-    private String getEhCacheKey(TaskId taskid, String key){
-        return taskid.getId()+"_"+key;
+    private String getEhCacheKey(TaskConfig taskid, String key){
+        return taskid.getTaskId()+"_"+key;
     }
 }

@@ -1,6 +1,6 @@
 package config;
 
-import com.oxf1.spider.TaskId;
+import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.impl.EhcacheConfigOperator;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
@@ -17,15 +17,16 @@ public class ConfigTest {
     private static String EH_CACHE_NAME = "com.oxf1.myspider.config.task";
     private static String STR_VALUE = "hello world";
     private static int INTEGER_VALUE = 1;
-    private TaskId taskid;
+    private TaskConfig taskConfig;
 
     @BeforeClass
     public void setup()
     {
-        taskid = new TaskId("Task-Id-For-Test", "testTask");
-        EhcacheConfigOperator opr = EhcacheConfigOperator.instance();
-        opr.put(taskid, "strKey", STR_VALUE);
-        opr.put(taskid, "intKey", INTEGER_VALUE);
+        EhcacheConfigOperator opr = new EhcacheConfigOperator();
+        taskConfig = new TaskConfig("Task-Id-For-Test", "testTask", opr);
+
+        opr.put(taskConfig, "strKey", STR_VALUE);
+        opr.put(taskConfig, "intKey", INTEGER_VALUE);
     }
 
     @AfterClass
@@ -41,9 +42,8 @@ public class ConfigTest {
     @Test
     public void testRead()
     {
-        EhcacheConfigOperator opr = EhcacheConfigOperator.instance();
-        String strVal = opr.loadString(taskid, "strKey");
-        int intVal = opr.loadInt(taskid, "intKey");
+        String strVal = this.taskConfig.loadString(taskConfig, "strKey");
+        int intVal = this.taskConfig.loadInt(taskConfig, "intKey");
         assertEquals(STR_VALUE, strVal);
         assertEquals(INTEGER_VALUE, intVal);
 

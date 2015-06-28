@@ -27,11 +27,11 @@ allprojects {
     sourceCompatibility = 1.7
 
     repositories {
+        mavenLocal()
         maven { url "http://maven.oschina.net/content/groups/public/" }
+        mavenCentral()
         maven { url "http://repo.spring.io/snapshot" }
         maven { url "https://raw.github.com/bulldog2011/bulldog-repo/master/repo/releases/" }//bigqueue
-
-        mavenCentral()
         maven { url "http://repo.grails.org/grails/core" }
     }
 
@@ -52,6 +52,8 @@ allprojects {
         slf4jApi = "1.7.12"
         bigqueue="0.7.0"
         jedis="2.7.2"
+        webmagic="0.5.2"
+        slf4jApi="1.7.12"
 
         junit="4.8.2"
         testng="6.8.21"

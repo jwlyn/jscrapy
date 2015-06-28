@@ -1,7 +1,8 @@
 package pipline;
 
-import com.oxf1.spider.TaskId;
+import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
+import com.oxf1.spider.config.ConfigOperator;
 import com.oxf1.spider.config.impl.EhcacheConfigOperator;
 import com.oxf1.spider.data.DataItem;
 import com.oxf1.spider.pipline.Pipline;
@@ -24,32 +25,32 @@ import static org.testng.Assert.assertEquals;
  * Created by cxu on 2015/6/21.
  */
 public class LocalFilePiplineTest {
-    private TaskId taskid;
+    private TaskConfig taskConfig;
     private String dataSavePath = System.getProperty("user.home")+"/"+".myspider/localfilepiplinetest/test.txt";
 
     @BeforeClass
     public void setup(){
-        taskid = new TaskId("task-id-for-test", "testTa");
-        EhcacheConfigOperator opr = EhcacheConfigOperator.instance();
-        opr.put(taskid, ConfigKeys.LOCAL_FILE_PIPLINE_DATA_SAVE_PATH, dataSavePath);
+        ConfigOperator opr = new EhcacheConfigOperator();
+        this.taskConfig = new TaskConfig("task-id-for-test", "testTa", opr);
+        this.taskConfig.put(taskConfig, ConfigKeys.LOCAL_FILE_PIPLINE_DATA_SAVE_PATH, dataSavePath);
     }
 
     @AfterClass
     public void tearDown() throws IOException {
         /*清空缓存*/
         CacheManager cacheManager = CacheManager.create();
-        Cache ehCache = cacheManager.getCache(ConfigKeys.EH_CACHE_NAME);
+        Cache ehCache = cacheManager.getCache(ConfigKeys.MYSPIER_CONFIG_NAME);
         ehCache.removeAll();
         cacheManager.clearAll();
         cacheManager.shutdown();
 
         /*删除文件*/
-        FileUtils.forceDelete(new File(dataSavePath));
+        FileUtils.forceDelete(new File(this.dataSavePath));
     }
 
     @Test
     public void testSingleThread() throws IOException, InterruptedException {
-        Pipline pipline = new LocalFilePipline(taskid);
+        Pipline pipline = new LocalFilePipline(this.taskConfig);
         DataItem dt = new DataItem() {
             @Override
             public List<String> getData() {
@@ -67,7 +68,7 @@ public class LocalFilePiplineTest {
         Thread.sleep(1000);
 
         try {
-            List<String> lines = FileUtils.readLines(new File(dataSavePath));
+            List<String> lines = FileUtils.readLines(new File(this.dataSavePath));
             assertEquals(200, lines.size());
         }finally {
             pipline.close();

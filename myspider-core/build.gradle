@@ -1,20 +1,16 @@
 dependencies {
-
-    //compile ""
-
     //runtime ""
     //testCompile "junit:junit:$junit"
-    //testCompile "org.testng:testng:$testng"
-
     compile "com.fasterxml.jackson.core:jackson-databind:$jackson"
     compile "com.fasterxml.jackson.core:jackson-core:$jackson"
     compile "com.fasterxml.jackson.core:jackson-annotations:$jackson"
     compile "org.apache.commons:commons-lang3:$commonsLang3"
-    compile "org.apache.commons:commons-vfs2:$commonsVfs2"
+    //compile "org.apache.commons:commons-vfs2:$commonsVfs2"
     compile "commons-io:commons-io:$commonsIo"
     compile "commons-codec:commons-codec:$commonsCodec"
     compile "net.sf.ehcache:ehcache:$ehcache"
     compile "com.leansoft:bigqueue:$bigqueue"
+    compile "us.codecraft:webmagic-core:$webmagic"
     compile "redis.clients:jedis:$jedis"
-
+    compile "org.slf4j:slf4j-api:$slf4jApi"
 }

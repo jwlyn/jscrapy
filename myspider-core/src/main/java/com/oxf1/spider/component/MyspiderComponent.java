@@ -1,19 +1,19 @@
 package com.oxf1.spider.component;
 
-import com.oxf1.spider.TaskId;
+import com.oxf1.spider.TaskConfig;
 
 /**
  * Created by cxu on 2015/6/22.
  */
 public class MyspiderComponent {
-    private final TaskId taskid;
+    private final TaskConfig taskConfig;
 
-    public MyspiderComponent(TaskId taskid){
-        this.taskid = taskid;
+    public MyspiderComponent(TaskConfig taskConfig){
+        this.taskConfig = taskConfig;
     }
 
-    protected TaskId getTaskid(){
-        return this.taskid;
+    protected TaskConfig getTaskConfig(){
+        return this.taskConfig;
     }
 
 }

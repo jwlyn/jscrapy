@@ -1,6 +1,6 @@
 package com.oxf1.spider.scheduler.impl;
 
-import com.oxf1.spider.TaskId;
+import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.request.Request;
 import com.oxf1.spider.scheduler.Scheduler;
 
@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class MongoDbScheduler extends Scheduler{
 
-    public MongoDbScheduler(TaskId taskid) {
-        super(taskid);
+    public MongoDbScheduler(TaskConfig taskConfig) {
+        super(taskConfig);
     }
 
     @Override

@@ -6,34 +6,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
 import java.util.Map;
 
 /**
  * Created by cxu on 2014/11/21.
  */
-public class HttpRequest implements Request{
+public class HttpRequest extends Request{
 
     private String url;//请求的url
     private HttpRequestMethod httpMethod;//请求的http方法，GET|POST等
     private Map<String, String> parameters;//如果是post请求，这里存放请求参数
-
-    /**
-     * 从队列里的json字符串来创建一个HttpRequest
-     * @param jsonString
-     * @return
-     */
-    public static HttpRequest build(String jsonString) throws IOException {
-        if(StringUtils.isNotBlank(jsonString)) {
-            ObjectMapper mapper = new ObjectMapper();
-            HttpRequest req =  mapper.readValue(jsonString, HttpRequest.class);
-            return req;
-        }
-
-        return null;
-    }
 
     /**
      * 构造函数

@@ -1,6 +1,6 @@
 package com.oxf1.spider.scheduler;
 
-import com.oxf1.spider.TaskId;
+import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.component.MyspiderComponent;
 import com.oxf1.spider.exception.MySpiderException;
 import com.oxf1.spider.request.Request;
@@ -12,8 +12,8 @@ import java.util.List;
  */
 public abstract class Scheduler extends MyspiderComponent {
 
-    public Scheduler(TaskId taskid) {
-        super(taskid);
+    public Scheduler(TaskConfig taskConfig) {
+        super(taskConfig);
     }
 
     /**

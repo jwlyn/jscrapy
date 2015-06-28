@@ -2,9 +2,8 @@ package com.oxf1.spider.scheduler.impl;
 
 import com.leansoft.bigqueue.BigQueueImpl;
 import com.leansoft.bigqueue.IBigQueue;
-import com.oxf1.spider.TaskId;
+import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
-import com.oxf1.spider.config.impl.EhcacheConfigOperator;
 import com.oxf1.spider.exception.MySpiderExceptionCode;
 import com.oxf1.spider.exception.MySpiderFetalException;
 import com.oxf1.spider.request.Request;
@@ -27,10 +26,10 @@ public class LocalQueueScheduler extends Scheduler {
     private String queueName;
     private IBigQueue bigQueue;
 
-    public LocalQueueScheduler(TaskId taskid) throws MySpiderFetalException {
-        super(taskid);
-        this.queueFilePath = EhcacheConfigOperator.instance().loadString(taskid, ConfigKeys.LOCAL_SCHEDULE_QUEUE_PATH);
-        this.queueName = taskid.getTaskName();
+    public LocalQueueScheduler(TaskConfig taskConfig) throws MySpiderFetalException {
+        super(taskConfig);
+        this.queueFilePath = taskConfig.loadString(taskConfig, ConfigKeys.LOCAL_SCHEDULE_QUEUE_PATH);
+        this.queueName = taskConfig.getTaskName();
         try{
             bigQueue = new BigQueueImpl(queueFilePath, queueName);
         }catch(IOException e){
@@ -68,7 +67,7 @@ public class LocalQueueScheduler extends Scheduler {
             if(jsonBytes!=null){
                 String json = new String(jsonBytes);
                 try{
-                    Request request = HttpRequest.build(json);
+                    Request request = HttpRequest.build(json, HttpRequest.class);
                     req.add(request);
                 }catch(IOException e){
                     throw new MySpiderFetalException(MySpiderExceptionCode.LOCAL_QUEUE_SCHEDULE_DEJSON_ERROR);

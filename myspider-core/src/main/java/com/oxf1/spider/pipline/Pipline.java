@@ -1,6 +1,6 @@
 package com.oxf1.spider.pipline;
 
-import com.oxf1.spider.TaskId;
+import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.component.MyspiderComponent;
 import com.oxf1.spider.data.DataItem;
 
@@ -9,8 +9,8 @@ import com.oxf1.spider.data.DataItem;
  */
 public abstract class Pipline extends MyspiderComponent{
 
-    public Pipline(TaskId taskid){
-        super(taskid);
+    public Pipline(TaskConfig taskConfig){
+        super(taskConfig);
     }
 
     /**

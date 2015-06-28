@@ -1,7 +1,8 @@
 package scheduler;
 
-import com.oxf1.spider.TaskId;
+import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
+import com.oxf1.spider.config.ConfigOperator;
 import com.oxf1.spider.config.impl.EhcacheConfigOperator;
 import com.oxf1.spider.exception.MySpiderException;
 import com.oxf1.spider.exception.MySpiderFetalException;
@@ -28,23 +29,23 @@ import static org.testng.Assert.assertEquals;
  * Created by cxu on 2015/6/22.
  */
 public class LocalSchedulerTest {
-    private TaskId taskid;
+    private TaskConfig taskConfig;
     private String queuePath = System.getProperty("user.home")+"/"+".myspider/scheduler/local/";
     private Scheduler sched;
 
     @BeforeClass
     public void setup() throws MySpiderFetalException {
-        taskid = new TaskId("task-id-for-test", "testTask");
-        EhcacheConfigOperator opr = EhcacheConfigOperator.instance();
-        opr.put(taskid, ConfigKeys.LOCAL_SCHEDULE_QUEUE_PATH, queuePath);
-        sched = new LocalQueueScheduler(this.taskid);
+        ConfigOperator opr = new EhcacheConfigOperator();
+        taskConfig = new TaskConfig("task-id-for-test", "testTask", opr);
+        taskConfig.put(taskConfig, ConfigKeys.LOCAL_SCHEDULE_QUEUE_PATH, queuePath);
+        sched = new LocalQueueScheduler(this.taskConfig);
     }
 
     @AfterClass
     public void tearDown() throws IOException {
         /*清空缓存*/
         CacheManager cacheManager = CacheManager.create();
-        Cache ehCache = cacheManager.getCache(ConfigKeys.EH_CACHE_NAME);
+        Cache ehCache = cacheManager.getCache(ConfigKeys.MYSPIER_CONFIG_NAME);
         ehCache.removeAll();
         cacheManager.clearAll();
         cacheManager.shutdown();

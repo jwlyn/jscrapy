@@ -1,6 +1,6 @@
 package com.oxf1.spider.dudup.impl;
 
-import com.oxf1.spider.TaskId;
+import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.dudup.DeDup;
 import com.oxf1.spider.request.Request;
 import net.sf.ehcache.Cache;
@@ -15,15 +15,15 @@ public class EhCacheDedup extends DeDup {
     Cache ehCache;
 
 
-    public EhCacheDedup(TaskId taskid) {
+    public EhCacheDedup(TaskConfig taskid) {
         super(taskid);
         cacheManager = CacheManager.create();
-        cacheManager.addCacheIfAbsent(getTaskid().getTaskName());
-        ehCache = cacheManager.getCache(getTaskid().getTaskName());
+        cacheManager.addCacheIfAbsent(getTaskConfig().getTaskName());
+        ehCache = cacheManager.getCache(getTaskConfig().getTaskName());
     }
 
     @Override
-    public boolean isDup(Request request) {
+    protected boolean isDup(Request request) {
         String fp = request.fp();
         Element el = new Element(fp, 1);
         el = ehCache.putIfAbsent(el);

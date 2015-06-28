@@ -1,8 +1,7 @@
 package com.oxf1.spider.dudup.impl;
 
-import com.oxf1.spider.TaskId;
+import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
-import com.oxf1.spider.config.impl.EhcacheConfigOperator;
 import com.oxf1.spider.dudup.DeDup;
 import com.oxf1.spider.request.Request;
 import redis.clients.jedis.Jedis;
@@ -17,9 +16,9 @@ public class RedisDedup extends DeDup {
 
     private JedisPool pool;
 
-    public RedisDedup(TaskId taskid) {
-        super(taskid);
-        String redisHost = EhcacheConfigOperator.instance().loadString(taskid, ConfigKeys.REDIS_DEDUP_SERVER);
+    public RedisDedup(TaskConfig taskConfig) {
+        super(taskConfig);
+        String redisHost = taskConfig.loadString(taskConfig, ConfigKeys.REDIS_DEDUP_SERVER);
         this.pool = new JedisPool(new JedisPoolConfig(), redisHost);
     }
 
@@ -29,7 +28,7 @@ public class RedisDedup extends DeDup {
      * @return 已经存在返回true, 否则false
      */
     @Override
-    public boolean isDup(Request request) {
+    protected boolean isDup(Request request) {
 
         try (Jedis jedis = pool.getResource()){
             boolean isDuplicate = jedis.sismember(getDedupSetKey(), request.fp());
@@ -45,6 +44,7 @@ public class RedisDedup extends DeDup {
      * @return
      */
     private String getDedupSetKey(){
-        return "myspider_dedup_" + getTaskid().getId();
+        return "myspider_dedup_" + getTaskConfig().getTaskId();
     }
+
 }

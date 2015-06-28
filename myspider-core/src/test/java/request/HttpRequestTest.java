@@ -1,6 +1,7 @@
 package request;
 
 import com.oxf1.spider.request.HttpRequestMethod;
+import com.oxf1.spider.request.Request;
 import com.oxf1.spider.request.impl.HttpRequest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -26,7 +27,7 @@ public class HttpRequestTest {
 
     @Test(dataProvider = "queue_request_provider")
     public void testBuild(String jsonStr, String url , HttpRequestMethod method) throws IOException {
-        HttpRequest req = HttpRequest.build(jsonStr);
+        Request req = Request.build(jsonStr, HttpRequest.class);
         assert req!=null : "jackson parse result can not empty!";
 
         assertEquals(req.getUrl(), url);

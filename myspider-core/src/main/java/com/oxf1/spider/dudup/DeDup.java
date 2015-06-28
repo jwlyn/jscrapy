@@ -1,6 +1,6 @@
 package com.oxf1.spider.dudup;
 
-import com.oxf1.spider.TaskId;
+import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.component.MyspiderComponent;
 import com.oxf1.spider.request.Request;
 
@@ -13,8 +13,8 @@ import java.util.List;
  */
 public abstract class DeDup extends MyspiderComponent{
 
-    public DeDup(TaskId taskid) {
-        super(taskid);
+    public DeDup(TaskConfig taskConfig) {
+        super(taskConfig);
     }
 
     /**
@@ -22,7 +22,7 @@ public abstract class DeDup extends MyspiderComponent{
      * @param request
      * @return
      */
-    public abstract boolean isDup(Request request);
+    protected abstract boolean isDup(Request request);
 
     /**
      * 返回非重复的

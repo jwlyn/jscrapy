@@ -1,6 +1,6 @@
 package com.oxf1.spider.pipline.impl;
 
-import com.oxf1.spider.TaskId;
+import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.data.DataItem;
 import com.oxf1.spider.pipline.Pipline;
 
@@ -9,9 +9,9 @@ import com.oxf1.spider.pipline.Pipline;
  */
 public class MongoDbPipline extends Pipline {
 
-    public MongoDbPipline(TaskId taskid)
+    public MongoDbPipline(TaskConfig taskConfig)
     {
-        super(taskid);
+        super(taskConfig);
     }
 
     @Override
