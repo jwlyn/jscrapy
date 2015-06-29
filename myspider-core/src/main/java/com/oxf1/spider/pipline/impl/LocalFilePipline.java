@@ -47,7 +47,7 @@ public class LocalFilePipline extends Pipline {
 class LocalFileDataConsumer{
     private Map<TaskConfig, BlockingQueue<DataItem>> dataQueue;
     private Map<TaskConfig, Future> consumerTask;
-    ExecutorService threadPool = Executors.newCachedThreadPool();
+    ExecutorService threadPool = Executors.newSingleThreadExecutor();
 
     public LocalFileDataConsumer(){
         dataQueue = new ConcurrentHashMap<TaskConfig, BlockingQueue<DataItem>>();
