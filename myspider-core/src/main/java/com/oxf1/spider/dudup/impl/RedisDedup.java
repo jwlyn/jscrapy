@@ -14,6 +14,7 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 public class RedisDedup extends DeDup {
 
+    private static final String DEDUP_SET_PREFIX="myspider_dedup_set_";
     private JedisPool pool;
 
     public RedisDedup(TaskConfig taskConfig) {
@@ -39,12 +40,19 @@ public class RedisDedup extends DeDup {
         }
     }
 
+    @Override
+    public void clean() {
+        try (Jedis jedis = pool.getResource()){
+            jedis.del(this.getDedupSetKey());
+        }
+    }
+
     /**
      * 去重的redis 集合(Set)的key
      * @return
      */
     private String getDedupSetKey(){
-        return "myspider_dedup_" + getTaskConfig().getTaskId();
+        return DEDUP_SET_PREFIX + getTaskConfig().getTaskId();
     }
 
 }

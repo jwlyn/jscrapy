@@ -6,8 +6,6 @@ import com.oxf1.spider.dudup.impl.EhCacheDedup;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
 import com.oxf1.spider.request.impl.HttpRequest;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -23,12 +21,13 @@ import static org.testng.Assert.assertEquals;
 public class EhcacheDeDupTest {
     private TaskConfig taskConfig;
     private Request rq = new HttpRequest("url", HttpRequestMethod.HTTP_DELETE, null);
+    private DeDup dp;
 
     @BeforeClass
     public void setup()
     {
         taskConfig = new TaskConfig("Task-Id-For-Test", "testTask");
-        DeDup dp = new EhCacheDedup(taskConfig);
+        dp = new EhCacheDedup(taskConfig);
 
         List<Request> req = new ArrayList<Request>();
         req.add(rq);
@@ -39,10 +38,7 @@ public class EhcacheDeDupTest {
     @AfterClass
     public void tearDown()
     {
-        CacheManager cacheManager = CacheManager.create();
-        Cache ehCache = cacheManager.getCache(taskConfig.getTaskName());
-        ehCache.removeAll();
-        cacheManager.shutdown();
+        dp.clean();
     }
 
     @Test

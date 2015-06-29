@@ -12,9 +12,6 @@ import com.oxf1.spider.request.impl.HttpRequest;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +23,8 @@ import static org.testng.Assert.assertEquals;
  */
 public class RedisDedupTest {
     private TaskConfig taskConfig;
-    Request rq = new HttpRequest("http://baidu.com", HttpRequestMethod.HTTP_DELETE, null);
+    private Request rq = new HttpRequest("http://baidu.com", HttpRequestMethod.HTTP_DELETE, null);
+    private DeDup dp;
 
     @BeforeClass
     public void setup()
@@ -34,7 +32,7 @@ public class RedisDedupTest {
         ConfigOperator opr = new EhcacheConfigOperator();
         taskConfig = new TaskConfig("Task-Id-For-Test", "testTask", opr);
         taskConfig.put(taskConfig, ConfigKeys.REDIS_DEDUP_SERVER, "localhost");;
-        DeDup dp = new RedisDedup(taskConfig);
+        dp = new RedisDedup(taskConfig);
 
         List<Request> req = new ArrayList<Request>();
         req.add(rq);
@@ -45,11 +43,7 @@ public class RedisDedupTest {
     @AfterClass
     public void tearDown()
     {
-        JedisPool pool = new JedisPool(new JedisPoolConfig(), "localhost");
-        Jedis jedis = pool.getResource();
-        jedis.del(taskConfig.getTaskId());
-        jedis.close();
-        pool.close();
+        dp.clean();
     }
 
     @Test

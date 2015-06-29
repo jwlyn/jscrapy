@@ -32,4 +32,9 @@ public class EhCacheDedup extends DeDup {
         }
         return true;
     }
+
+    @Override
+    public void clean() {
+        ehCache.removeAll();
+    }
 }
