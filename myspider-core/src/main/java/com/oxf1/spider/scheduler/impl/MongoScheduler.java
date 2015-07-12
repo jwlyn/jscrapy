@@ -10,9 +10,9 @@ import java.util.List;
  * Mysql 实现的队列
  * Created by cxu on 2014/11/21.
  */
-public class MongoDbScheduler extends Scheduler{
+public class MongoScheduler extends Scheduler{
 
-    public MongoDbScheduler(TaskConfig taskConfig) {
+    public MongoScheduler(TaskConfig taskConfig) {
         super(taskConfig);
     }
 
