@@ -26,12 +26,13 @@ import static org.testng.Assert.assertEquals;
  */
 public class LocalFilePiplineTest {
     private TaskConfig taskConfig;
-    private String dataSavePath = System.getProperty("user.home")+"/"+".myspider/localfilepiplinetest/test.txt";
+    private String dataSavePath = System.getProperty("user.home")+"/"+".myspider/pipline/";
 
     @BeforeClass
     public void setup(){
         ConfigOperator opr = new EhcacheConfigOperator();
         this.taskConfig = new TaskConfig("task-id-for-test", "testTa", opr);
+        this.dataSavePath = this.dataSavePath + taskConfig.getTaskName() + File.separator + "test.txt";
         this.taskConfig.put(taskConfig, ConfigKeys.LOCAL_FILE_PIPLINE_DATA_SAVE_PATH, dataSavePath);
     }
 

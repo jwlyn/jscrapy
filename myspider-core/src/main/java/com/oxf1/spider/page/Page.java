@@ -10,16 +10,19 @@ public class Page {
     private Request request;
     private String rawText;
 
-    public String getRawText() {
-        return rawText;
+    public Page(String rawText){
+        this.rawText = rawText;
     }
 
-    public void setRawText(String rawText) {
-        this.rawText = rawText;
+    public String getRawText() {
+        return rawText;
     }
 
     public Request getRequest(){
         return this.request;
     }
 
+    public void setRequest(Request request) {
+        this.request = request;
+    }
 }
