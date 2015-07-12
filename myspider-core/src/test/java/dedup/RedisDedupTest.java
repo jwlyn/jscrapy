@@ -31,7 +31,7 @@ public class RedisDedupTest {
     {
         ConfigOperator opr = new EhcacheConfigOperator();
         taskConfig = new TaskConfig("Task-Id-For-Test", "testTask", opr);
-        taskConfig.put(taskConfig, ConfigKeys.REDIS_DEDUP_SERVER, "localhost");;
+        taskConfig.put(ConfigKeys.REDIS_DEDUP_SERVER, "localhost");;
         dp = new RedisDedup(taskConfig);
 
         List<Request> req = new ArrayList<Request>();

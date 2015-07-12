@@ -54,6 +54,7 @@ allprojects {
         jedis="2.7.2"
         webmagic="0.5.2"
         slf4jApi="1.7.12"
+        mongodbDriver="3.0.2"
 
         junit="4.8.2"
         testng="6.8.21"

@@ -37,7 +37,7 @@ public class LocalSchedulerTest {
     public void setup() throws MySpiderFetalException {
         ConfigOperator opr = new EhcacheConfigOperator();
         taskConfig = new TaskConfig("task-id-for-test", "testTask", opr);
-        taskConfig.put(taskConfig, ConfigKeys.LOCAL_SCHEDULE_QUEUE_PATH, queuePath);
+        taskConfig.put(ConfigKeys.LOCAL_SCHEDULE_QUEUE_PATH, queuePath);
         sched = new LocalQueueScheduler(this.taskConfig);
     }
 

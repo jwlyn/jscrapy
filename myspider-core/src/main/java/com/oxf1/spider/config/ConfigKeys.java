@@ -13,4 +13,11 @@ public class ConfigKeys {
 
     /*redis*/
     public static final String REDIS_DEDUP_SERVER = "REDIS_DEDUP_SERVER";
+
+    /*mongodb*/
+    public static final String MONGODB_HOST = "MONGODB_HOST";
+    public static final String MONGODB_PORT = "MONGODB_PORT";
+    public static final String MONGODB_CACHER_DB_NAME = "MONGODB_CACHER_DB_NAME";//缓存
+    public static final String MONGODB_DEDUP_DB_NAME = "MONGODB_DEDUP_DB_NAME";//去重
+
 }

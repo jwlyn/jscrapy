@@ -41,8 +41,13 @@ public class TaskConfig implements ConfigOperator{
         return this.cfg.loadInt(taskConfig, key);
     }
 
+    @Deprecated
     @Override
     public void put(TaskConfig taskConfig, String key, Object value) {
-        this.cfg.put(taskConfig, key, value);
+        throw new UnsupportedOperationException("Deprecated!");
+    }
+
+    public void put(String key, Object value) {
+        this.cfg.put(this, key, value);
     }
 }

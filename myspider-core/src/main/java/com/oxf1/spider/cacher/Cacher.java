@@ -22,4 +22,6 @@ public abstract class Cacher extends MyspiderComponent{
     public abstract Page loadPage(Request request);
 
     public abstract void cachePage(Page page);
+
+    public abstract void clean(Page page);
 }

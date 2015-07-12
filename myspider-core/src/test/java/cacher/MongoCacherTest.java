@@ -2,8 +2,8 @@ package cacher;
 
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.cacher.Cacher;
-import com.oxf1.spider.cacher.impl.LocalDiskCacher;
-import com.oxf1.spider.config.ConfigOperator;
+import com.oxf1.spider.cacher.impl.MongoCacher;
+import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.config.impl.EhcacheConfigOperator;
 import com.oxf1.spider.page.Page;
 import com.oxf1.spider.request.HttpRequestMethod;
@@ -18,23 +18,26 @@ import static org.testng.Assert.assertNotNull;
 /**
  * Created by cxu on 2015/7/12.
  */
-public class LocalDiskCacherTest {
-
+public class MongoCacherTest {
     private Page page;
     private Request request;
-    private Cacher cacher;
+    private TaskConfig taskConfig = null;
+    private Cacher cacher = null;
 
-    public LocalDiskCacherTest(){
+    public MongoCacherTest(){
         request = new HttpRequest("http://oxf1.com/test", HttpRequestMethod.HTTP_DELETE, null);
         page = new Page("this is html content, hahaha!");
         page.setRequest(request);
+
+        taskConfig = new TaskConfig("taskId", "taskName", new EhcacheConfigOperator());
+        taskConfig.put(ConfigKeys.MONGODB_HOST, "120.26.0.133");
+        taskConfig.put(ConfigKeys.MONGODB_PORT, 27017);
+        taskConfig.put(ConfigKeys.MONGODB_CACHER_DB_NAME, "myspider_cacher");
+        cacher = new MongoCacher(taskConfig);
     }
 
     @BeforeClass
     public void setup(){
-        ConfigOperator opr = new EhcacheConfigOperator();
-        TaskConfig taskConfig = new TaskConfig("task-id-for-test", "testTask", opr);
-        this.cacher = new LocalDiskCacher(taskConfig);
         this.cacher.cachePage(page);
     }
 

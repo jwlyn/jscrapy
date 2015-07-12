@@ -33,7 +33,7 @@ public class LocalFilePiplineTest {
         ConfigOperator opr = new EhcacheConfigOperator();
         this.taskConfig = new TaskConfig("task-id-for-test", "testTa", opr);
         this.dataSavePath = this.dataSavePath + taskConfig.getTaskName() + File.separator + "test.txt";
-        this.taskConfig.put(taskConfig, ConfigKeys.LOCAL_FILE_PIPLINE_DATA_SAVE_PATH, dataSavePath);
+        this.taskConfig.put(ConfigKeys.LOCAL_FILE_PIPLINE_DATA_SAVE_PATH, dataSavePath);
     }
 
     @AfterClass

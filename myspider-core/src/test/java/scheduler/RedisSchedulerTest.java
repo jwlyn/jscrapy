@@ -30,7 +30,7 @@ public class RedisSchedulerTest {
     public void test() throws MySpiderException {
         ConfigOperator opr = new EhcacheConfigOperator();
         TaskConfig taskConfig = new TaskConfig("tid", "test-task", opr);
-        taskConfig.put(taskConfig, ConfigKeys.REDIS_DEDUP_SERVER, "localhost");
+        taskConfig.put(ConfigKeys.REDIS_DEDUP_SERVER, "localhost");
 
         Scheduler sched = new RedisScheduler(taskConfig);
 

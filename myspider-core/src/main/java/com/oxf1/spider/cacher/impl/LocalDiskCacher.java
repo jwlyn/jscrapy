@@ -62,6 +62,17 @@ public class LocalDiskCacher extends Cacher {
         //TODO log
     }
 
+    @Override
+    public void clean(Page page) {
+        String file = this.getCacheFilePath(page.getRequest());
+        try {
+            FileUtils.forceDelete(new File(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+            //TODO log
+        }
+    }
+
     /**
      * 获取缓存文件的绝对路径
      * @param request
