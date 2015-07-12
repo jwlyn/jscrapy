@@ -30,7 +30,7 @@ public class MongoCacherTest {
         page.setRequest(request);
 
         taskConfig = new TaskConfig("taskId", "taskName", new EhcacheConfigOperator());
-        taskConfig.put(ConfigKeys.MONGODB_HOST, "120.26.0.133");
+        taskConfig.put(ConfigKeys.MONGODB_HOST, "localhost");
         taskConfig.put(ConfigKeys.MONGODB_PORT, 27017);
         taskConfig.put(ConfigKeys.MONGODB_CACHER_DB_NAME, "myspider_cacher");
         cacher = new MongoCacher(taskConfig);
