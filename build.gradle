@@ -55,6 +55,7 @@ allprojects {
         webmagic="0.5.2"
         slf4jApi="1.7.12"
         mongodbDriver="3.0.2"
+        mongodbQueue="1.0.0"
 
         junit="4.8.2"
         testng="6.8.21"

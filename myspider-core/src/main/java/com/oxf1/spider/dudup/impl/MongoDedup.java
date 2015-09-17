@@ -10,7 +10,7 @@ import com.oxf1.spider.request.Request;
  * Created by cxu on 2015/7/12.
  */
 public class MongoDedup extends DeDup {
-    private static final String DB_PRIMARY_KEY = "id";
+    private static final String DB_PRIMARY_KEY = "_id";
     private static final String DB_CACHE_FIELD_NAME = "page";
     private Mongo mongo = null;
     protected DB db = null;
