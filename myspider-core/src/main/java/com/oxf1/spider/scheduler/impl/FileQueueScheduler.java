@@ -20,13 +20,13 @@ import java.util.List;
  * bigqueue:https://github.com/bulldog2011/bigqueue
  * Created by cxu on 2015/6/22.
  */
-public class LocalQueueScheduler extends Scheduler {
+public class FileQueueScheduler extends Scheduler {
 
     private String queueFilePath;
     private String queueName;
     private IBigQueue bigQueue;
 
-    public LocalQueueScheduler(TaskConfig taskConfig) throws MySpiderFetalException {
+    public FileQueueScheduler(TaskConfig taskConfig) throws MySpiderFetalException {
         super(taskConfig);
         this.queueFilePath = taskConfig.loadString(taskConfig, ConfigKeys.LOCAL_SCHEDULE_QUEUE_PATH);
         this.queueName = taskConfig.getTaskName();
