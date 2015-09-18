@@ -18,4 +18,5 @@ dependencies {
     compile "org.slf4j:slf4j-api:$slf4jApi"
     compile "org.mongodb:mongo-java-driver:$mongodbDriver"
     compile "gaillard:mongo-queue-java:$mongodbQueue"
+    compile "org.yaml:snakeyaml:$snakyaml"
 }

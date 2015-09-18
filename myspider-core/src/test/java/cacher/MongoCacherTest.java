@@ -4,7 +4,6 @@ import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.cacher.Cacher;
 import com.oxf1.spider.cacher.impl.MongoCacher;
 import com.oxf1.spider.config.ConfigKeys;
-import com.oxf1.spider.config.impl.EhcacheConfigOperator;
 import com.oxf1.spider.page.Page;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
@@ -29,7 +28,7 @@ public class MongoCacherTest {
         page = new Page("this is html content, hahaha!");
         page.setRequest(request);
 
-        taskConfig = new TaskConfig("taskId", "taskName", new EhcacheConfigOperator());
+        taskConfig = new TaskConfig("taskId", "taskName");
         taskConfig.put(ConfigKeys.MONGODB_HOST, "localhost");
         taskConfig.put(ConfigKeys.MONGODB_PORT, 27017);
         taskConfig.put(ConfigKeys.MONGODB_CACHER_DB_NAME, "myspider_cacher");

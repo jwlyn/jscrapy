@@ -2,8 +2,6 @@ package dedup;
 
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
-import com.oxf1.spider.config.ConfigOperator;
-import com.oxf1.spider.config.impl.EhcacheConfigOperator;
 import com.oxf1.spider.dudup.DeDup;
 import com.oxf1.spider.dudup.impl.MongoDedup;
 import com.oxf1.spider.request.HttpRequestMethod;
@@ -29,8 +27,7 @@ public class MongoDedupTest {
     @BeforeClass
     public void setup()
     {
-        ConfigOperator opr = new EhcacheConfigOperator();
-        taskConfig = new TaskConfig("Task-Id-For-Test", "testTask", opr);
+        taskConfig = new TaskConfig("Task-Id-For-Test", "testTask");
         taskConfig.put(ConfigKeys.MONGODB_HOST, "localhost");
         taskConfig.put(ConfigKeys.MONGODB_PORT, 27017);
         taskConfig.put(ConfigKeys.MONGODB_DEDUP_DB_NAME, "myspider_dedup");

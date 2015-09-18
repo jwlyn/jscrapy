@@ -2,8 +2,6 @@ package scheduler;
 
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
-import com.oxf1.spider.config.ConfigOperator;
-import com.oxf1.spider.config.impl.EhcacheConfigOperator;
 import com.oxf1.spider.exception.MySpiderException;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
@@ -28,8 +26,7 @@ public class RedisSchedulerTest {
      */
     @Test
     public void test() throws MySpiderException {
-        ConfigOperator opr = new EhcacheConfigOperator();
-        TaskConfig taskConfig = new TaskConfig("tid", "test-task", opr);
+        TaskConfig taskConfig = new TaskConfig("tid", "test-task");
         taskConfig.put(ConfigKeys.REDIS_DEDUP_SERVER, "localhost");
 
         Scheduler sched = new RedisScheduler(taskConfig);

@@ -2,24 +2,39 @@ package com.oxf1.spider;
 
 import com.oxf1.spider.config.ConfigOperator;
 import com.oxf1.spider.config.impl.EhcacheConfigOperator;
+import org.apache.commons.lang3.StringUtils;
+
+import java.lang.management.ManagementFactory;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * Created by cxu on 2015/6/21.
  */
-public class TaskConfig implements ConfigOperator{
+public class TaskConfig{
+    private static String HOST = null;//本机ip
+    private final String jvmProcessId;//jvm 进程id
     private final String taskId;//唯一标识
     private final String taskName;
     private final ConfigOperator cfg;
 
-    public TaskConfig(String id, String taskName, ConfigOperator cfg){
-        this.taskId = id;
-        this.taskName = taskName;
-        this.cfg = cfg;
+    static{
+        InetAddress addr = null;
+        try {
+            addr = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            HOST = "?.?.?.?";
+        }
+        if(StringUtils.isBlank(HOST)){
+            HOST = addr.getHostAddress().toString();
+        }
     }
 
     public TaskConfig(String taskId, String taskName){
         this.taskId = taskId;
         this.taskName = taskName;
+        /*初始化jvm进程id*/
+        this.jvmProcessId = ManagementFactory.getRuntimeMXBean().getName();
         this.cfg = new EhcacheConfigOperator();//默认的
     }
 
@@ -31,23 +46,48 @@ public class TaskConfig implements ConfigOperator{
         return this.taskName;
     }
 
-    @Override
     public String loadString(TaskConfig taskConfig, String key) {
-        return this.cfg.loadString(taskConfig, key);
+        key = this.getTaskKey(key);
+        return (String)this.cfg.loadValue(key);
     }
 
-    @Override
+    /**
+     * 从配置读出一个key,转化为int
+     * @param taskConfig
+     * @param key
+     * @return
+     */
     public Integer loadInt(TaskConfig taskConfig, String key) {
-        return this.cfg.loadInt(taskConfig, key);
+        key = this.getTaskKey(key);
+        Integer temp =  (Integer)this.cfg.loadValue(key);
+        return temp;
     }
 
-    @Deprecated
-    @Override
-    public void put(TaskConfig taskConfig, String key, Object value) {
-        throw new UnsupportedOperationException("Deprecated!");
-    }
-
+    /**
+     * 保存配置
+     * @param key
+     * @param value
+     */
     public void put(String key, Object value) {
-        this.cfg.put(this, key, value);
+        key = this.getTaskKey(key);
+        cfg.put(key, value);
+    }
+
+    /**
+     * 加上和Task有关的前缀
+     * @param key
+     * @return
+     */
+    private String getTaskKey(String key){
+        StringBuffer buf = new StringBuffer(50);
+        buf.append(this.jvmProcessId)//使用jvm进程Id可以在一台机器上模拟分布式
+                .append("@")
+                .append(HOST)
+                .append("@")
+                .append(this.taskName)
+                .append("@")
+                .append(this.taskId)
+                .append(key);
+        return buf.toString();
     }
 }

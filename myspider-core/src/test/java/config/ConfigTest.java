@@ -1,7 +1,6 @@
 package config;
 
 import com.oxf1.spider.TaskConfig;
-import com.oxf1.spider.config.impl.EhcacheConfigOperator;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import org.testng.annotations.AfterClass;
@@ -22,11 +21,10 @@ public class ConfigTest {
     @BeforeClass
     public void setup()
     {
-        EhcacheConfigOperator opr = new EhcacheConfigOperator();
-        taskConfig = new TaskConfig("Task-Id-For-Test", "testTask", opr);
+        taskConfig = new TaskConfig("Task-Id-For-Test", "testTask");
 
-        opr.put(taskConfig, "strKey", STR_VALUE);
-        opr.put(taskConfig, "intKey", INTEGER_VALUE);
+        taskConfig.put("strKey", STR_VALUE);
+        taskConfig.put("intKey", INTEGER_VALUE);
     }
 
     @AfterClass

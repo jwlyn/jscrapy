@@ -2,8 +2,6 @@ package scheduler;
 
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
-import com.oxf1.spider.config.ConfigOperator;
-import com.oxf1.spider.config.impl.EhcacheConfigOperator;
 import com.oxf1.spider.exception.MySpiderException;
 import com.oxf1.spider.exception.MySpiderFetalException;
 import com.oxf1.spider.request.HttpRequestMethod;
@@ -35,8 +33,7 @@ public class LocalSchedulerTest {
 
     @BeforeClass
     public void setup() throws MySpiderFetalException {
-        ConfigOperator opr = new EhcacheConfigOperator();
-        taskConfig = new TaskConfig("task-id-for-test", "testTask", opr);
+        taskConfig = new TaskConfig("task-id-for-test", "testTask");
         taskConfig.put(ConfigKeys.LOCAL_SCHEDULE_QUEUE_PATH, queuePath);
         sched = new FileQueueScheduler(this.taskConfig);
     }

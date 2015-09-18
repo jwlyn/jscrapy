@@ -2,8 +2,6 @@ package pipline;
 
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
-import com.oxf1.spider.config.ConfigOperator;
-import com.oxf1.spider.config.impl.EhcacheConfigOperator;
 import com.oxf1.spider.data.DataItem;
 import com.oxf1.spider.pipline.Pipline;
 import com.oxf1.spider.pipline.impl.LocalFilePipline;
@@ -30,8 +28,7 @@ public class LocalFilePiplineTest {
 
     @BeforeClass
     public void setup(){
-        ConfigOperator opr = new EhcacheConfigOperator();
-        this.taskConfig = new TaskConfig("task-id-for-test", "testTa", opr);
+        this.taskConfig = new TaskConfig("task-id-for-test", "testTa");
         this.dataSavePath = this.dataSavePath + taskConfig.getTaskName() + File.separator + "test.txt";
         this.taskConfig.put(ConfigKeys.LOCAL_FILE_PIPLINE_DATA_SAVE_PATH, dataSavePath);
     }

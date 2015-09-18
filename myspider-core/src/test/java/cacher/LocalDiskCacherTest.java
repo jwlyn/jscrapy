@@ -3,8 +3,6 @@ package cacher;
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.cacher.Cacher;
 import com.oxf1.spider.cacher.impl.LocalDiskCacher;
-import com.oxf1.spider.config.ConfigOperator;
-import com.oxf1.spider.config.impl.EhcacheConfigOperator;
 import com.oxf1.spider.page.Page;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
@@ -32,8 +30,7 @@ public class LocalDiskCacherTest {
 
     @BeforeClass
     public void setup(){
-        ConfigOperator opr = new EhcacheConfigOperator();
-        TaskConfig taskConfig = new TaskConfig("task-id-for-test", "testTask", opr);
+        TaskConfig taskConfig = new TaskConfig("task-id-for-test", "testTask");
         this.cacher = new LocalDiskCacher(taskConfig);
         this.cacher.cachePage(page);
     }
