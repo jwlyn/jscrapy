@@ -2,9 +2,12 @@ package com.oxf1.spider.cacher.impl;
 
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.cacher.Cacher;
+import com.oxf1.spider.config.ConfigKeys;
+import com.oxf1.spider.config.SysDefaultConfig;
 import com.oxf1.spider.page.Page;
 import com.oxf1.spider.request.Request;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,9 +18,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class LocalDiskCacher extends Cacher {
     //缓存文件的最外层目录
-    private String cacheDir = System.getProperty("user.home") + File.separator +
-            ".myspider" + File.separator +
-            "cacher" + File.separator;
+    private String cacheDir;
 
     /**
      * 构造函数
@@ -25,7 +26,20 @@ public class LocalDiskCacher extends Cacher {
      */
     public LocalDiskCacher(TaskConfig taskConfig) {
         super(taskConfig);
-        this.cacheDir += (taskConfig.getTaskName() + File.separator);//组合出这个任务在本地磁盘的目录
+        String spiderWorkDir = taskConfig.loadString(ConfigKeys.SPIDER_WORK_DIR);
+        if(StringUtils.isBlank(spiderWorkDir)){
+            spiderWorkDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
+        }
+        spiderWorkDir = spiderWorkDir + taskConfig.getTaskFp() + File.separator + "cacher" + File.separator;
+        this.cacheDir = spiderWorkDir;//组合出这个任务在本地磁盘的目录
+        taskConfig.put(ConfigKeys.RT_LOCAL_CACHER_DIR, this.cacheDir);
+
+        try {
+            FileUtils.forceMkdir(new File(this.cacheDir));
+        } catch (IOException e) {
+            //TODO
+            e.printStackTrace();
+        }
     }
 
     @Override

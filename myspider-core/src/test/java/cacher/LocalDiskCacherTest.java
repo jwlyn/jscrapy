@@ -30,7 +30,7 @@ public class LocalDiskCacherTest {
 
     @BeforeClass
     public void setup(){
-        TaskConfig taskConfig = new TaskConfig("task-id-for-test", "testTask");
+        TaskConfig taskConfig = new TaskConfig("task_id", "test_name");
         this.cacher = new LocalDiskCacher(taskConfig);
         this.cacher.cachePage(page);
     }

@@ -32,4 +32,5 @@ public class ConfigKeys {
     ------------------------------------------------------------------------------------
      */
     public static final String RT_LOCAL_FILE_PIPLINE_DATA_FILE = "RT_LOCAL_FILE_PIPLINE_DATA_FILE";
+    public static final String RT_LOCAL_CACHER_DIR = "RT_LOCAL_CACHER_DIR";
 }

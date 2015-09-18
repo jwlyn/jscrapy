@@ -91,7 +91,7 @@
 
 
     -->
-    <diskStore path="user.home/.myspider/ehcache/"/>
+    <diskStore path="user.home/.myspider/_ehcache/"/>
     <!--
 
         TransactionManagerLookup configuration
