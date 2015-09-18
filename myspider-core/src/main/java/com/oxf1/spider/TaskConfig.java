@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by cxu on 2015/6/21.
@@ -17,6 +18,10 @@ public class TaskConfig{
     private final String taskId;//唯一标识
     private final String taskName;
     private final ConfigOperator cfg;
+    /**
+     * 存放同一个任务需要的多线程共享对象
+     */
+    private ConcurrentHashMap<String, Object> taskSharedObject;
 
     static{
         InetAddress addr = null;
@@ -36,6 +41,7 @@ public class TaskConfig{
         /*初始化jvm进程id*/
         this.jvmProcessId = ManagementFactory.getRuntimeMXBean().getName();
         this.cfg = new EhcacheConfigOperator();//默认的
+        this.taskSharedObject = new ConcurrentHashMap<String, Object>(5);
     }
 
     public String getTaskId() {
@@ -46,18 +52,17 @@ public class TaskConfig{
         return this.taskName;
     }
 
-    public String loadString(TaskConfig taskConfig, String key) {
+    public String loadString(String key) {
         key = this.getTaskKey(key);
         return (String)this.cfg.loadValue(key);
     }
 
     /**
      * 从配置读出一个key,转化为int
-     * @param taskConfig
      * @param key
      * @return
      */
-    public Integer loadInt(TaskConfig taskConfig, String key) {
+    public Integer loadInt(String key) {
         key = this.getTaskKey(key);
         Integer temp =  (Integer)this.cfg.loadValue(key);
         return temp;

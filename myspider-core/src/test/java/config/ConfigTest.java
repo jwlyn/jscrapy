@@ -40,8 +40,8 @@ public class ConfigTest {
     @Test
     public void testRead()
     {
-        String strVal = this.taskConfig.loadString(taskConfig, "strKey");
-        int intVal = this.taskConfig.loadInt(taskConfig, "intKey");
+        String strVal = this.taskConfig.loadString("strKey");
+        int intVal = this.taskConfig.loadInt("intKey");
         assertEquals(STR_VALUE, strVal);
         assertEquals(INTEGER_VALUE, intVal);
 

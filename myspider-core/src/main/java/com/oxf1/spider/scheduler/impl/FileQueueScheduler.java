@@ -28,7 +28,7 @@ public class FileQueueScheduler extends Scheduler {
 
     public FileQueueScheduler(TaskConfig taskConfig) throws MySpiderFetalException {
         super(taskConfig);
-        this.queueFilePath = taskConfig.loadString(taskConfig, ConfigKeys.LOCAL_SCHEDULE_QUEUE_PATH);
+        this.queueFilePath = taskConfig.loadString(ConfigKeys.LOCAL_SCHEDULE_QUEUE_PATH);
         this.queueName = taskConfig.getTaskName();
         try{
             bigQueue = new BigQueueImpl(queueFilePath, queueName);

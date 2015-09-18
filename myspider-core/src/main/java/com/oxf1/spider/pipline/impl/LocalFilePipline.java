@@ -26,7 +26,7 @@ public class LocalFilePipline extends Pipline {
      */
     public LocalFilePipline(TaskConfig taskConfig) {
         super(taskConfig);
-        this.dataFilePath = taskConfig.loadString(taskConfig, ConfigKeys.LOCAL_FILE_PIPLINE_DATA_SAVE_PATH);//完整的目录+文件名字。解析之后的数据保存的位置
+        this.dataFilePath = taskConfig.loadString(ConfigKeys.LOCAL_FILE_PIPLINE_DATA_SAVE_PATH);//完整的目录+文件名字。解析之后的数据保存的位置
         this.baseDir = FilenameUtils.getFullPath(dataFilePath);
     }
 

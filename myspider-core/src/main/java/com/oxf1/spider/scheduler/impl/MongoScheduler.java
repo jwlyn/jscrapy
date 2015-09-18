@@ -23,9 +23,9 @@ public class MongoScheduler extends Scheduler{
 
     public MongoScheduler(TaskConfig taskConfig) {
         super(taskConfig);
-        String dbHost = taskConfig.loadString(taskConfig, ConfigKeys.MONGODB_HOST);
-        int dbPort = taskConfig.loadInt(taskConfig, ConfigKeys.MONGODB_PORT);
-        String dbName = taskConfig.loadString(taskConfig, ConfigKeys.MONGODB_DEDUP_DB_NAME);
+        String dbHost = taskConfig.loadString(ConfigKeys.MONGODB_HOST);
+        int dbPort = taskConfig.loadInt(ConfigKeys.MONGODB_PORT);
+        String dbName = taskConfig.loadString(ConfigKeys.MONGODB_DEDUP_DB_NAME);
         String tableName = taskConfig.getTaskName();
         Mongo mongo = new MongoClient(dbHost, dbPort);
         DB db = mongo.getDB(dbName);

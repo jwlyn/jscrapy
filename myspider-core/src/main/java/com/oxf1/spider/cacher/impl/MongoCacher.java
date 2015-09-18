@@ -19,9 +19,9 @@ public class MongoCacher  extends Cacher {
 
     public MongoCacher(TaskConfig taskConfig) {
         super(taskConfig);
-        String dbHost = taskConfig.loadString(taskConfig, ConfigKeys.MONGODB_HOST);
-        int dbPort = taskConfig.loadInt(taskConfig, ConfigKeys.MONGODB_PORT);
-        String dbName = taskConfig.loadString(taskConfig, ConfigKeys.MONGODB_CACHER_DB_NAME);
+        String dbHost = taskConfig.loadString(ConfigKeys.MONGODB_HOST);
+        int dbPort = taskConfig.loadInt(ConfigKeys.MONGODB_PORT);
+        String dbName = taskConfig.loadString(ConfigKeys.MONGODB_CACHER_DB_NAME);
         String tableName = taskConfig.getTaskName();
         this.mongo = new MongoClient(dbHost, dbPort);
         this.db = mongo.getDB(dbName);

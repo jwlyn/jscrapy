@@ -21,7 +21,7 @@ public class RedisScheduler  extends Scheduler {
 
     public RedisScheduler(TaskConfig taskConfig) {
         super(taskConfig);
-        String redisHost = taskConfig.loadString(taskConfig, ConfigKeys.REDIS_DEDUP_SERVER);
+        String redisHost = taskConfig.loadString(ConfigKeys.REDIS_DEDUP_SERVER);
         this.pool = new JedisPool(new JedisPoolConfig(), redisHost);
     }
 
