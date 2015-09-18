@@ -43,7 +43,7 @@ public class MongoCacherTest {
 
     @AfterClass
     public void tearDown(){
-        this.cacher.clean(page);
+        this.cacher.close();
     }
 
     @Test

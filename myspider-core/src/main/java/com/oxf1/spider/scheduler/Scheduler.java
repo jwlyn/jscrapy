@@ -40,5 +40,4 @@ public abstract class Scheduler extends MyspiderComponent {
      */
     public abstract int remove(List<Request> requests);
 
-    public abstract void shutdown();
 }

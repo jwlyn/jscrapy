@@ -40,7 +40,7 @@ public class LocalDiskCacherTest {
 
     @AfterClass
     public void tearDown(){
-        this.cacher.clean(page);
+        this.cacher.close();
     }
 
     @Test

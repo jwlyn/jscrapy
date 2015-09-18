@@ -62,7 +62,7 @@ public class RedisScheduler  extends Scheduler {
     }
 
     @Override
-    public void shutdown() {
+    public void close() {
         this.pool.close();
     }
 

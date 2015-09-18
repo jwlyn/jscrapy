@@ -10,7 +10,7 @@ import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
 import com.oxf1.spider.request.impl.HttpRequest;
 import com.oxf1.spider.scheduler.Scheduler;
-import com.oxf1.spider.scheduler.impl.LocalQueueScheduler;
+import com.oxf1.spider.scheduler.impl.FileQueueScheduler;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import org.apache.commons.io.FileUtils;
@@ -38,7 +38,7 @@ public class LocalSchedulerTest {
         ConfigOperator opr = new EhcacheConfigOperator();
         taskConfig = new TaskConfig("task-id-for-test", "testTask", opr);
         taskConfig.put(ConfigKeys.LOCAL_SCHEDULE_QUEUE_PATH, queuePath);
-        sched = new LocalQueueScheduler(this.taskConfig);
+        sched = new FileQueueScheduler(this.taskConfig);
     }
 
     @AfterClass
@@ -50,7 +50,7 @@ public class LocalSchedulerTest {
         cacheManager.clearAll();
         cacheManager.shutdown();
 
-        this.sched.shutdown();
+        this.sched.close();
         /*删除文件*/
         FileUtils.deleteQuietly(new File(queuePath));
     }

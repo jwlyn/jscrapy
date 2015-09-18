@@ -43,7 +43,7 @@ public class RedisDedupTest {
     @AfterClass
     public void tearDown()
     {
-        dp.clean();
+        dp.close();
     }
 
     @Test

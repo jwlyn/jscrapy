@@ -19,5 +19,4 @@ public abstract class Pipline extends MyspiderComponent{
      */
     public abstract void save(DataItem dataItem);
 
-    public abstract void close();
 }

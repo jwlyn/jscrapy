@@ -83,7 +83,7 @@ public class FileQueueScheduler extends Scheduler {
     }
 
     @Override
-    public void shutdown() {
+    public void close() {
         if(bigQueue!=null){
             bigQueue.flush();
             try {
@@ -92,10 +92,5 @@ public class FileQueueScheduler extends Scheduler {
                 e.printStackTrace();
             }
         }
-    }
-
-    protected void finalize( ) throws Throwable {
-        super.finalize();
-        bigQueue.close();
     }
 }

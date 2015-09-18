@@ -41,7 +41,7 @@ public class RedisDedup extends DeDup {
     }
 
     @Override
-    public void clean() {
+    public void close() {
         try (Jedis jedis = pool.getResource()){
             jedis.del(this.getDedupSetKey());
         }

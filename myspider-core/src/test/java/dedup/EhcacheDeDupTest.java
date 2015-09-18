@@ -38,7 +38,7 @@ public class EhcacheDeDupTest {
     @AfterClass
     public void tearDown()
     {
-        dp.clean();
+        dp.close();
     }
 
     @Test

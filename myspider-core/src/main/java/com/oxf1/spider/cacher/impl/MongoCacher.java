@@ -49,7 +49,7 @@ public class MongoCacher  extends Cacher {
     }
 
     @Override
-    public void clean(Page page) {
+    public void close() {
         this.collection.drop();
     }
 }

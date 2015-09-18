@@ -34,7 +34,7 @@ public class EhCacheDedup extends DeDup {
     }
 
     @Override
-    public void clean() {
+    public void close() {
         ehCache.removeAll();
     }
 }

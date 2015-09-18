@@ -22,6 +22,11 @@ public class Spider extends MyspiderComponent implements Runnable{
         super(taskConfig);
     }
 
+    @Override
+    public void close() {
+
+    }
+
     public void setDedup(DeDup dedup) {
         this.dedup = dedup;
     }

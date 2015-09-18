@@ -38,6 +38,4 @@ public abstract class DeDup extends MyspiderComponent{
         }
         return req;
     }
-
-    public abstract void clean();
 }

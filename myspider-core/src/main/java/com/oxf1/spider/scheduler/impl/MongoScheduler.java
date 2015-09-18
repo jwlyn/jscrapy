@@ -53,7 +53,7 @@ public class MongoScheduler extends Scheduler{
     }
 
     @Override
-    public void shutdown() {
+    public void close() {
 
     }
 }

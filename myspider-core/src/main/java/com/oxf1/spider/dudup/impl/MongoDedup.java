@@ -45,7 +45,7 @@ public class MongoDedup extends DeDup {
     }
 
     @Override
-    public void clean() {
+    public void close() {
         this.collection.drop();
     }
 }
