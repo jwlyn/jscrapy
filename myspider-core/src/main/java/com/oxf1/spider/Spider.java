@@ -14,7 +14,7 @@ import com.oxf1.spider.scheduler.Scheduler;
 public class Spider extends MyspiderComponent implements Runnable{
     private DeDup dedup;
     private Downloader downloader;
-    private Pipline pipline;
+    private Pipline pipline;//TODO 多个pipline
     private Processor processor;
     private Scheduler scheduler;
 

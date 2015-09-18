@@ -24,26 +24,24 @@ import static org.testng.Assert.assertEquals;
  */
 public class LocalFilePiplineTest {
     private TaskConfig taskConfig;
-    private String dataSavePath = System.getProperty("user.home")+"/"+".myspider/pipline/";
 
     @BeforeClass
     public void setup(){
-        this.taskConfig = new TaskConfig("task-id-for-test", "testTa");
-        this.dataSavePath = this.dataSavePath + taskConfig.getTaskName() + File.separator + "test.txt";
-        this.taskConfig.put(ConfigKeys.LOCAL_FILE_PIPLINE_DATA_SAVE_PATH, dataSavePath);
+        this.taskConfig = new TaskConfig("task_id", "test_name");
     }
 
     @AfterClass
     public void tearDown() throws IOException {
+        /*删除文件*/
+        String dataSavePath = taskConfig.loadString(ConfigKeys.RT_LOCAL_FILE_PIPLINE_DATA_FILE);
+        FileUtils.forceDelete(new File(dataSavePath));
+
         /*清空缓存*/
         CacheManager cacheManager = CacheManager.create();
         Cache ehCache = cacheManager.getCache(ConfigKeys.MYSPIER_CONFIG_NAME);
         ehCache.removeAll();
         cacheManager.clearAll();
         cacheManager.shutdown();
-
-        /*删除文件*/
-        FileUtils.forceDelete(new File(this.dataSavePath));
     }
 
     @Test
@@ -66,7 +64,8 @@ public class LocalFilePiplineTest {
         Thread.sleep(1000);
 
         try {
-            List<String> lines = FileUtils.readLines(new File(this.dataSavePath));
+            String dataSavePath = taskConfig.loadString(ConfigKeys.RT_LOCAL_FILE_PIPLINE_DATA_FILE);
+            List<String> lines = FileUtils.readLines(new File(dataSavePath));
             assertEquals(100, lines.size());
         }finally {
             pipline.close();

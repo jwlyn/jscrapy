@@ -52,7 +52,10 @@ public class EhcacheConfigOperator implements ConfigOperator {
     private Object getValue(String key){
         String ehCacheKey = getEhCacheKey(key);
         Element element = this.ehCache.get(ehCacheKey);
-        return (Object) element.getObjectValue();
+        if(element!=null){
+            return (Object) element.getObjectValue();
+        }
+        return null;
     }
 
     /**

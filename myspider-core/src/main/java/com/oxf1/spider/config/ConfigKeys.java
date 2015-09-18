@@ -5,8 +5,10 @@ package com.oxf1.spider.config;
  */
 public class ConfigKeys {
 
+    //保存本地任务的配置，缓存，数据等的总目录地址
+    public static String SPIDER_WORK_DIR = "SPIDER_WORK_DIR";
     //ehCache 的配置集合，爬虫配置专用
-    public static String MYSPIER_CONFIG_NAME = "com.oxf1.myspider.config.task";
+    public static String MYSPIER_CONFIG_NAME = "com_oxf1_myspider_task_config";
     /*单机爬虫解析之后数据文件保存的位置*/
     public static final String LOCAL_FILE_PIPLINE_DATA_SAVE_PATH = "LOCAL_FILE_PIPLINE_DATA_SAVE_PATH";
     /*单机调度队列的磁盘位置*/
@@ -23,4 +25,11 @@ public class ConfigKeys {
 
     public static final String MEM_DEDUP_MAP = "MEM_DEDUP_MAP";
     public static final String MEM_SCHEDULER_MAP = "MEM_SCHEDULER_MAP";
+
+    /*----------------------------------------------------------------------------------
+    run time config
+     在运行时组合生成的配置
+    ------------------------------------------------------------------------------------
+     */
+    public static final String RT_LOCAL_FILE_PIPLINE_DATA_FILE = "RT_LOCAL_FILE_PIPLINE_DATA_FILE";
 }

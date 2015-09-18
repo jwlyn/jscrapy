@@ -54,7 +54,11 @@ public class TaskConfig{
 
     public String loadString(String key) {
         key = this.getTaskKey(key);
-        return (String)this.cfg.loadValue(key);
+        Object value = this.cfg.loadValue(key);
+        if(value!=null){
+            return (String)value;
+        }
+        else return null;
     }
 
     /**
@@ -64,8 +68,11 @@ public class TaskConfig{
      */
     public Integer loadInt(String key) {
         key = this.getTaskKey(key);
-        Integer temp =  (Integer)this.cfg.loadValue(key);
-        return temp;
+        Object value =  this.cfg.loadValue(key);
+        if(value!=null){
+            return (Integer)value;
+        }
+        return null;
     }
 
     /**
@@ -87,6 +94,14 @@ public class TaskConfig{
         key = this.getTaskKey(key);
         Object o = taskSharedObject.get(key);
         return o;
+    }
+
+    /**
+     * 本机唯一任务标示
+     * @return
+     */
+    public String getTaskFp(){
+        return getTaskKey("");
     }
 
     /**
