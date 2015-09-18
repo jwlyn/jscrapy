@@ -4,6 +4,7 @@ package com.oxf1.spider.config;
  * Created by cxu on 2015/6/21.
  */
 public class ConfigKeys {
+
     //ehCache 的配置集合，爬虫配置专用
     public static String MYSPIER_CONFIG_NAME = "com.oxf1.myspider.config.task";
     /*单机爬虫解析之后数据文件保存的位置*/
@@ -20,4 +21,6 @@ public class ConfigKeys {
     public static final String MONGODB_CACHER_DB_NAME = "MONGODB_CACHER_DB_NAME";//缓存
     public static final String MONGODB_DEDUP_DB_NAME = "MONGODB_DEDUP_DB_NAME";//去重
 
+    public static final String MEM_DEDUP_MAP = "MEM_DEDUP_MAP";
+    public static final String MEM_SCHEDULER_MAP = "MEM_SCHEDULER_MAP";
 }

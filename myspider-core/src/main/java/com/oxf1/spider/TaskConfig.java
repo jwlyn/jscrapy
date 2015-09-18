@@ -78,6 +78,17 @@ public class TaskConfig{
         cfg.put(key, value);
     }
 
+    public void addTaskSharedObject(String key, Object obj){
+        key = this.getTaskKey(key);
+        taskSharedObject.put(key, obj);
+    }
+
+    public Object getTaskSharedObject(String key){
+        key = this.getTaskKey(key);
+        Object o = taskSharedObject.get(key);
+        return o;
+    }
+
     /**
      * 加上和Task有关的前缀
      * @param key
