@@ -11,6 +11,9 @@ dependencies {
     compile "net.sf.ehcache:ehcache:$ehcache"
     compile "com.leansoft:bigqueue:$bigqueue"
     compile "us.codecraft:webmagic-core:$webmagic"
+    compile("us.codecraft:webmagic-core:$webmagic") {
+        exclude module: 'commons-io:slf4j-api'
+    }
     compile "redis.clients:jedis:$jedis"
     compile "org.slf4j:slf4j-api:$slf4jApi"
     compile "org.mongodb:mongo-java-driver:$mongodbDriver"

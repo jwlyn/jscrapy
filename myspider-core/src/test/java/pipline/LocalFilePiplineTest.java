@@ -70,7 +70,7 @@ public class LocalFilePiplineTest {
 
         try {
             List<String> lines = FileUtils.readLines(new File(this.dataSavePath));
-            assertEquals(200, lines.size());
+            assertEquals(100, lines.size());
         }finally {
             pipline.close();
         }
