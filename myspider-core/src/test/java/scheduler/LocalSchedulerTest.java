@@ -11,12 +11,10 @@ import com.oxf1.spider.scheduler.Scheduler;
 import com.oxf1.spider.scheduler.impl.FileQueueScheduler;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
-import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,18 +26,18 @@ import static org.testng.Assert.assertEquals;
  */
 public class LocalSchedulerTest {
     private TaskConfig taskConfig;
-    private String queuePath = System.getProperty("user.home")+"/"+".myspider/scheduler/local/";
     private Scheduler sched;
 
     @BeforeClass
     public void setup() throws MySpiderFetalException {
-        taskConfig = new TaskConfig("task-id-for-test", "testTask");
-        taskConfig.put(ConfigKeys.LOCAL_SCHEDULE_QUEUE_PATH, queuePath);
+        taskConfig = new TaskConfig("task_id", "test_name");
         sched = new FileQueueScheduler(this.taskConfig);
     }
 
     @AfterClass
     public void tearDown() throws IOException {
+        /*删除文件*///TODO
+        //FileUtils.deleteDirectory(new File(taskConfig.loadString(ConfigKeys.RT_LOCAL_QUEUE_DIR)));
         /*清空缓存*/
         CacheManager cacheManager = CacheManager.create();
         Cache ehCache = cacheManager.getCache(ConfigKeys.MYSPIER_CONFIG_NAME);
@@ -48,8 +46,6 @@ public class LocalSchedulerTest {
         cacheManager.shutdown();
 
         this.sched.close();
-        /*删除文件*/
-        FileUtils.deleteQuietly(new File(queuePath));
     }
 
     @Test
