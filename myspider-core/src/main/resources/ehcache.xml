@@ -721,7 +721,7 @@
         defined on your system. On a standard Linux system this will be /tmp"
 
     -->
-    <cache name="com_oxf1_myspider_task_config"
+<!--    <cache name="com_oxf1_myspider_task_config"
            maxEntriesLocalHeap="1000"
            maxEntriesLocalDisk="1000000"
            eternal="true"
@@ -729,7 +729,7 @@
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off"
            overflowToDisk="true">
-    </cache>
+    </cache>-->
 
     <defaultCache name="com_oxf1_myspider_dedupe"
            maxElementsInMemory="100000"
