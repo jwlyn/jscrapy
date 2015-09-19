@@ -1,7 +1,7 @@
-package com.oxf1.spider.dudup.impl;
+package com.oxf1.spider.dedup.impl;
 
 import com.oxf1.spider.TaskConfig;
-import com.oxf1.spider.dudup.DeDup;
+import com.oxf1.spider.dedup.DeDup;
 import com.oxf1.spider.request.Request;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;

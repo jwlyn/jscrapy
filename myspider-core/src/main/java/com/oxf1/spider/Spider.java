@@ -2,7 +2,7 @@ package com.oxf1.spider;
 
 import com.oxf1.spider.component.MyspiderComponent;
 import com.oxf1.spider.downloader.Downloader;
-import com.oxf1.spider.dudup.DeDup;
+import com.oxf1.spider.dedup.DeDup;
 import com.oxf1.spider.pipline.Pipline;
 import com.oxf1.spider.processor.Processor;
 import com.oxf1.spider.scheduler.Scheduler;

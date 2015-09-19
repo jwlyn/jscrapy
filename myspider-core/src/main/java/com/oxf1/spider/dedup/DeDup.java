@@ -1,4 +1,4 @@
-package com.oxf1.spider.dudup;
+package com.oxf1.spider.dedup;
 
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.component.MyspiderComponent;

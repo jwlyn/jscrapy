@@ -1,9 +1,9 @@
-package com.oxf1.spider.dudup.impl;
+package com.oxf1.spider.dedup.impl;
 
 import com.mongodb.*;
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
-import com.oxf1.spider.dudup.DeDup;
+import com.oxf1.spider.dedup.DeDup;
 import com.oxf1.spider.request.Request;
 
 /**

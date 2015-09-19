@@ -111,14 +111,18 @@ public class TaskConfig{
      */
     private String getTaskKey(String key){
         StringBuffer buf = new StringBuffer(50);
-        buf.append(this.jvmProcessId)//使用jvm进程Id可以在一台机器上模拟分布式
-                .append("@")
-                .append(HOST)
+        buf.append(HOST)
                 .append("@")
                 .append(this.taskName)
                 .append("@")
                 .append(this.taskId)
-                .append(key);
+                .append("@")
+                .append(this.jvmProcessId);//使用jvm进程Id可以在一台机器上模拟分布式
+
+        if(StringUtils.isNotBlank(key)){
+            buf.append("@").append(key);
+        }
+
         return buf.toString();
     }
 }

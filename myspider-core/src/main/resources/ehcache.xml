@@ -732,8 +732,7 @@
     </cache>
 
     <defaultCache name="com_oxf1_myspider_dedupe"
-           maxElementsInMemory="10000"
-
+           maxElementsInMemory="100000"
            eternal="true"
            diskPersistent="true"
            overflowToDisk="true"
