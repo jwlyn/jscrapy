@@ -18,8 +18,8 @@ public class EhCacheDedup extends DeDup {
     public EhCacheDedup(TaskConfig taskid) {
         super(taskid);
         cacheManager = CacheManager.create();
-        cacheManager.addCacheIfAbsent(getTaskConfig().getTaskName());
-        ehCache = cacheManager.getCache(getTaskConfig().getTaskName());
+        cacheManager.addCacheIfAbsent(getTaskConfig().getTaskFp());
+        ehCache = cacheManager.getCache(getTaskConfig().getTaskFp());
     }
 
     @Override

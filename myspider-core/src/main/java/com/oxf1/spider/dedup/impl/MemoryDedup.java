@@ -19,11 +19,11 @@ public class MemoryDedup  extends DeDup {
      */
     public MemoryDedup(TaskConfig taskConfig) {
         super(taskConfig);
-        if(taskConfig.getTaskSharedObject(ConfigKeys.MEM_DEDUP_MAP)==null){
+        if(taskConfig.getTaskSharedObject(ConfigKeys.MEM_DEDUP_SET)==null){
             synchronized (taskConfig){
-                if(taskConfig.getTaskSharedObject(ConfigKeys.MEM_DEDUP_MAP)==null){
+                if(taskConfig.getTaskSharedObject(ConfigKeys.MEM_DEDUP_SET)==null){
                     ConcurrentHashMap<String, Character> existUrl = new ConcurrentHashMap<String, Character>(10000);
-                    taskConfig.addTaskSharedObject(ConfigKeys.MEM_DEDUP_MAP, existUrl);
+                    taskConfig.addTaskSharedObject(ConfigKeys.MEM_DEDUP_SET, existUrl);
                 }
             }
         }
@@ -31,7 +31,7 @@ public class MemoryDedup  extends DeDup {
 
     @Override
     protected boolean isDup(Request request) {
-        ConcurrentHashMap<String, Character> existUrl = (ConcurrentHashMap<String, Character>)getTaskConfig().getTaskSharedObject(ConfigKeys.MEM_DEDUP_MAP);
+        ConcurrentHashMap<String, Character> existUrl = (ConcurrentHashMap<String, Character>)getTaskConfig().getTaskSharedObject(ConfigKeys.MEM_DEDUP_SET);
         String id = request.fp();
         Character ret = existUrl.putIfAbsent(id, '1');
         return ret!=null;

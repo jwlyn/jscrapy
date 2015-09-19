@@ -20,8 +20,8 @@ public class ConfigKeys {
     public static final String MONGODB_DEDUP_DB_NAME = "MONGODB_DEDUP_DB_NAME";//去重
 
     /*内存队列*/
-    public static final String MEM_DEDUP_MAP = "MEM_DEDUP_MAP";
-    public static final String MEM_SCHEDULER_MAP = "MEM_SCHEDULER_MAP";
+    public static final String MEM_DEDUP_SET = "MEM_DEDUP_SET";
+    public static final String MEM_SCHEDULER_QUEUE = "MEM_SCHEDULER_QUEUE";
 
     /*----------------------------------------------------------------------------------
     run time config

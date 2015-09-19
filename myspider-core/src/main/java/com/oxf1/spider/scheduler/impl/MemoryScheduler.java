@@ -20,11 +20,11 @@ public class MemoryScheduler  extends Scheduler {
      */
     public MemoryScheduler(TaskConfig taskConfig) {
         super(taskConfig);
-        if(taskConfig.getTaskSharedObject(ConfigKeys.MEM_SCHEDULER_MAP)==null){
+        if(taskConfig.getTaskSharedObject(ConfigKeys.MEM_SCHEDULER_QUEUE)==null){
             synchronized (taskConfig){
-                if(taskConfig.getTaskSharedObject(ConfigKeys.MEM_SCHEDULER_MAP)==null){
+                if(taskConfig.getTaskSharedObject(ConfigKeys.MEM_SCHEDULER_QUEUE)==null){
                     ConcurrentLinkedQueue<Request> queue = new ConcurrentLinkedQueue<Request>();
-                    taskConfig.addTaskSharedObject(ConfigKeys.MEM_SCHEDULER_MAP, queue);
+                    taskConfig.addTaskSharedObject(ConfigKeys.MEM_SCHEDULER_QUEUE, queue);
                 }
             }
         }
@@ -32,14 +32,14 @@ public class MemoryScheduler  extends Scheduler {
 
     @Override
     public int push(List<Request> requests) throws MySpiderException {
-        ConcurrentLinkedQueue<Request> queue = (ConcurrentLinkedQueue<Request>)this.getTaskConfig().getTaskSharedObject(ConfigKeys.MEM_SCHEDULER_MAP);
+        ConcurrentLinkedQueue<Request> queue = (ConcurrentLinkedQueue<Request>)this.getTaskConfig().getTaskSharedObject(ConfigKeys.MEM_SCHEDULER_QUEUE);
         queue.addAll(requests);
         return requests.size();
     }
 
     @Override
     public List<Request> poll(int n) throws MySpiderException {
-        ConcurrentLinkedQueue<Request> queue = (ConcurrentLinkedQueue<Request>)this.getTaskConfig().getTaskSharedObject(ConfigKeys.MEM_SCHEDULER_MAP);
+        ConcurrentLinkedQueue<Request> queue = (ConcurrentLinkedQueue<Request>)this.getTaskConfig().getTaskSharedObject(ConfigKeys.MEM_SCHEDULER_QUEUE);
         List<Request> requests = new ArrayList<Request>(n);
         for (int i = 0; i < n; i++) {
             Request req = queue.poll();
