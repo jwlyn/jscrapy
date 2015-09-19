@@ -24,7 +24,7 @@ public class MemeorySchedulerTest {
      */
     @Test
     public void test() throws MySpiderException {
-        TaskConfig taskConfig = new TaskConfig("tid", "test-task");
+        TaskConfig taskConfig = new TaskConfig("task_id", "task_name");
         Scheduler sched = new MemoryScheduler(taskConfig);
 
         List<Request> request = new ArrayList<Request>();

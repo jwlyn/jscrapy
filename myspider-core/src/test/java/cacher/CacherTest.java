@@ -63,7 +63,7 @@ public class CacherTest {
      * @return
      */
     private Cacher initLocalDiskCacher(){
-        TaskConfig taskConfig = new TaskConfig("task_id", "test_name");
+        TaskConfig taskConfig = new TaskConfig("task_id", "task_name");
         Cacher cacher = new LocalDiskCacher(taskConfig);
         return cacher;
     }

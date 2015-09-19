@@ -22,7 +22,7 @@ import static org.testng.Assert.assertEquals;
  * Created by cxu on 2015/9/19.
  */
 public class DeDupTest {
-    private Request rq = new HttpRequest("http://url1.com", HttpRequestMethod.HTTP_DELETE, null);
+    private Request rq = new HttpRequest("http://url1", HttpRequestMethod.HTTP_DELETE, null);
 
     @DataProvider(name="dp")
     public DeDup[][] dataProvider(){
@@ -45,8 +45,8 @@ public class DeDupTest {
 
         //先测试写入原来一样的，返回非空
         Request rq1 = rq;
-        Request rq2 = new HttpRequest("url2", HttpRequestMethod.HTTP_DELETE, null);
-        Request rq3 = new HttpRequest("url3", HttpRequestMethod.HTTP_DELETE, null);
+        Request rq2 = new HttpRequest("http://url2", HttpRequestMethod.HTTP_DELETE, null);
+        Request rq3 = new HttpRequest("http://url3", HttpRequestMethod.HTTP_DELETE, null);
 
         List<Request> req = new ArrayList<Request>();
         req.add(rq1);
@@ -65,7 +65,7 @@ public class DeDupTest {
      * @return
      */
     private DeDup initEhcacheDedup(){
-        TaskConfig taskConfig = new TaskConfig("Task-Id-For-Test", "testTask");
+        TaskConfig taskConfig = new TaskConfig("task_id", "task_name");
         DeDup dp = new EhCacheDedup(taskConfig);
         return dp;
     }
@@ -75,7 +75,7 @@ public class DeDupTest {
      * @return
      */
     private DeDup initMemoryDedup(){
-        TaskConfig taskConfig = new TaskConfig("Task-Id-For-Test", "testTask");
+        TaskConfig taskConfig = new TaskConfig("task_id", "task_name");
         DeDup dp = new MemoryDedup(taskConfig);
         return dp;
     }
@@ -85,7 +85,7 @@ public class DeDupTest {
      * @return
      */
     private DeDup initMongoDedup(){
-        TaskConfig taskConfig = new TaskConfig("Task-Id-For-Test", "testTask");
+        TaskConfig taskConfig = new TaskConfig("task_id", "task_name");
         taskConfig.put(ConfigKeys.MONGODB_HOST, "localhost");
         taskConfig.put(ConfigKeys.MONGODB_PORT, 27017);
         taskConfig.put(ConfigKeys.MONGODB_DEDUP_DB_NAME, "myspider_dedup");
@@ -98,7 +98,7 @@ public class DeDupTest {
      * @return
      */
     private DeDup initRedisDedup(){
-        TaskConfig taskConfig = new TaskConfig("Task-Id-For-Test", "testTask");
+        TaskConfig taskConfig = new TaskConfig("task_id", "task_name");
         taskConfig.put(ConfigKeys.REDIS_DEDUP_SERVER, "localhost");;
         DeDup dp = new RedisDedup(taskConfig);
         return dp;

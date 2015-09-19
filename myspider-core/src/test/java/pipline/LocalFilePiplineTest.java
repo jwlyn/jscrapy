@@ -5,8 +5,6 @@ import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.data.DataItem;
 import com.oxf1.spider.pipline.Pipline;
 import com.oxf1.spider.pipline.impl.LocalFilePipline;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
 import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -27,7 +25,7 @@ public class LocalFilePiplineTest {
 
     @BeforeClass
     public void setup(){
-        this.taskConfig = new TaskConfig("task_id", "test_name");
+        this.taskConfig = new TaskConfig("task_id", "task_name");
     }
 
     @AfterClass
@@ -35,13 +33,6 @@ public class LocalFilePiplineTest {
         /*删除文件*/
         String dataSavePath = taskConfig.loadString(ConfigKeys.RT_LOCAL_FILE_PIPLINE_DATA_FILE);
         FileUtils.forceDelete(new File(dataSavePath));
-
-        /*清空缓存*/
-        CacheManager cacheManager = CacheManager.create();
-        Cache ehCache = cacheManager.getCache(ConfigKeys.MYSPIER_CONFIG_NAME);
-        ehCache.removeAll();
-        cacheManager.clearAll();
-        cacheManager.shutdown();
     }
 
     @Test

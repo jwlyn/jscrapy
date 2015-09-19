@@ -1,9 +1,11 @@
 package com.oxf1.spider;
 
 import com.oxf1.spider.config.ConfigOperator;
-import com.oxf1.spider.config.impl.EhcacheConfigOperator;
+import com.oxf1.spider.config.SysDefaultConfig;
+import com.oxf1.spider.config.impl.YamlConfigOperator;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -40,7 +42,9 @@ public class TaskConfig{
         this.taskName = taskName;
         /*初始化jvm进程id*/
         this.jvmProcessId = ManagementFactory.getRuntimeMXBean().getName();
-        this.cfg = new EhcacheConfigOperator();//默认的
+
+        String taskConfigFile = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR + getTaskFp() + File.separator + "cfg.yaml";
+        this.cfg = new YamlConfigOperator(taskConfigFile);//默认的
         this.taskSharedObject = new ConcurrentHashMap<String, Object>(5);
     }
 

@@ -1,7 +1,6 @@
 package scheduler;
 
 import com.oxf1.spider.TaskConfig;
-import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.exception.MySpiderException;
 import com.oxf1.spider.exception.MySpiderFetalException;
 import com.oxf1.spider.request.HttpRequestMethod;
@@ -9,8 +8,6 @@ import com.oxf1.spider.request.Request;
 import com.oxf1.spider.request.impl.HttpRequest;
 import com.oxf1.spider.scheduler.Scheduler;
 import com.oxf1.spider.scheduler.impl.FileQueueScheduler;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -30,20 +27,12 @@ public class LocalSchedulerTest {
 
     @BeforeClass
     public void setup() throws MySpiderFetalException {
-        taskConfig = new TaskConfig("task_id", "test_name");
+        taskConfig = new TaskConfig("task_id", "task_name");
         sched = new FileQueueScheduler(this.taskConfig);
     }
 
     @AfterClass
     public void tearDown() throws IOException {
-        /*删除文件*///TODO
-        //FileUtils.deleteDirectory(new File(taskConfig.loadString(ConfigKeys.RT_LOCAL_QUEUE_DIR)));
-        /*清空缓存*/
-        CacheManager cacheManager = CacheManager.create();
-        Cache ehCache = cacheManager.getCache(ConfigKeys.MYSPIER_CONFIG_NAME);
-        ehCache.removeAll();
-        cacheManager.clearAll();
-        cacheManager.shutdown();
 
         this.sched.close();
     }

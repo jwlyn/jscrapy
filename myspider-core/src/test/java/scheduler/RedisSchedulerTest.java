@@ -26,7 +26,7 @@ public class RedisSchedulerTest {
      */
     @Test
     public void test() throws MySpiderException {
-        TaskConfig taskConfig = new TaskConfig("tid", "test-task");
+        TaskConfig taskConfig = new TaskConfig("task_id", "task_name");
         taskConfig.put(ConfigKeys.REDIS_DEDUP_SERVER, "localhost");
 
         Scheduler sched = new RedisScheduler(taskConfig);
