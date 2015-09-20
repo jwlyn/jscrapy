@@ -1,6 +1,11 @@
 package com.oxf1.spider.config;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.File;
+import java.lang.management.ManagementFactory;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * 系统常量
@@ -12,6 +17,23 @@ public class SysDefaultConfig {
             + ".myspider"
             + File.separator;
 
+    public static String HOST;//本机的IP
+    public static String JVM_PID = ManagementFactory.getRuntimeMXBean().getName();;//JVM进程号，虚拟化本机任务使用
+
+    static{
+        InetAddress addr = null;
+        try {
+            addr = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            HOST = "?.?.?.?";
+            //TODO log error
+        }
+        if(StringUtils.isBlank(HOST)){
+            HOST = addr.getHostAddress().toString();
+        }
+
+        JVM_PID = "";
+    }
 
 
 }
