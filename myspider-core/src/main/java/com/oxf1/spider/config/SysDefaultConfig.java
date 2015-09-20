@@ -18,7 +18,7 @@ public class SysDefaultConfig {
             + File.separator;
 
     public static String HOST;//本机的IP
-    public static String JVM_PID = ManagementFactory.getRuntimeMXBean().getName();;//JVM进程号，虚拟化本机任务使用
+    public static String VIRTUAL_ID = ManagementFactory.getRuntimeMXBean().getName();;//JVM进程号，虚拟化本机任务使用
 
     static{
         InetAddress addr = null;
@@ -31,8 +31,6 @@ public class SysDefaultConfig {
         if(StringUtils.isBlank(HOST)){
             HOST = addr.getHostAddress().toString();
         }
-
-        JVM_PID = "";
     }
 
 

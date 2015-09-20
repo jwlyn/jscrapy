@@ -89,7 +89,7 @@ public class TaskConfig{
                 .append("@")
                 .append(this.taskId)
                 .append("@")
-                .append(SysDefaultConfig.JVM_PID);//使用jvm进程Id可以在一台机器上模拟分布式
+                .append(SysDefaultConfig.VIRTUAL_ID);//使用jvm进程Id可以在一台机器上模拟分布式
 
         return buf.toString();
     }
