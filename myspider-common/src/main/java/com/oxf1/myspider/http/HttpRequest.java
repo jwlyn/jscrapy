@@ -1,6 +1,7 @@
 package com.oxf1.myspider.http;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,6 +18,7 @@ public class HttpRequest {
     private boolean isAjax = false; //是否是ajax请求
     private String referer;
     private Map<String,String> header = new HashMap<String, String>();
+    private List<Integer> acceptCode;
 
     public String getUrl() {
         return url;
