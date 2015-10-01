@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * Created by cxu on 2015/6/21.
@@ -44,19 +45,20 @@ public class LocalFilePipline extends Pipline {
     }
 
     @Override
-    public void save(DataItem dataItem) {
-        if (dataItem != null) {
-            try{
-                File dataFile = new File(dataFilePath);
-                ObjectMapper mapper = new ObjectMapper();
-                String data = mapper.writeValueAsString(dataItem.getDataItem());
-                synchronized (super.getTaskConfig()){//任务级别的锁，只锁住同一个任务的多个线程
-                    FileUtils.writeStringToFile(dataFile, data+"\n", StandardCharsets.UTF_8.name(), true);
+    public void save(List<DataItem> dataItems) {
+        if (dataItems != null && dataItems.size()>0) {
+            for (DataItem dataItem : dataItems) {
+                try {
+                    File dataFile = new File(dataFilePath);
+                    ObjectMapper mapper = new ObjectMapper();
+                    String data = mapper.writeValueAsString(dataItem.getDataItem());
+                    synchronized (super.getTaskConfig()) {//任务级别的锁，只锁住同一个任务的多个线程
+                        FileUtils.writeStringToFile(dataFile, data + "\n", StandardCharsets.UTF_8.name(), true);
+                    }
+                } catch (IOException e) {
+                    //TODO
+                    e.printStackTrace();
                 }
-            }
-            catch(IOException e){
-                //TODO
-                e.printStackTrace();
             }
         }
     }

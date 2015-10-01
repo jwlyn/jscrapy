@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
@@ -40,9 +41,11 @@ public class LocalFilePiplineTest {
         DataItem dt = new DataItem();
         dt.put("a", "123")
                 .put("b", "456");
+        List<DataItem> dataItems = new ArrayList<>();
+        dataItems.add(dt);
 
         for(int i=0; i<100; i++){
-            pipline.save(dt);
+            pipline.save(dataItems);
         }
 
         Thread.sleep(1000);

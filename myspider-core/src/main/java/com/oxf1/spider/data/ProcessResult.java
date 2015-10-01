@@ -71,4 +71,12 @@ public class ProcessResult {
         }
         return this;
     }
+
+    public List<DataItem> getData() {
+        return data;
+    }
+
+    public List<Request> getLinks() {
+        return links;
+    }
 }

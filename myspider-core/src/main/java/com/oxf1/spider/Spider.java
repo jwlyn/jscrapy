@@ -45,6 +45,7 @@ public class Spider extends MyspiderComponent implements Runnable{
                 requests = scheduler.poll(getTaskConfig().getSchedulerBatchSize());
             } catch (MySpiderException e) {
                 e.printStackTrace();
+                //TODO
             }
 
             for (Request req : requests) {//处理每一个请求
@@ -54,7 +55,20 @@ public class Spider extends MyspiderComponent implements Runnable{
                 }
 
                 ProcessResult result = processor.process(pg);
-                //TODO 处理链接和数据
+                //处理链接
+                List<Request> newLinks = result.getLinks();
+                newLinks = dedup.deDup(newLinks);
+                try {
+                    scheduler.push(newLinks);
+                } catch (MySpiderException e) {
+                    e.printStackTrace();
+                    //TODO
+                }
+
+                //存储数据
+                for (Pipline pipline : piplines) {
+                    pipline.save(result.getData());
+                }
             }
 
         }
