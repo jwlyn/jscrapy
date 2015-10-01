@@ -1,5 +1,6 @@
 package com.oxf1.myspider.http;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,11 +15,15 @@ public class HttpRequest {
     private HashMap<String, String> requestParameters = new HashMap<String, String>();//请求参数
 
     private WatchableSpiderProxy proxy;
-    private String userAgent = "userAgent/github.com/oxf1/myspider";
-    private boolean isAjax = false; //是否是ajax请求
-    private String referer;
     private Map<String,String> header = new HashMap<String, String>();
     private List<Integer> acceptCode;
+
+
+    public HttpRequest() {
+        acceptCode = new ArrayList<Integer>();
+        acceptCode.add(200);
+        header.put(HttpHeaderName.USER_AGENT, "myspider@github");
+    }
 
     public String getUrl() {
         return url;
@@ -53,27 +58,28 @@ public class HttpRequest {
     }
 
     public String getUserAgent() {
-        return userAgent;
+        return header.get(HttpHeaderName.USER_AGENT);
     }
 
     public void setUserAgent(String userAgent) {
-        this.userAgent = userAgent;
-    }
-
-    public boolean isAjax() {
-        return isAjax;
+        header.put(HttpHeaderName.USER_AGENT, userAgent);
     }
 
     public void setIsAjax(boolean isAjax) {
-        this.isAjax = isAjax;
+        if (isAjax) {
+            header.put(HttpHeaderName.AJAX, HttpHeaderValue.XMLHTTP_REQUEST);
+        }
+        else {
+            header.remove(HttpHeaderName.AJAX);
+        }
     }
 
     public String getReferer() {
-        return referer;
+        return header.get(HttpHeaderName.REFERER);
     }
 
     public void setReferer(String referer) {
-        this.referer = referer;
+        header.put(HttpHeaderName.REFERER, referer);
     }
 
     public String getHeader(String name) {
@@ -84,11 +90,32 @@ public class HttpRequest {
         this.header.put(name, value);
     }
 
+    public final Map<String, String> getHeader() {
+        return header;
+    }
+
     public void setCookie(String cookie) {
-        this.header.put("Cookie", cookie);
+        this.header.put(HttpHeaderName.COOKIE, cookie);
     }
 
     public String getCookie() {
-        return this.header.get("Cookie");
+        return this.header.get(HttpHeaderName.COOKIE);
+    }
+
+    public void setAcceptCode(List<Integer> acceptCode) {
+        this.acceptCode = acceptCode;
+    }
+
+    public void addAcceptCode(int httpStatusCode) {
+        acceptCode.add(httpStatusCode);
+    }
+
+    /**
+     * 接受哪些http状态码
+     * @param httpStatusCode
+     * @return
+     */
+    public boolean isAccept(int httpStatusCode) {
+        return this.acceptCode.contains(httpStatusCode);
     }
 }

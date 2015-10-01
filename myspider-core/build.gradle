@@ -10,7 +10,7 @@ dependencies {
     compile "commons-codec:commons-codec:$commonsCodec"
     compile "net.sf.ehcache:ehcache:$ehcache"
     compile "com.leansoft:bigqueue:$bigqueue"
-    compile "us.codecraft:webmagic-core:$webmagic"
+
     compile("us.codecraft:webmagic-core:$webmagic") {
         exclude module: 'commons-io:slf4j-api'
     }

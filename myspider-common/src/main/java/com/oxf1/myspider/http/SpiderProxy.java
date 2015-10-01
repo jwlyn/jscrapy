@@ -9,9 +9,9 @@ public class SpiderProxy {
     private final String user;
     private final String password;
     private final String host;
-    private final String port;
+    private final int port;
 
-    public SpiderProxy(String user, String password, String host, String port) {
+    public SpiderProxy(String user, String password, String host, int port) {
         this.user = StringUtils.isBlank(user) ? "" : user;
         this.password = StringUtils.isBlank(password) ? "" : password;
         this.host = host;
@@ -30,7 +30,7 @@ public class SpiderProxy {
         return host;
     }
 
-    public String getPort() {
+    public int getPort() {
         return port;
     }
 
