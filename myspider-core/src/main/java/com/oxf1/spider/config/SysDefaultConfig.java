@@ -19,6 +19,7 @@ public class SysDefaultConfig {
 
     public static String HOST;//本机的IP
     public static String VIRTUAL_ID = ManagementFactory.getRuntimeMXBean().getName();;//JVM进程号，虚拟化本机任务使用
+    public static int SCHEDULER_BATCH_SIZE = 10;//默认每次从队列里拿出来多少url
 
     static{
         InetAddress addr = null;

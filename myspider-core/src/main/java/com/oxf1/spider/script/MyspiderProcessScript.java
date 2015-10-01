@@ -1,7 +1,7 @@
 package com.oxf1.spider.script;
 
 import com.oxf1.spider.page.Page;
-import com.oxf1.spider.processor.ProcessResult;
+import com.oxf1.spider.data.ProcessResult;
 
 /**
  * 脚本扩展接口

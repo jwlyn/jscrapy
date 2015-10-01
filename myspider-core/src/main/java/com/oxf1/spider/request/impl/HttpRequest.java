@@ -61,7 +61,7 @@ public class HttpRequest extends Request{
 
     @Override
     public String fp() {
-        String s = this.asJson();
+        String s = this.asJson();//这个地方key的值不一定按照顺序 TODO
         return DigestUtils.sha1Hex(s);
     }
 

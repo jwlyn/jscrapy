@@ -49,7 +49,7 @@ public class LocalFilePipline extends Pipline {
             try{
                 File dataFile = new File(dataFilePath);
                 ObjectMapper mapper = new ObjectMapper();
-                String data = mapper.writeValueAsString(dataItem.getData());
+                String data = mapper.writeValueAsString(dataItem.getDataItem());
                 synchronized (super.getTaskConfig()){//任务级别的锁，只锁住同一个任务的多个线程
                     FileUtils.writeStringToFile(dataFile, data+"\n", StandardCharsets.UTF_8.name(), true);
                 }

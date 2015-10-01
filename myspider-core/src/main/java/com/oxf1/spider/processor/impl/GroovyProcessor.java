@@ -3,7 +3,7 @@ package com.oxf1.spider.processor.impl;
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.component.MyspiderComponent;
 import com.oxf1.spider.page.Page;
-import com.oxf1.spider.processor.ProcessResult;
+import com.oxf1.spider.data.ProcessResult;
 import com.oxf1.spider.processor.Processor;
 import groovy.lang.GroovyObject;
 

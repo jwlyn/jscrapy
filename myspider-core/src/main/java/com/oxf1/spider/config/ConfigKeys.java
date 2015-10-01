@@ -26,7 +26,8 @@ public class ConfigKeys {
 
     /*Groovy解析脚本对象*/
     public static final String GROOVY_PROCESSOR_OBJ = "groovy_processor_object";
-    public static final String SCHEDULER = "SCHEDULER";
+    public static final String SCHEDULER = "scheduler";
+    public static final String SCHEDULER_BATCH_SIZE = "scheduler_batch_size";
 
     /*----------------------------------------------------------------------------------
     run time config

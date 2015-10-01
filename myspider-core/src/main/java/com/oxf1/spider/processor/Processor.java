@@ -1,5 +1,6 @@
 package com.oxf1.spider.processor;
 
+import com.oxf1.spider.data.ProcessResult;
 import com.oxf1.spider.page.Page;
 
 /**

@@ -12,7 +12,6 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
@@ -38,15 +37,9 @@ public class LocalFilePiplineTest {
     @Test
     public void testSingleThread() throws IOException, InterruptedException {
         Pipline pipline = new LocalFilePipline(this.taskConfig);
-        DataItem dt = new DataItem() {
-            @Override
-            public List<String> getData() {
-                List<String> dt = new ArrayList<String>();
-                dt.add("123");
-                dt.add("345");
-                return dt;
-            }
-        };
+        DataItem dt = new DataItem();
+        dt.put("a", "123")
+                .put("b", "456");
 
         for(int i=0; i<100; i++){
             pipline.save(dt);

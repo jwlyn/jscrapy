@@ -7,7 +7,7 @@ import com.oxf1.spider.downloader.Downloader;
 import com.oxf1.spider.exception.MySpiderException;
 import com.oxf1.spider.page.Page;
 import com.oxf1.spider.pipline.Pipline;
-import com.oxf1.spider.processor.ProcessResult;
+import com.oxf1.spider.data.ProcessResult;
 import com.oxf1.spider.processor.Processor;
 import com.oxf1.spider.request.Request;
 import com.oxf1.spider.scheduler.Scheduler;
