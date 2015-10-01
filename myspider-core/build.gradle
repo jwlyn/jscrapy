@@ -19,4 +19,5 @@ dependencies {
     compile "org.mongodb:mongo-java-driver:$mongodbDriver"
     compile "gaillard:mongo-queue-java:$mongodbQueue"
     compile "org.yaml:snakeyaml:$snakyaml"
+    compile "org.codehaus.groovy:groovy-all:$groovy"
 }
