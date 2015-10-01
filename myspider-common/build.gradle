@@ -6,4 +6,5 @@ dependencies {
     testCompile "junit:junit:$junit"
     compile "commons-io:commons-io:$commonsIo"
     compile "org.apache.commons:commons-lang3:$commonsLang3"
+    compile("us.codecraft:webmagic-core:$webmagic")
 }
