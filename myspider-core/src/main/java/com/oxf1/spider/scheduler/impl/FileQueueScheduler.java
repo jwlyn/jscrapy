@@ -31,7 +31,7 @@ public class FileQueueScheduler extends Scheduler {
     public FileQueueScheduler(TaskConfig taskConfig) throws MySpiderFetalException {
         super(taskConfig);
 
-        String spiderWorkDir = taskConfig.loadString(ConfigKeys.SPIDER_WORK_DIR);
+        String spiderWorkDir = taskConfig.getTaskWorkDir();
         if(StringUtils.isBlank(spiderWorkDir)){
             spiderWorkDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
         }

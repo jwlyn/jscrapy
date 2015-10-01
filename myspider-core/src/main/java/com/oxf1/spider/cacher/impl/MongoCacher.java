@@ -34,7 +34,9 @@ public class MongoCacher  extends Cacher {
         query.append(DB_PRIMARY_KEY, request.fp());
         BasicDBObject obj = (BasicDBObject) collection.findOne(query);
         if(obj!=null){
-            return new Page(obj.getString(DB_CACHE_FIELD_NAME));
+            Page pg = new Page(obj.getString(DB_CACHE_FIELD_NAME));
+            pg.setIsFromCache(true);
+            return pg;
         }
 
         return null;

@@ -28,7 +28,7 @@ public class LocalFilePipline extends Pipline {
     public LocalFilePipline(TaskConfig taskConfig){
 
         super(taskConfig);
-        String spiderWorkDir = taskConfig.loadString(ConfigKeys.SPIDER_WORK_DIR);
+        String spiderWorkDir = taskConfig.getTaskWorkDir();
         if(StringUtils.isBlank(spiderWorkDir)){
             spiderWorkDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
         }

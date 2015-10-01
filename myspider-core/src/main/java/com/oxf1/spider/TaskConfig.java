@@ -1,8 +1,11 @@
 package com.oxf1.spider;
 
+import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.config.ConfigOperator;
 import com.oxf1.spider.config.SysDefaultConfig;
 import com.oxf1.spider.config.impl.YamlConfigOperator;
+import com.oxf1.spider.scheduler.Scheduler;
+import groovy.lang.GroovyObject;
 
 import java.io.File;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,6 +41,22 @@ public class TaskConfig{
         return this.taskName;
     }
 
+    public int getSchedulerBatchSize() {
+        return 10;//TODO
+    }
+
+    /**
+     * 工作目录，放配置，缓存等的目录位置
+     * @return
+     */
+    public String getTaskWorkDir() {
+        return loadString(ConfigKeys.SPIDER_WORK_DIR);
+    }
+
+    public String getTaskStatus() {
+        return loadString(ConfigKeys.TASK_STATUS);
+    }
+
     public String loadString(String key) {
         Object value = this.cfg.loadValue(key);
         if(value!=null){
@@ -66,6 +85,14 @@ public class TaskConfig{
      */
     public void put(String key, Object value) {
         cfg.put(key, value);
+    }
+
+    public GroovyObject getGroovyProcessor() {
+        return (GroovyObject)this.getTaskSharedObject(ConfigKeys.GROOVY_PROCESSOR_OBJ);
+    }
+
+    public Scheduler getScheduler() {
+        return (Scheduler)this.getTaskSharedObject(ConfigKeys.SCHEDULER);
     }
 
     public void addTaskSharedObject(String key, Object obj){

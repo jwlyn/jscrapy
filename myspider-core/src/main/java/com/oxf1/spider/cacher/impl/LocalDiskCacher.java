@@ -26,7 +26,7 @@ public class LocalDiskCacher extends Cacher {
      */
     public LocalDiskCacher(TaskConfig taskConfig) {
         super(taskConfig);
-        String spiderWorkDir = taskConfig.loadString(ConfigKeys.SPIDER_WORK_DIR);
+        String spiderWorkDir = taskConfig.getTaskWorkDir();
         if(StringUtils.isBlank(spiderWorkDir)){
             spiderWorkDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
         }
@@ -52,6 +52,7 @@ public class LocalDiskCacher extends Cacher {
                 String pageContent = FileUtils.readFileToString(new File(file));
                 page = new Page(pageContent);
                 page.setRequest(request);
+                page.setIsFromCache(true);
                 //TODO log
             } catch (IOException e) {
                 e.printStackTrace();

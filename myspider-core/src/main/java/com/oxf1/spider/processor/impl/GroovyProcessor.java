@@ -2,7 +2,6 @@ package com.oxf1.spider.processor.impl;
 
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.component.MyspiderComponent;
-import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.page.Page;
 import com.oxf1.spider.processor.ProcessResult;
 import com.oxf1.spider.processor.Processor;
@@ -19,7 +18,7 @@ public class GroovyProcessor extends MyspiderComponent implements Processor  {
 
     @Override
     public ProcessResult process(Page page) {
-        GroovyObject processor = (GroovyObject)getTaskConfig().getTaskSharedObject(ConfigKeys.GROOVY_PROCESSOR_OBJ);
+        GroovyObject processor = getTaskConfig().getGroovyProcessor();
         ProcessResult result = (ProcessResult)processor.invokeMethod("process", page);
 
         return result;

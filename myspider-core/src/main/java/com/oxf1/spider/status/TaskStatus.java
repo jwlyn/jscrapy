@@ -6,6 +6,10 @@ import java.util.concurrent.atomic.AtomicLong;
  * Created by cxu on 2015/9/30.
  */
 public class TaskStatus {
+    public enum Status{
+        RUN, STOP, CANCEL
+    }
+
 
     private AtomicLong succUrl = new AtomicLong(0);
     private AtomicLong failedUrl = new AtomicLong(0);

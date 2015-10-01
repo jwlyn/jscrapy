@@ -21,8 +21,12 @@ public class ConfigKeys {
     public static final String MEM_DEDUP_SET = "MEM_DEDUP_SET";
     public static final String MEM_SCHEDULER_QUEUE = "MEM_SCHEDULER_QUEUE";
 
+    /*任务当时应该处于的状态：运行、暂停(保存队列)、结束(需要清空队列)*/
+    public static final String TASK_STATUS = "task_status";
+
     /*Groovy解析脚本对象*/
     public static final String GROOVY_PROCESSOR_OBJ = "groovy_processor_object";
+    public static final String SCHEDULER = "SCHEDULER";
 
     /*----------------------------------------------------------------------------------
     run time config

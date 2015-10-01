@@ -7,8 +7,17 @@ import com.oxf1.spider.request.Request;
  */
 public class Page {
 
+    private boolean isFromCache;
     private Request request;
     private String rawText;
+
+    public boolean isFromCache() {
+        return isFromCache;
+    }
+
+    public void setIsFromCache(boolean isFromCache) {
+        this.isFromCache = isFromCache;
+    }
 
     public Page(String rawText){
         this.rawText = rawText;
