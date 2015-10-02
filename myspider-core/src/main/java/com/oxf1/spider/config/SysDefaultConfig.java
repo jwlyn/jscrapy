@@ -35,6 +35,4 @@ public class SysDefaultConfig {
             HOST = addr.getHostAddress().toString();
         }
     }
-
-
 }

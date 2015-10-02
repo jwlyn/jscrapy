@@ -33,14 +33,17 @@ public class TaskConfig{
         String taskConfigFile = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR + getTaskFp() + File.separator + "cfg.yaml";
         this.cfg = new YamlConfigOperator(taskConfigFile);//默认的
         this.taskSharedObject = new ConcurrentHashMap<String, Object>(5);
+
+        cfg.put(ConfigKeys.TASK_ID, taskId);
+        cfg.put(ConfigKeys.TASK_NAME, taskName);
     }
 
     public String getTaskId() {
-        return this.taskId;
+        return loadString(ConfigKeys.TASK_ID);
     }
 
-    public String getTaskName(){
-        return this.taskName;
+    public String getTaskName() {
+        return loadString(ConfigKeys.TASK_NAME);
     }
 
     /**
@@ -125,6 +128,7 @@ public class TaskConfig{
         }
         return waitMs;
     }
+
     public String loadString(String key) {
         Object value = this.cfg.loadValue(key);
         if(value!=null){

@@ -52,7 +52,9 @@ public class RedisDedup extends DeDup {
      * @return
      */
     private String getDedupSetKey(){
-        return DEDUP_SET_PREFIX + getTaskConfig().getTaskId();
+        String dedupSetKey = DEDUP_SET_PREFIX + getTaskConfig().getTaskId();
+
+        return dedupSetKey;
     }
 
 }
