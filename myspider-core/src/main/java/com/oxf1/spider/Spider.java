@@ -31,7 +31,7 @@ public class Spider extends MyspiderComponent implements Runnable{
     public Spider(TaskConfig taskConfig){
         super(taskConfig);
         piplines = new ArrayList<>(5);
-        scheduler = taskConfig.getScheduler();
+        scheduler = taskConfig.getScheduler();//共用scheduler减少竞争和去重误差
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Spider extends MyspiderComponent implements Runnable{
                 requests = scheduler.poll(getTaskConfig().getSchedulerBatchSize());
             } catch (MySpiderException e) {
                 e.printStackTrace();
-                //TODO
+                //TODO log it
             }
 
             for (Request req : requests) {//处理每一个请求
@@ -62,7 +62,7 @@ public class Spider extends MyspiderComponent implements Runnable{
                     scheduler.push(newLinks);
                 } catch (MySpiderException e) {
                     e.printStackTrace();
-                    //TODO
+                    //TODO log
                 }
 
                 //存储数据
@@ -70,24 +70,42 @@ public class Spider extends MyspiderComponent implements Runnable{
                     pipline.save(result.getData());
                 }
             }
+            if (requests.size() == 0) {//睡眠一段等待命令或者新的url到来
+                int sleepTimeMs = getTaskConfig().getWaitUrlSleepTimeMs();
+                //TODO
+            }
 
         }
 
         String taskStatus = getTaskConfig().getTaskStatus();
         if(TaskStatus.Status.CANCEL.name().equalsIgnoreCase(taskStatus)){
-            //TODO
+            //这种情况下，任务取消，删除：dedup队列，网页缓存，存储的数据，请求队列
+            //TODO log it
+            this.cleanTaskEnv();
         }
-        else if(TaskStatus.Status.STOP.name().equalsIgnoreCase(taskStatus)){
+        else if(TaskStatus.Status.PAUSE.name().equalsIgnoreCase(taskStatus)){
             //TODO
         }
         else if(!TaskStatus.Status.RUN.name().equalsIgnoreCase(taskStatus)){
-            //TODO
+            //TODO log it
         }
     }
 
     @Override
     public void close() {
 
+    }
+
+    /**
+     * 情况任务占用的资源和产生的数据
+     */
+    private void cleanTaskEnv() {
+        dedup.close();
+        cacher.close();
+        for (Pipline p : piplines) {
+            p.close();
+        }
+        scheduler.close();
     }
 
     public void setDedup(DeDup dedup) {

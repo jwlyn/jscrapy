@@ -65,6 +65,12 @@ public class LocalFilePipline extends Pipline {
 
     @Override
     public void close() {
-
+        String baseDir = FilenameUtils.getFullPath(dataFilePath);
+        try {
+            FileUtils.deleteDirectory(new File(baseDir));
+        } catch (IOException e) {
+            e.printStackTrace();
+            //TODO log it
+        }
     }
 }

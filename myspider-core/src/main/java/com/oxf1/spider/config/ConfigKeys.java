@@ -23,11 +23,21 @@ public class ConfigKeys {
 
     /*任务当时应该处于的状态：运行、暂停(保存队列)、结束(需要清空队列)*/
     public static final String TASK_STATUS = "task_status";
+    public static final String WAIT_URL_SLEEP_TIME_MS = "wait_url_sleep_time_ms";
 
     /*Groovy解析脚本对象*/
     public static final String GROOVY_PROCESSOR_OBJ = "groovy_processor_object";
     public static final String SCHEDULER = "scheduler";
     public static final String SCHEDULER_BATCH_SIZE = "scheduler_batch_size";
+    public static final String THREAD_COUNT = "task_thread_count";
+
+    /*模块类名*/
+    public static final String SCHEDULER_CLASS_NAME = "scheduler_class_name";
+    public static final String DEDUP_CLASS_NAME = "dedup_class_name";
+    public static final String DOWNLOADER_CLASS_NAME = "downloader_class_name";
+    public static final String PIPLINE_CLASS_NAME = "pipline_class_name";
+    public static final String PROCESSOR_CLASS_NAME = "processor_class_name";
+    public static final String CACHER_CLASS_NAME = "cacher_class_name";
 
     /*----------------------------------------------------------------------------------
     run time config

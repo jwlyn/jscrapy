@@ -5,7 +5,9 @@ import com.oxf1.spider.config.ConfigOperator;
 import com.oxf1.spider.config.SysDefaultConfig;
 import com.oxf1.spider.config.impl.YamlConfigOperator;
 import com.oxf1.spider.scheduler.Scheduler;
+import com.oxf1.spider.status.TaskStatus;
 import groovy.lang.GroovyObject;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.concurrent.ConcurrentHashMap;
@@ -41,8 +43,55 @@ public class TaskConfig{
         return this.taskName;
     }
 
+    /**
+     * scheduler每次从队列里取出的请求数目, 默认1个
+     * @return
+     */
     public int getSchedulerBatchSize() {
-        return 10;//TODO
+        Integer size =  loadInt(ConfigKeys.SCHEDULER_BATCH_SIZE);
+        if (size == null) {
+            size = SysDefaultConfig.SCHEDULER_BATCH_SIZE;
+        }
+        return size;
+    }
+
+    /**
+     * 每个任务开启的线程数目,默认是1个
+     * @return
+     */
+    public int getThreadCount() {
+        Integer threadCount = loadInt(ConfigKeys.THREAD_COUNT);
+        if (threadCount == null) {
+            threadCount = SysDefaultConfig.THREAD_COUNT;
+        }
+        return threadCount;
+    }
+
+    /**
+     * 爬虫模块的class名字
+     */
+    public String getSchedulerClassName() {
+        return loadString(ConfigKeys.SCHEDULER_CLASS_NAME);
+    }
+
+    public String getDedupClassName() {
+        return loadString(ConfigKeys.DEDUP_CLASS_NAME);
+    }
+
+    public String getDownloaderClassName() {
+        return loadString(ConfigKeys.DOWNLOADER_CLASS_NAME);
+    }
+
+    public String getPiplineClassName() {
+        return loadString(ConfigKeys.PIPLINE_CLASS_NAME);
+    }
+
+    public String getProcessorClassName() {
+        return loadString(ConfigKeys.PROCESSOR_CLASS_NAME);
+    }
+
+    public String getCacherClassName() {
+        return loadString(ConfigKeys.CACHER_CLASS_NAME);
     }
 
     /**
@@ -50,13 +99,32 @@ public class TaskConfig{
      * @return
      */
     public String getTaskWorkDir() {
-        return loadString(ConfigKeys.SPIDER_WORK_DIR);
+        String workDir = loadString(ConfigKeys.SPIDER_WORK_DIR);
+        if (StringUtils.isBlank(workDir)) {
+            workDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
+        }
+        return workDir;
     }
 
     public String getTaskStatus() {
         return loadString(ConfigKeys.TASK_STATUS);
     }
 
+    public void setTaskStatus(TaskStatus.Status status) {
+        put(ConfigKeys.TASK_STATUS, status.name());
+    }
+
+    /**
+     * 队列空的时候，睡眠等待时间
+     * @return
+     */
+    public int getWaitUrlSleepTimeMs() {
+        Integer waitMs = loadInt(ConfigKeys.WAIT_URL_SLEEP_TIME_MS);
+        if (waitMs == null) {
+            waitMs = SysDefaultConfig.WAIT_URL_SLEEP_TIME_MS;
+        }
+        return waitMs;
+    }
     public String loadString(String key) {
         Object value = this.cfg.loadValue(key);
         if(value!=null){
@@ -93,6 +161,10 @@ public class TaskConfig{
 
     public Scheduler getScheduler() {
         return (Scheduler)this.getTaskSharedObject(ConfigKeys.SCHEDULER);
+    }
+
+    public void setScheduler(Scheduler scheduler) {
+        taskSharedObject.put(ConfigKeys.SCHEDULER, scheduler);
     }
 
     public void addTaskSharedObject(String key, Object obj){

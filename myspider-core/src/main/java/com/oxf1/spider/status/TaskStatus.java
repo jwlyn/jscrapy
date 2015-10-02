@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class TaskStatus {
     public enum Status{
-        RUN, STOP, CANCEL
+        RUN, PAUSE, CANCEL
     }
 
 

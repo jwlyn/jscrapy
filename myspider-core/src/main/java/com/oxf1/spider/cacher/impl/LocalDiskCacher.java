@@ -80,7 +80,12 @@ public class LocalDiskCacher extends Cacher {
 
     @Override
     public void close() {
-
+        try {
+            FileUtils.deleteDirectory(new File(this.cacheDir));
+        } catch (IOException e) {
+            e.printStackTrace();
+            //TODO log it
+        }
     }
 
     /**

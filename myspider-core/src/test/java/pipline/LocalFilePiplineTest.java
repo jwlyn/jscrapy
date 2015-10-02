@@ -31,8 +31,8 @@ public class LocalFilePiplineTest {
     @AfterClass
     public void tearDown() throws IOException {
         /*删除文件*/
-        String dataSavePath = taskConfig.loadString(ConfigKeys.RT_LOCAL_FILE_PIPLINE_DATA_FILE);
-        FileUtils.forceDelete(new File(dataSavePath));
+        String tempDir = taskConfig.getTaskWorkDir() + taskConfig.getTaskFp();
+        FileUtils.deleteDirectory(new File(tempDir));
     }
 
     @Test
