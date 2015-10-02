@@ -110,6 +110,18 @@ public class TaskConfig{
         return loadString(ConfigKeys.CACHER_CLASS_NAME);
     }
 
+    public String getVirtualId() {
+        String virtualId = null;
+        if (this.cfg != null) {//说明：在使用taskid+taskName构造TaskConfig时，cfg还是null,但是又必须确定yaml配置的位置
+            virtualId = loadString(ConfigKeys.VIRTUAL_ID);
+        }
+
+        if (StringUtils.isBlank(virtualId)) {
+            virtualId = SysDefaultConfig.VIRTUAL_ID;
+        }
+        return virtualId;
+    }
+
     /**
      * 工作目录，放配置，缓存等的目录位置
      * @return
@@ -205,7 +217,7 @@ public class TaskConfig{
                 .append("@")
                 .append(this.taskId)
                 .append("@")
-                .append(SysDefaultConfig.VIRTUAL_ID);//使用jvm进程Id可以在一台机器上模拟分布式
+                .append(getVirtualId());//使用jvm进程Id可以在一台机器上模拟分布式
 
         return buf.toString();
     }

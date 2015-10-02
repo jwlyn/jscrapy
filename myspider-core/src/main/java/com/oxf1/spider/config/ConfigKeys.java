@@ -7,6 +7,7 @@ public class ConfigKeys {
 
     public static final String TASK_ID = "task_id";
     public static final String TASK_NAME = "task_name";
+    public static final String VIRTUAL_ID = "virtual_id";
 
     //保存本地任务的配置，缓存，数据等的总目录地址
     public static String SPIDER_WORK_DIR = "SPIDER_WORK_DIR";
