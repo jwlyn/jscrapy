@@ -31,7 +31,6 @@ public class TaskManager {
             tasks.put(taskId, task);
             task.run();
         }
-
     }
 
     public void cancelTask(TaskConfig taskConfig) {

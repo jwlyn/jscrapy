@@ -8,7 +8,7 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.LinkedHashMap;
 
 /**
  * 将配置文件保存在本地磁盘
@@ -17,10 +17,19 @@ import java.util.concurrent.ConcurrentHashMap;
 public class YamlConfigOperator  implements ConfigOperator {
 
     String persistencePath;//持久化文件的磁盘地址
-    private ConcurrentHashMap<String, Object> configMap = new ConcurrentHashMap<String, Object>(20);
+    private LinkedHashMap<String, Object> configMap = new LinkedHashMap<String, Object>(20);
 
     public YamlConfigOperator(String persistencePath){
         this.persistencePath = persistencePath;
+    }
+
+    /**
+     * 重新从文件里load参数
+     */
+    public void reload() throws IOException {
+        Yaml yaml = new Yaml();
+        String yamlStr = FileUtils.readFileToString(new File(this.persistencePath));
+        configMap = (LinkedHashMap<String, Object>)yaml.loadAs(yamlStr, LinkedHashMap.class);
     }
 
     @Override
@@ -49,5 +58,19 @@ public class YamlConfigOperator  implements ConfigOperator {
             e.printStackTrace();
             //TODO
         }
+    }
+
+/*    public static void main(String[]arg) throws IOException {
+        String cfg = "C:\\Users\\cxu\\.myspider\\10.15.86.67@task_name@task_id@8384@cxu-PC\\cfg.yaml";
+        YamlConfigOperator opr = new YamlConfigOperator(cfg);
+        opr.reload();
+        System.out.println(opr);
+    }*/
+
+    @Override
+    public String toString() {
+        return "YamlConfigOperator{" +
+                "configMap=" + configMap +
+                '}';
     }
 }

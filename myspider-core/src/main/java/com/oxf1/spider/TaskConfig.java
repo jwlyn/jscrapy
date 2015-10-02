@@ -10,6 +10,7 @@ import groovy.lang.GroovyObject;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -25,7 +26,6 @@ public class TaskConfig{
      */
     private ConcurrentHashMap<String, Object> taskSharedObject;
 
-
     public TaskConfig(String taskId, String taskName){
         this.taskId = taskId;
         this.taskName = taskName;
@@ -36,6 +36,19 @@ public class TaskConfig{
 
         cfg.put(ConfigKeys.TASK_ID, taskId);
         cfg.put(ConfigKeys.TASK_NAME, taskName);
+    }
+
+    /**
+     * 从yaml文件load一个任务
+     * @param taskConfigFile
+     */
+    public TaskConfig(String taskConfigFile) throws IOException {
+        this.cfg = new YamlConfigOperator(taskConfigFile);
+        this.cfg.reload();
+        this.taskSharedObject = new ConcurrentHashMap<String, Object>(5);
+
+        taskId = loadString(ConfigKeys.TASK_ID);
+        taskName = loadString(ConfigKeys.TASK_NAME);
     }
 
     public String getTaskId() {
