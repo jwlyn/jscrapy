@@ -9,6 +9,8 @@ import com.oxf1.spider.pipline.Pipline;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +21,7 @@ import java.util.List;
  * Created by cxu on 2015/6/21.
  */
 public class LocalFilePipline extends Pipline {
-
+    final static Logger logger = LoggerFactory.getLogger(LocalFilePipline.class);
     private String dataFilePath;//物理的数据文件位置path+file
 
     /**
@@ -39,8 +41,9 @@ public class LocalFilePipline extends Pipline {
         try {
             FileUtils.forceMkdir(new File(baseDir));
         } catch (IOException e) {
-            //TODO
+            //TODO exp
             e.printStackTrace();
+            logger.error("创建目录{}失败 {}", baseDir, e);
         }
     }
 
@@ -58,6 +61,7 @@ public class LocalFilePipline extends Pipline {
                 } catch (IOException e) {
                     //TODO
                     e.printStackTrace();
+                    logger.error("写文件{}失败{}", dataFilePath, e);
                 }
             }
         }
@@ -71,6 +75,7 @@ public class LocalFilePipline extends Pipline {
         } catch (IOException e) {
             e.printStackTrace();
             //TODO log it
+            logger.error("删除目录{}时失败{}", baseDir, e);
         }
     }
 }

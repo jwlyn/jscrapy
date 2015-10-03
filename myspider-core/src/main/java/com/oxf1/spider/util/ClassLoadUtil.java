@@ -7,6 +7,8 @@ import com.oxf1.spider.downloader.Downloader;
 import com.oxf1.spider.pipline.Pipline;
 import com.oxf1.spider.processor.Processor;
 import com.oxf1.spider.scheduler.Scheduler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 
@@ -14,6 +16,7 @@ import java.lang.reflect.Constructor;
  * Created by cxu on 2015/10/2.
  */
 public class ClassLoadUtil {
+    final static Logger logger = LoggerFactory.getLogger(ClassLoadUtil.class);
 
     public static Scheduler loadScheduler(String className, TaskConfig arg) {
         Object o = loadClass(className, arg);
@@ -82,7 +85,7 @@ public class ClassLoadUtil {
             Constructor constructor = c.getConstructor(new Class[]{TaskConfig.class});
             o = constructor.newInstance(arg);
         } catch (Exception e) {
-            //TODO log it
+            logger.error("构造{}时出错{}", className, e);
         }
 
         return o;

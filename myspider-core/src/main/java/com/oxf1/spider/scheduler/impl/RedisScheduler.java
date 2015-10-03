@@ -5,6 +5,8 @@ import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.request.Request;
 import com.oxf1.spider.request.impl.HttpRequest;
 import com.oxf1.spider.scheduler.Scheduler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -17,6 +19,7 @@ import java.util.List;
  * Created by cxu on 2015/6/21.
  */
 public class RedisScheduler  extends Scheduler {
+    final static Logger logger = LoggerFactory.getLogger(RedisScheduler.class);
     private JedisPool pool;
 
     public RedisScheduler(TaskConfig taskConfig) {
@@ -50,7 +53,7 @@ public class RedisScheduler  extends Scheduler {
         } catch (IOException e) {
             e.printStackTrace();
             //TODO
-
+            logger.error("redis取url出错了{}", e);
         }
         return req;
     }

@@ -6,11 +6,15 @@ import com.oxf1.spider.cacher.Cacher;
 import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.page.Page;
 import com.oxf1.spider.request.Request;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by cxu on 2015/7/12.
  */
 public class MongoCacher  extends Cacher {
+    final static Logger logger = LoggerFactory.getLogger(MongoCacher.class);
+
     private Mongo mongo = null;
     protected DB db = null;
     protected DBCollection collection = null;

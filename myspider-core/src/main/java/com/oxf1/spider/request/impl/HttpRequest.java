@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -13,7 +15,7 @@ import java.util.Map;
  * Created by cxu on 2014/11/21.
  */
 public class HttpRequest extends Request{
-
+    final static Logger logger = LoggerFactory.getLogger(HttpRequest.class);
     private String url;//请求的url
     private HttpRequestMethod httpMethod;//请求的http方法，GET|POST等
     private Map<String, String> parameters;//如果是post请求，这里存放请求参数
@@ -54,6 +56,7 @@ public class HttpRequest extends Request{
             return mapper.writeValueAsString(this);
         } catch (JsonProcessingException e) {
             e.printStackTrace();//TODO
+            logger.error("httpRequest ->json error {}", e);
         }
 
         return null;

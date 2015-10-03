@@ -13,8 +13,7 @@ public class ConfigKeys {
     public static String SPIDER_WORK_DIR = "spider_work_dir";
     public static final String SCHEDULER_BATCH_SIZE = "scheduler_batch_size";
     public static final String THREAD_COUNT = "task_thread_count";
-    //GROOVY_SCRIPT_CODE|GROOVY_FILE必须有一个
-    public static final String GROOVY_SCRIPT_CODE = "groovy_script_code";
+    //GROOVY_FILE必须有
     public static final String GROOVY_FILE = "groovy_file";
 
     /*任务当时应该处于的状态：运行、暂停(保存队列)、结束(需要清空队列)*/

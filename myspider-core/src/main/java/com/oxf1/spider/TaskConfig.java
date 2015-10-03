@@ -12,6 +12,8 @@ import groovy.lang.Script;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by cxu on 2015/6/21.
  */
 public class TaskConfig {
-
+    final static Logger logger = LoggerFactory.getLogger(TaskConfig.class);
     private final String taskId;
     private final String taskName;
     private final ConfigOperator cfg;
@@ -44,39 +46,37 @@ public class TaskConfig {
         taskName = loadString(ConfigKeys.TASK_NAME);
         initTaskStatusObject();
 
-        String groovyCode = loadString(ConfigKeys.GROOVY_SCRIPT_CODE);
-        if (StringUtils.isNotBlank(groovyCode)) {
-            setGroovyScript(groovyCode);
-        } else {
-            String groovyFile = loadString(ConfigKeys.GROOVY_FILE);
-            if (groovyFile != null) {
-                File f = new File(groovyFile);
-                if (f.exists() && !f.isDirectory()) {//绝对路径
+        String groovyCode = null;
+        String groovyFile = loadString(ConfigKeys.GROOVY_FILE);
+        if (groovyFile != null) {
+            File f = new File(groovyFile);
+            if (f.exists() && !f.isDirectory()) {//绝对路径
+                groovyCode = FileUtils.readFileToString(f);
+            } else {//相对路径？
+                String path = FilenameUtils.getFullPath(taskConfigFile);
+                path = path + groovyFile;
+                f = new File(path);
+                if (f.exists() && !f.isDirectory()) {
                     groovyCode = FileUtils.readFileToString(f);
-                } else {//相对路径？
-                    String path = FilenameUtils.getFullPath(taskConfigFile);
-                    path = path + groovyFile;
-                    f = new File(path);
-                    if (f.exists() && !f.isDirectory()) {
-                        groovyCode = FileUtils.readFileToString(f);
-                    }
                 }
-                if (StringUtils.isNotBlank(groovyCode)) {
-                    setGroovyScript(groovyCode);
-                } else {
-                    //TODO log it throw exception
-                }
-            } else {
-                //TODO log throw exception
             }
+            if (StringUtils.isNotBlank(groovyCode)) {
+                setGroovyScript(groovyCode);
+            } else {
+                logger.error("groovy file {} is empty", groovyFile);
+            }
+        } else {
+            logger.error("groovy file {} not exists", groovyFile);
         }
+
     }
 
     public void setGroovyScript(String groovyCode) {
-        //TODO 代码加载失败
         if (StringUtils.isNotBlank(groovyCode)) {
             GroovyObject o = instanceClass(groovyCode);
             taskSharedObject.put(ConfigKeys.RT_GROOVY_SCRIPT_OBJECT, o);
+        } else {
+            logger.error("groovyCode is empty!");
         }
 
     }
@@ -195,13 +195,14 @@ public class TaskConfig {
 
     /**
      * 检查某一个key对应的值是不是存在的
+     *
      * @param key
      * @return
      */
     public boolean checkValueExists(String key) {
         Object value1 = this.cfg.loadValue(key);
         Object value2 = getTaskSharedObject(key);
-        return (value1!=null || value2!=null);
+        return (value1 != null || value2 != null);
     }
 
     /**
@@ -234,6 +235,7 @@ public class TaskConfig {
 
     /**
      * 每个任务的多个线程共用一个scheduler对象。防止竞争和去重不干净问题。
+     *
      * @return
      */
     public Scheduler getSchedulerObject() {
@@ -242,6 +244,7 @@ public class TaskConfig {
 
     /**
      * 由Task初始化时调用,之后每个spider对象都共用这个Scheduler对象
+     *
      * @param scheduler
      */
     public void setSchedulerObject(Scheduler scheduler) {
@@ -297,16 +300,18 @@ public class TaskConfig {
         try {
             klass = new GroovyClassLoader().parseClass(scriptCode);
         } catch (Exception e) {
-            //TODO log it
+            logger.error("groovyCode编译异常{}", e);
+
         }
 
         try {
             if (klass == null) {
                 throw new Exception("ERROR ## 脚本加载异常.");
+            } else {
+                parser = (GroovyObject) klass.newInstance();
             }
-            parser = (GroovyObject) klass.newInstance();
-        } catch (Exception e) {
-            //TODO log it
+        } catch (Exception e) {//经过校验之后，这里是很可能不发生的
+            logger.error("groovy脚本实例化异常{}", e);
         }
 
         return parser;

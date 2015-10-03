@@ -1,5 +1,8 @@
 package com.oxf1.spider;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -8,6 +11,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by cxu on 2015/6/20.
  */
 public class TaskManager {
+    final static Logger logger = LoggerFactory.getLogger(Application.class);
+
     private static TaskManager TASK_MANAGER = new TaskManager();
 
     private Map<String, Task> tasks;
@@ -20,11 +25,11 @@ public class TaskManager {
         return TASK_MANAGER;
     }
 
-    public void startTask(TaskConfig taskConfig) {
+    public void runTask(TaskConfig taskConfig) {
         String taskId = taskConfig.getTaskId();
         Task task = tasks.get(taskId);
         if (task != null) {
-            //TODO log
+            logger.warn("task {} 已经存在，不能再次调度启动", task);
         }
         else {
             task = new Task(taskConfig);
@@ -37,7 +42,7 @@ public class TaskManager {
         String taskId = taskConfig.getTaskId();
         Task task = tasks.get(taskId);
         if (task == null) {
-            //TODO log
+            logger.warn("task {} 不存在，不能取消", task);
         }
         else {
             task.cancel();
@@ -49,7 +54,7 @@ public class TaskManager {
         String taskId = taskConfig.getTaskId();
         Task task = tasks.get(taskId);
         if (task == null) {
-            //TODO log
+            logger.warn("task {} 不存在，不能暂停", task);
         }
         else {
             task.pause();

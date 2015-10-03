@@ -9,6 +9,8 @@ import com.oxf1.spider.processor.Processor;
 import com.oxf1.spider.scheduler.Scheduler;
 import com.oxf1.spider.status.TaskStatus;
 import com.oxf1.spider.util.ClassLoadUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,6 +20,7 @@ import java.util.concurrent.Executors;
  * Created by cxu on 2015/6/20.
  */
 public class Task extends MyspiderComponent {
+    final static Logger logger = LoggerFactory.getLogger(Task.class);
     private ExecutorService threads;
 
     public Task(TaskConfig taskConfig) {
@@ -74,5 +77,16 @@ public class Task extends MyspiderComponent {
     @Override
     public void close() {
 
+    }
+
+    @Override
+    public String toString() {
+        TaskConfig cfg = getTaskConfig();
+        String taskName = cfg.getTaskName();
+        String taskFp = cfg.getTaskFp();
+        return "Task{" +
+                "tasiName=" + taskName +
+                "taskFp=" + taskFp +
+                '}';
     }
 }

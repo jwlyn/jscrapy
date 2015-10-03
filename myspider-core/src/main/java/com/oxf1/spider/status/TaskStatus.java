@@ -55,4 +55,15 @@ public class TaskStatus {
     public void addDataItemCount(long n) {
         this.dataItemCount.addAndGet(n);
     }
+
+    @Override
+    public String toString() {
+        return "TaskStatus{" +
+                "cacheUrl=" + cacheUrl +
+                ", netUrl=" + netUrl +
+                ", failedUrl=" + failedUrl +
+                ", pageSizeKb=" + pageSizeKb +
+                ", dataItemCount=" + dataItemCount +
+                '}';
+    }
 }

@@ -26,16 +26,10 @@ public class ConfigValidateUtil {
                 ConfigKeys.PIPLINE_CLASS_NAME,
                 ConfigKeys.PROCESSOR_CLASS_NAME,
                 ConfigKeys.CACHER_CLASS_NAME,
+                ConfigKeys.GROOVY_FILE,
         };
 
         result = result && require(taskConfig, requiredParameters);
-
-
-        /**
-         * 必须有一个
-         */
-        String[] requireOne = {ConfigKeys.GROOVY_FILE, ConfigKeys.GROOVY_SCRIPT_CODE};
-        result = result && requireOne(taskConfig, requireOne);
 
         return result;
     }

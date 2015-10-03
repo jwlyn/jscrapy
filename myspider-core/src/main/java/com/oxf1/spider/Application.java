@@ -2,6 +2,8 @@ package com.oxf1.spider;
 
 import com.oxf1.spider.util.ConfigValidateUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -9,15 +11,17 @@ import java.io.IOException;
  * Created by cxu on 2015/10/2.
  */
 public class Application {
+    final static Logger logger = LoggerFactory.getLogger(Application.class);
+
     public static void main(String[]arg) throws IOException {
         String taskConfigFile = parseTaskConfigFile();
 
         TaskConfig taskConfig = new TaskConfig(taskConfigFile);
         if (!ConfigValidateUtil.validate(taskConfig)) {
-            System.out.println("请按照提示检查配置！");
+            logger.info("请按照提示检查配置！");
             return;
         }else{
-            System.out.println("配置校验通过！");
+            logger.info("配置校验通过！");
         }
         //验证通过
 
