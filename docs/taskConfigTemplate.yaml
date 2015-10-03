@@ -1,0 +1,15 @@
+task_id: task_id
+task_name: task_name
+virtual_id: VIRTUAL_ID
+spider_work_dir: c:/code/temp
+wait_url_sleep_time_ms: 1000
+task_status: #这个放在这里不太合适，再看看
+scheduler_batch_size: 1 #每次去队列里拿到的url数目
+task_thread_count: 1 #任务线程数目
+scheduler_class_name:
+dedup_class_name:
+downloader_class_name:
+pipline_class_name:
+processor_class_name:
+cacher_class_name:
+groovy_file: TaskExcample.groovy
