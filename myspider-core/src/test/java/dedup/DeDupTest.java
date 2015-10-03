@@ -1,7 +1,6 @@
 package dedup;
 
 import com.oxf1.spider.TaskConfig;
-import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.dedup.DeDup;
 import com.oxf1.spider.dedup.impl.EhCacheDedup;
 import com.oxf1.spider.dedup.impl.MemoryDedup;
@@ -12,7 +11,9 @@ import com.oxf1.spider.request.Request;
 import com.oxf1.spider.request.impl.HttpRequest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import util.ResourcePathUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class DeDupTest {
     private Request rq = new HttpRequest("http://url1", HttpRequestMethod.HTTP_DELETE, null);
 
     @DataProvider(name="dp")
-    public DeDup[][] dataProvider(){
+    public DeDup[][] dataProvider() throws IOException {
         return new DeDup[][]{
                 {initEhcacheDedup()} ,
                 {initMemoryDedup()},
@@ -64,8 +65,9 @@ public class DeDupTest {
      *
      * @return
      */
-    private DeDup initEhcacheDedup(){
-        TaskConfig taskConfig = new TaskConfig("task_id", "task_name");
+    private DeDup initEhcacheDedup() throws IOException {
+        String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/EhCacheDedupTest.yaml");
+        TaskConfig taskConfig = new TaskConfig(path);
         DeDup dp = new EhCacheDedup(taskConfig);
         return dp;
     }
@@ -74,8 +76,9 @@ public class DeDupTest {
      *
      * @return
      */
-    private DeDup initMemoryDedup(){
-        TaskConfig taskConfig = new TaskConfig("task_id", "task_name");
+    private DeDup initMemoryDedup() throws IOException {
+        String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/MemoryDedupTest.yaml");
+        TaskConfig taskConfig = new TaskConfig(path);
         DeDup dp = new MemoryDedup(taskConfig);
         return dp;
     }
@@ -84,11 +87,9 @@ public class DeDupTest {
      *
      * @return
      */
-    private DeDup initMongoDedup(){
-        TaskConfig taskConfig = new TaskConfig("task_id", "task_name");
-        taskConfig.put(ConfigKeys.MONGODB_HOST, "localhost");
-        taskConfig.put(ConfigKeys.MONGODB_PORT, 27017);
-        taskConfig.put(ConfigKeys.MONGODB_DEDUP_DB_NAME, "myspider_dedup");
+    private DeDup initMongoDedup() throws IOException {
+        String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/MongoDedupTest.yaml");
+        TaskConfig taskConfig = new TaskConfig(path);
         DeDup dp = new MongoDedup(taskConfig);
         return dp;
     }
@@ -97,9 +98,9 @@ public class DeDupTest {
      *
      * @return
      */
-    private DeDup initRedisDedup(){
-        TaskConfig taskConfig = new TaskConfig("task_id", "task_name");
-        taskConfig.put(ConfigKeys.REDIS_DEDUP_SERVER, "localhost");;
+    private DeDup initRedisDedup() throws IOException {
+        String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/RedisDedupTest.yaml");
+        TaskConfig taskConfig = new TaskConfig(path);
         DeDup dp = new RedisDedup(taskConfig);
         return dp;
     }

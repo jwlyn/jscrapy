@@ -1,0 +1,5 @@
+task_id: task_id
+task_name: task_name
+mongodb_host: localhost
+mongodb_port: 27017
+mongodb_dedup_db_name: myspider_dedup
