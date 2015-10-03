@@ -10,20 +10,20 @@ public class ConfigKeys {
     public static final String VIRTUAL_ID = "virtual_id";
 
     //保存本地任务的配置，缓存，数据等的总目录地址
-    public static String SPIDER_WORK_DIR = "SPIDER_WORK_DIR";
+    public static String SPIDER_WORK_DIR = "spider_work_dir";
 
     /*redis*/
-    public static final String REDIS_DEDUP_SERVER = "REDIS_DEDUP_SERVER";
+    public static final String REDIS_DEDUP_SERVER = "redis_dedup_server";
 
     /*mongodb*/
-    public static final String MONGODB_HOST = "MONGODB_HOST";
-    public static final String MONGODB_PORT = "MONGODB_PORT";
-    public static final String MONGODB_CACHER_DB_NAME = "MONGODB_CACHER_DB_NAME";//缓存
-    public static final String MONGODB_DEDUP_DB_NAME = "MONGODB_DEDUP_DB_NAME";//去重
+    public static final String MONGODB_HOST = "mongodb_host";
+    public static final String MONGODB_PORT = "mongodb_port";
+    public static final String MONGODB_CACHER_DB_NAME = "mongodb_cacher_db_name";//缓存
+    public static final String MONGODB_DEDUP_DB_NAME = "mongodb_dedup_db_name";//去重
 
     /*内存队列*/
-    public static final String MEM_DEDUP_SET = "MEM_DEDUP_SET";
-    public static final String MEM_SCHEDULER_QUEUE = "MEM_SCHEDULER_QUEUE";
+    public static final String MEM_DEDUP_SET = "memory_dedup_set";
+    public static final String MEM_SCHEDULER_QUEUE = "memory_scheduler_queue";
 
     /*任务当时应该处于的状态：运行、暂停(保存队列)、结束(需要清空队列)*/
     public static final String TASK_STATUS = "task_status";
@@ -52,7 +52,7 @@ public class ConfigKeys {
      在运行时组合生成的配置
     ------------------------------------------------------------------------------------
      */
-    public static final String RT_LOCAL_FILE_PIPLINE_DATA_FILE = "RT_LOCAL_FILE_PIPLINE_DATA_FILE";
-    public static final String RT_LOCAL_CACHER_DIR = "RT_LOCAL_CACHER_DIR";
-    public static final String RT_LOCAL_QUEUE_DIR = "RT_LOCAL_QUEUE_DIR";
+    public static final String RT_LOCAL_FILE_PIPLINE_DATA_FILE = "rt_local_file_pipline_data_file";
+    public static final String RT_LOCAL_CACHER_DIR = "rt_local_cacher_dir";
+    public static final String RT_LOCAL_QUEUE_DIR = "rt_local_queue_dir";
 }

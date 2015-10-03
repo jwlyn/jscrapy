@@ -4,7 +4,6 @@ import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.cacher.Cacher;
 import com.oxf1.spider.cacher.impl.LocalDiskCacher;
 import com.oxf1.spider.cacher.impl.MongoCacher;
-import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.page.Page;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
@@ -12,8 +11,12 @@ import com.oxf1.spider.request.impl.HttpRequest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import util.ResourcePathUtils;
+
+import java.io.IOException;
 
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.fail;
 
 /**
  * Created by cxu on 2015/9/19.
@@ -50,10 +53,13 @@ public class CacherTest {
      * @return
      */
     private Cacher initMongoCacher(){
-        TaskConfig taskConfig = new TaskConfig("task_id", "task_name");
-        taskConfig.put(ConfigKeys.MONGODB_HOST, "localhost");
-        taskConfig.put(ConfigKeys.MONGODB_PORT, 27017);
-        taskConfig.put(ConfigKeys.MONGODB_CACHER_DB_NAME, "myspider_cacher");
+        String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/MongoCacherTest.yaml");
+        TaskConfig taskConfig = null;
+        try {
+            taskConfig = new TaskConfig(path);
+        } catch (IOException e) {
+            fail(e.getLocalizedMessage());
+        }
         Cacher cacher = new MongoCacher(taskConfig);
         return cacher;
     }
@@ -62,8 +68,14 @@ public class CacherTest {
      *
      * @return
      */
-    private Cacher initLocalDiskCacher(){
-        TaskConfig taskConfig = new TaskConfig("task_id", "task_name");
+    private Cacher initLocalDiskCacher()  {
+        String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/CacherTest.yaml");
+        TaskConfig taskConfig = null;
+        try {
+            taskConfig = new TaskConfig(path);
+        } catch (IOException e) {
+            fail(e.getLocalizedMessage());
+        }
         Cacher cacher = new LocalDiskCacher(taskConfig);
         return cacher;
     }

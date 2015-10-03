@@ -18,7 +18,6 @@ public class HttpRequest {
     private Map<String,String> header = new HashMap<String, String>();
     private List<Integer> acceptCode;
 
-
     public HttpRequest() {
         acceptCode = new ArrayList<Integer>();
         acceptCode.add(200);
