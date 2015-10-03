@@ -11,6 +11,7 @@ import com.oxf1.spider.scheduler.impl.FileQueueScheduler;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import util.ResourcePathUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,8 +27,9 @@ public class LocalSchedulerTest {
     private Scheduler sched;
 
     @BeforeClass
-    public void setup() throws MySpiderFetalException {
-        taskConfig = new TaskConfig("task_id", "task_name");
+    public void setup() throws MySpiderFetalException, IOException {
+        String path = ResourcePathUtils.getResourceFileAbsPath(LocalSchedulerTest.class, "/LocalSchedulerTest.yaml");
+        taskConfig = new TaskConfig(path);
         sched = new FileQueueScheduler(this.taskConfig);
     }
 

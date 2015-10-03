@@ -8,7 +8,9 @@ import com.oxf1.spider.request.impl.HttpRequest;
 import com.oxf1.spider.scheduler.Scheduler;
 import com.oxf1.spider.scheduler.impl.MemoryScheduler;
 import org.testng.annotations.Test;
+import util.ResourcePathUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +25,9 @@ public class MemeorySchedulerTest {
      * 插入N条，得到N条
      */
     @Test
-    public void test() throws MySpiderException {
-        TaskConfig taskConfig = new TaskConfig("task_id", "task_name");
+    public void test() throws MySpiderException, IOException {
+        String path = ResourcePathUtils.getResourceFileAbsPath(MemeorySchedulerTest.class, "/MemorySchedulerTest.yaml");
+        TaskConfig taskConfig = new TaskConfig(path);
         Scheduler sched = new MemoryScheduler(taskConfig);
 
         List<Request> request = new ArrayList<Request>();

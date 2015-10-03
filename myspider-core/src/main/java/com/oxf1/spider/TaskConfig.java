@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by cxu on 2015/6/21.
  */
-public class TaskConfig{
+public class TaskConfig {
 
     private final String taskId;
     private final String taskName;
@@ -30,22 +30,9 @@ public class TaskConfig{
      */
     private ConcurrentHashMap<String, Object> taskSharedObject;
 
-    public TaskConfig(String taskId, String taskName){
-        this.taskId = taskId;
-        this.taskName = taskName;
-
-        String taskConfigFile = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR + getTaskFp() + File.separator + "cfg.yaml";
-        this.cfg = new YamlConfigOperator(taskConfigFile);//默认的
-        this.taskSharedObject = new ConcurrentHashMap<String, Object>(5);
-
-        cfg.put(ConfigKeys.TASK_ID, taskId);
-        cfg.put(ConfigKeys.TASK_NAME, taskName);
-        initTaskStatusObject();
-        setGroovyScript(loadString(ConfigKeys.GROOVY_SCRIPT_CODE));
-    }
-
     /**
      * 从yaml文件load一个任务
+     *
      * @param taskConfigFile
      */
     public TaskConfig(String taskConfigFile) throws IOException {
@@ -60,17 +47,15 @@ public class TaskConfig{
         String groovyCode = loadString(ConfigKeys.GROOVY_SCRIPT_CODE);
         if (StringUtils.isNotBlank(groovyCode)) {
             setGroovyScript(groovyCode);
-        }
-        else {
+        } else {
             String groovyFile = loadString(ConfigKeys.GROOVY_FILE);
             if (groovyFile != null) {
                 File f = new File(groovyFile);
-                if(f.exists() && !f.isDirectory()) {//绝对路径
+                if (f.exists() && !f.isDirectory()) {//绝对路径
                     groovyCode = FileUtils.readFileToString(f);
-                }
-                else {//相对路径？
+                } else {//相对路径？
                     String path = FilenameUtils.getFullPath(taskConfigFile);
-                    path = path+groovyFile;
+                    path = path + groovyFile;
                     f = new File(path);
                     if (f.exists() && !f.isDirectory()) {
                         groovyCode = FileUtils.readFileToString(f);
@@ -78,12 +63,10 @@ public class TaskConfig{
                 }
                 if (StringUtils.isNotBlank(groovyCode)) {
                     setGroovyScript(groovyCode);
-                }
-                else{
+                } else {
                     //TODO log it throw exception
                 }
-            }
-            else{
+            } else {
                 //TODO log throw exception
             }
         }
@@ -108,10 +91,11 @@ public class TaskConfig{
 
     /**
      * scheduler每次从队列里取出的请求数目, 默认1个
+     *
      * @return
      */
     public int getSchedulerBatchSize() {
-        Integer size =  loadInt(ConfigKeys.SCHEDULER_BATCH_SIZE);
+        Integer size = loadInt(ConfigKeys.SCHEDULER_BATCH_SIZE);
         if (size == null) {
             size = SysDefaultConfig.SCHEDULER_BATCH_SIZE;
         }
@@ -120,6 +104,7 @@ public class TaskConfig{
 
     /**
      * 每个任务开启的线程数目,默认是1个
+     *
      * @return
      */
     public int getThreadCount() {
@@ -159,9 +144,7 @@ public class TaskConfig{
 
     public String getVirtualId() {
         String virtualId = null;
-        if (this.cfg != null) {//说明：在使用taskid+taskName构造TaskConfig时，cfg还是null,但是又必须确定yaml配置的位置
-            virtualId = loadString(ConfigKeys.VIRTUAL_ID);
-        }
+        virtualId = loadString(ConfigKeys.VIRTUAL_ID);
 
         if (StringUtils.isBlank(virtualId)) {
             virtualId = SysDefaultConfig.VIRTUAL_ID;
@@ -171,6 +154,7 @@ public class TaskConfig{
 
     /**
      * 工作目录，放配置，缓存等的目录位置
+     *
      * @return
      */
     public String getTaskWorkDir() {
@@ -191,6 +175,7 @@ public class TaskConfig{
 
     /**
      * 队列空的时候，睡眠等待时间
+     *
      * @return
      */
     public int getWaitUrlSleepTimeMs() {
@@ -203,27 +188,28 @@ public class TaskConfig{
 
     public String loadString(String key) {
         Object value = this.cfg.loadValue(key);
-        if(value!=null){
-            return (String)value;
-        }
-        else return null;
+        if (value != null) {
+            return (String) value;
+        } else return null;
     }
 
     /**
      * 从配置读出一个key,转化为int
+     *
      * @param key
      * @return
      */
     public Integer loadInt(String key) {
-        Object value =  this.cfg.loadValue(key);
-        if(value!=null){
-            return (Integer)value;
+        Object value = this.cfg.loadValue(key);
+        if (value != null) {
+            return (Integer) value;
         }
         return null;
     }
 
     /**
      * 保存配置
+     *
      * @param key
      * @param value
      */
@@ -232,18 +218,26 @@ public class TaskConfig{
     }
 
     public GroovyObject getGroovyProcessorObject() {
-        return (GroovyObject)this.getTaskSharedObject(ConfigKeys.GROOVY_PROCESSOR_OBJ);
+        return (GroovyObject) this.getTaskSharedObject(ConfigKeys.GROOVY_PROCESSOR_OBJ);
     }
 
+    /**
+     * 每个任务的多个线程共用一个scheduler对象。防止竞争和去重不干净问题。
+     * @return
+     */
     public Scheduler getSchedulerObject() {
-        return (Scheduler)this.getTaskSharedObject(ConfigKeys.SCHEDULER_OBJECT);
+        return (Scheduler) this.getTaskSharedObject(ConfigKeys.SCHEDULER_OBJECT);
     }
 
+    /**
+     * 由Task初始化时调用,之后每个spider对象都共用这个Scheduler对象
+     * @param scheduler
+     */
     public void setSchedulerObject(Scheduler scheduler) {
         taskSharedObject.put(ConfigKeys.SCHEDULER_OBJECT, scheduler);
     }
 
-    public void addTaskSharedObject(String key, Object obj){
+    public void addTaskSharedObject(String key, Object obj) {
         taskSharedObject.put(key, obj);
     }
 
@@ -253,20 +247,21 @@ public class TaskConfig{
     }
 
     public TaskStatus getTaskStatusObject() {
-        TaskStatus status = (TaskStatus)taskSharedObject.get(ConfigKeys.TASK_STATUS_OBJ);
+        TaskStatus status = (TaskStatus) taskSharedObject.get(ConfigKeys.TASK_STATUS_OBJ);
         return status;
     }
 
-    public Object getTaskSharedObject(String key){
+    public Object getTaskSharedObject(String key) {
         Object o = taskSharedObject.get(key);
         return o;
     }
 
     /**
      * 本机唯一任务标示
+     *
      * @return
      */
-    public String getTaskFp(){
+    public String getTaskFp() {
         StringBuffer buf = new StringBuffer(10);
         buf.append(SysDefaultConfig.HOST)
                 .append("@")
@@ -281,6 +276,7 @@ public class TaskConfig{
 
     /**
      * 从Groovy脚本实例化对象
+     *
      * @param scriptCode
      * @return
      */

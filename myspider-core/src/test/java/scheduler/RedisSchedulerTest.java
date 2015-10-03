@@ -1,7 +1,6 @@
 package scheduler;
 
 import com.oxf1.spider.TaskConfig;
-import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.exception.MySpiderException;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
@@ -9,7 +8,9 @@ import com.oxf1.spider.request.impl.HttpRequest;
 import com.oxf1.spider.scheduler.Scheduler;
 import com.oxf1.spider.scheduler.impl.RedisScheduler;
 import org.testng.annotations.Test;
+import util.ResourcePathUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +26,9 @@ public class RedisSchedulerTest {
      * 插入N条，得到N条
      */
     @Test
-    public void test() throws MySpiderException {
-        TaskConfig taskConfig = new TaskConfig("task_id", "task_name");
-        taskConfig.put(ConfigKeys.REDIS_DEDUP_SERVER, "localhost");
-
+    public void test() throws MySpiderException, IOException {
+        String path = ResourcePathUtils.getResourceFileAbsPath(RedisSchedulerTest.class, "/RedisSchedulerTest.yaml");
+        TaskConfig taskConfig = new TaskConfig(path);
         Scheduler sched = new RedisScheduler(taskConfig);
 
         List<Request> request = new ArrayList<Request>();
