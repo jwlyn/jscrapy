@@ -184,20 +184,30 @@ public class TaskConfig{
         cfg.put(key, value);
     }
 
-    public GroovyObject getGroovyProcessor() {
+    public GroovyObject getGroovyProcessorObject() {
         return (GroovyObject)this.getTaskSharedObject(ConfigKeys.GROOVY_PROCESSOR_OBJ);
     }
 
-    public Scheduler getScheduler() {
-        return (Scheduler)this.getTaskSharedObject(ConfigKeys.SCHEDULER);
+    public Scheduler getSchedulerObject() {
+        return (Scheduler)this.getTaskSharedObject(ConfigKeys.SCHEDULER_OBJECT);
     }
 
-    public void setScheduler(Scheduler scheduler) {
-        taskSharedObject.put(ConfigKeys.SCHEDULER, scheduler);
+    public void setSchedulerObject(Scheduler scheduler) {
+        taskSharedObject.put(ConfigKeys.SCHEDULER_OBJECT, scheduler);
     }
 
     public void addTaskSharedObject(String key, Object obj){
         taskSharedObject.put(key, obj);
+    }
+
+    public void initTaskStatusObject() {
+        TaskStatus status = new TaskStatus();
+        taskSharedObject.put(ConfigKeys.TASK_STATUS_OBJ, status);
+    }
+
+    public TaskStatus getTaskStatusObject() {
+        TaskStatus status = (TaskStatus)taskSharedObject.get(ConfigKeys.TASK_STATUS_OBJ);
+        return status;
     }
 
     public Object getTaskSharedObject(String key){

@@ -44,7 +44,7 @@ public class Task extends MyspiderComponent {
         String[] piplineClass = cfg.getPiplineClassName().split(",");
 
         Scheduler scheduler = ClassLoadUtil.loadScheduler(schedulerClass, cfg);
-        cfg.setScheduler(scheduler);
+        cfg.setSchedulerObject(scheduler);
 
         int threadCount = getTaskConfig().getThreadCount();
         for (int i = 0; i < threadCount; i++) {

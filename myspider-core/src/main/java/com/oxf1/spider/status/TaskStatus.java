@@ -10,18 +10,26 @@ public class TaskStatus {
         RUN, PAUSE, CANCEL
     }
 
-
-    private AtomicLong succUrl = new AtomicLong(0);
+    private AtomicLong cacheUrl = new AtomicLong(0);
+    private AtomicLong netUrl = new AtomicLong(0);
     private AtomicLong failedUrl = new AtomicLong(0);
     private AtomicLong pageSizeKb = new AtomicLong(0);
-    private AtomicLong dataSizeKb = new AtomicLong(0);
+    private AtomicLong dataItemCount = new AtomicLong(0);
 
-    public Long getSuccUrl() {
-        return succUrl.longValue();
+    public AtomicLong getCacheUrl() {
+        return cacheUrl;
     }
 
-    public void addSuccUrl(long n) {
-        succUrl.addAndGet(n);
+    public void addCacheUrl(long n) {
+        cacheUrl.addAndGet(n);
+    }
+
+    public Long getNetUrl() {
+        return netUrl.longValue();
+    }
+
+    public void addNetUrl(long n) {
+        netUrl.addAndGet(n);
     }
 
     public Long getFailedUrl() {
@@ -40,11 +48,11 @@ public class TaskStatus {
         this.pageSizeKb.addAndGet(n);
     }
 
-    public Long getDataSizeKb() {
-        return dataSizeKb.longValue();
+    public Long getDataItemCount() {
+        return dataItemCount.longValue();
     }
 
-    public void addDataSizeKb(long n) {
-        this.dataSizeKb.addAndGet(n);
+    public void addDataItemCount(long n) {
+        this.dataItemCount.addAndGet(n);
     }
 }

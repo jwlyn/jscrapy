@@ -18,7 +18,7 @@ public class GroovyProcessor extends MyspiderComponent implements Processor  {
 
     @Override
     public ProcessResult process(Page page) {
-        GroovyObject processor = getTaskConfig().getGroovyProcessor();
+        GroovyObject processor = getTaskConfig().getGroovyProcessorObject();
         ProcessResult result = (ProcessResult)processor.invokeMethod("process", page);
         result.setRequest(page.getRequest());
         return result;

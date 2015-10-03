@@ -31,7 +31,7 @@ public class Spider extends MyspiderComponent implements Runnable{
     public Spider(TaskConfig taskConfig){
         super(taskConfig);
         piplines = new ArrayList<>(5);
-        scheduler = taskConfig.getScheduler();//共用scheduler减少竞争和去重误差
+        scheduler = taskConfig.getSchedulerObject();//共用scheduler减少竞争和去重误差
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Spider extends MyspiderComponent implements Runnable{
 
         while(!Thread.currentThread().isInterrupted() &&
                 getTaskConfig().getTaskStatus().equalsIgnoreCase(TaskStatus.Status.RUN.name())){
-
+            TaskStatus status = getTaskConfig().getTaskStatusObject();
             List<Request> requests = null;
             try {
                 requests = scheduler.poll(getTaskConfig().getSchedulerBatchSize());
@@ -52,8 +52,21 @@ public class Spider extends MyspiderComponent implements Runnable{
                 Page pg = cacher.loadPage(req);
                 if (pg == null) {//缓存没有命中，从网络下载
                     pg = downloader.download(req);
+                    if (pg == null) {
+                        status.addFailedUrl(1);
+                    }else{
+                        status.addNetUrl(1);
+                        status.addPageSizeKb(pg.sizeInKb());
+                    }
+                }else{//看一下是否缓存命中
+                    if(pg.isFromCache()){
+                        status.addCacheUrl(1);
+                        status.addPageSizeKb(pg.sizeInKb());
+                    }
                 }
-
+                if (pg == null) {
+                    continue;
+                }
                 ProcessResult result = processor.process(pg);
                 //处理链接
                 List<Request> newLinks = result.getLinks();
@@ -68,6 +81,7 @@ public class Spider extends MyspiderComponent implements Runnable{
                 //存储数据
                 for (Pipline pipline : piplines) {
                     pipline.save(result.getData());
+                    status.addDataItemCount(result.getData().size());
                 }
             }
             if (requests.size() == 0) {//睡眠一段等待命令或者新的url到来

@@ -31,9 +31,10 @@ public class ConfigKeys {
 
     /*Groovy解析脚本对象*/
     public static final String GROOVY_PROCESSOR_OBJ = "groovy_processor_object";
-    public static final String SCHEDULER = "scheduler";
+    public static final String SCHEDULER_OBJECT = "scheduler";
     public static final String SCHEDULER_BATCH_SIZE = "scheduler_batch_size";
     public static final String THREAD_COUNT = "task_thread_count";
+    public static final String TASK_STATUS_OBJ = "task_status_object";
 
     /*模块类名*/
     public static final String SCHEDULER_CLASS_NAME = "scheduler_class_name";

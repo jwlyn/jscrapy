@@ -1,6 +1,7 @@
 package com.oxf1.spider.page;
 
 import com.oxf1.spider.request.Request;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by cxu on 2014/11/21.
@@ -33,5 +34,15 @@ public class Page {
 
     public void setRequest(Request request) {
         this.request = request;
+    }
+
+    public long sizeInKb() {
+        if (StringUtils.isBlank(rawText)) {
+            return 0;
+        }
+        else{
+            int len = rawText.length();
+            return Math.round(len / 1024);
+        }
     }
 }
