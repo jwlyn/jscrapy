@@ -16,7 +16,6 @@ import util.ResourcePathUtils;
 import java.io.IOException;
 
 import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.fail;
 
 /**
  * Created by cxu on 2015/9/19.
@@ -26,22 +25,22 @@ public class CacherTest {
     private Request request;
 
     @BeforeClass
-    public void setup(){
+    public void setup() {
         request = new HttpRequest("http://oxf1.com/test", HttpRequestMethod.HTTP_DELETE, null);
         page = new Page("this is html content, hahaha!");
         page.setRequest(request);
     }
 
-    @DataProvider(name="dp")
-    public Cacher[][] dataProvider(){
+    @DataProvider(name = "dp")
+    public Cacher[][] dataProvider() throws IOException {
         return new Cacher[][]{
-                {initLocalDiskCacher()} ,
+                {initLocalDiskCacher()},
                 {initMongoCacher()}
         };
     }
 
     @Test(dataProvider = "dp")
-    public void test(Cacher cacher){
+    public void test(Cacher cacher) {
         cacher.cachePage(page);
         Page pg = cacher.loadPage(request);
         assertNotNull(pg);
@@ -49,33 +48,23 @@ public class CacherTest {
     }
 
     /**
-     *
      * @return
      */
-    private Cacher initMongoCacher(){
+    private Cacher initMongoCacher() throws IOException {
         String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/MongoCacherTest.yaml");
         TaskConfig taskConfig = null;
-        try {
-            taskConfig = new TaskConfig(path);
-        } catch (IOException e) {
-            fail(e.getLocalizedMessage());
-        }
+        taskConfig = new TaskConfig(path);
         Cacher cacher = new MongoCacher(taskConfig);
         return cacher;
     }
 
     /**
-     *
      * @return
      */
-    private Cacher initLocalDiskCacher()  {
+    private Cacher initLocalDiskCacher() throws IOException {
         String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/CacherTest.yaml");
         TaskConfig taskConfig = null;
-        try {
-            taskConfig = new TaskConfig(path);
-        } catch (IOException e) {
-            fail(e.getLocalizedMessage());
-        }
+        taskConfig = new TaskConfig(path);
         Cacher cacher = new LocalDiskCacher(taskConfig);
         return cacher;
     }

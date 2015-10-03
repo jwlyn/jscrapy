@@ -9,6 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import util.ResourcePathUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,8 +25,9 @@ public class LocalFilePiplineTest {
     private TaskConfig taskConfig;
 
     @BeforeClass
-    public void setup(){
-        this.taskConfig = new TaskConfig("task_id", "task_name");
+    public void setup() throws IOException {
+        String path = ResourcePathUtils.getResourceFileAbsPath(LocalFilePiplineTest.class, "/LocalFilePiplineTest.yaml");
+        this.taskConfig = new TaskConfig(path);
     }
 
     @AfterClass
