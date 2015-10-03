@@ -76,7 +76,7 @@ public class TaskConfig {
         //TODO 代码加载失败
         if (StringUtils.isNotBlank(groovyCode)) {
             GroovyObject o = instanceClass(groovyCode);
-            taskSharedObject.put(ConfigKeys.GROOVY_SCRIPT_OBJECT, o);
+            taskSharedObject.put(ConfigKeys.RT_GROOVY_SCRIPT_OBJECT, o);
         }
 
     }
@@ -194,6 +194,17 @@ public class TaskConfig {
     }
 
     /**
+     * 检查某一个key对应的值是不是存在的
+     * @param key
+     * @return
+     */
+    public boolean checkValueExists(String key) {
+        Object value1 = this.cfg.loadValue(key);
+        Object value2 = getTaskSharedObject(key);
+        return (value1!=null || value2!=null);
+    }
+
+    /**
      * 从配置读出一个key,转化为int
      *
      * @param key
@@ -218,7 +229,7 @@ public class TaskConfig {
     }
 
     public GroovyObject getGroovyProcessorObject() {
-        return (GroovyObject) this.getTaskSharedObject(ConfigKeys.GROOVY_PROCESSOR_OBJ);
+        return (GroovyObject) this.getTaskSharedObject(ConfigKeys.RT_GROOVY_PROCESSOR_OBJECT);
     }
 
     /**
@@ -226,7 +237,7 @@ public class TaskConfig {
      * @return
      */
     public Scheduler getSchedulerObject() {
-        return (Scheduler) this.getTaskSharedObject(ConfigKeys.SCHEDULER_OBJECT);
+        return (Scheduler) this.getTaskSharedObject(ConfigKeys.RT_SCHEDULER_OBJECT);
     }
 
     /**
@@ -234,7 +245,7 @@ public class TaskConfig {
      * @param scheduler
      */
     public void setSchedulerObject(Scheduler scheduler) {
-        taskSharedObject.put(ConfigKeys.SCHEDULER_OBJECT, scheduler);
+        taskSharedObject.put(ConfigKeys.RT_SCHEDULER_OBJECT, scheduler);
     }
 
     public void addTaskSharedObject(String key, Object obj) {
@@ -243,11 +254,11 @@ public class TaskConfig {
 
     public void initTaskStatusObject() {
         TaskStatus status = new TaskStatus();
-        taskSharedObject.put(ConfigKeys.TASK_STATUS_OBJ, status);
+        taskSharedObject.put(ConfigKeys.RT_TASK_STATUS_OBJECT, status);
     }
 
     public TaskStatus getTaskStatusObject() {
-        TaskStatus status = (TaskStatus) taskSharedObject.get(ConfigKeys.TASK_STATUS_OBJ);
+        TaskStatus status = (TaskStatus) taskSharedObject.get(ConfigKeys.RT_TASK_STATUS_OBJECT);
         return status;
     }
 
