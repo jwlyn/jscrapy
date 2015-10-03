@@ -36,6 +36,7 @@ public class TaskConfig{
 
         cfg.put(ConfigKeys.TASK_ID, taskId);
         cfg.put(ConfigKeys.TASK_NAME, taskName);
+        initTaskStatusObject();
     }
 
     /**
@@ -49,6 +50,7 @@ public class TaskConfig{
 
         taskId = loadString(ConfigKeys.TASK_ID);
         taskName = loadString(ConfigKeys.TASK_NAME);
+        initTaskStatusObject();
     }
 
     public String getTaskId() {
