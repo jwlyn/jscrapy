@@ -6,7 +6,11 @@ import com.oxf1.spider.config.SysDefaultConfig;
 import com.oxf1.spider.config.impl.YamlConfigOperator;
 import com.oxf1.spider.scheduler.Scheduler;
 import com.oxf1.spider.status.TaskStatus;
+import groovy.lang.GroovyClassLoader;
 import groovy.lang.GroovyObject;
+import groovy.lang.Script;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -37,6 +41,7 @@ public class TaskConfig{
         cfg.put(ConfigKeys.TASK_ID, taskId);
         cfg.put(ConfigKeys.TASK_NAME, taskName);
         initTaskStatusObject();
+        setGroovyScript(loadString(ConfigKeys.GROOVY_SCRIPT_CODE));
     }
 
     /**
@@ -51,6 +56,46 @@ public class TaskConfig{
         taskId = loadString(ConfigKeys.TASK_ID);
         taskName = loadString(ConfigKeys.TASK_NAME);
         initTaskStatusObject();
+
+        String groovyCode = loadString(ConfigKeys.GROOVY_SCRIPT_CODE);
+        if (StringUtils.isNotBlank(groovyCode)) {
+            setGroovyScript(groovyCode);
+        }
+        else {
+            String groovyFile = loadString(ConfigKeys.GROOVY_FILE);
+            if (groovyFile != null) {
+                File f = new File(groovyFile);
+                if(f.exists() && !f.isDirectory()) {//绝对路径
+                    groovyCode = FileUtils.readFileToString(f);
+                }
+                else {//相对路径？
+                    String path = FilenameUtils.getFullPath(taskConfigFile);
+                    path = path+groovyFile;
+                    f = new File(path);
+                    if (f.exists() && !f.isDirectory()) {
+                        groovyCode = FileUtils.readFileToString(f);
+                    }
+                }
+                if (StringUtils.isNotBlank(groovyCode)) {
+                    setGroovyScript(groovyCode);
+                }
+                else{
+                    //TODO log it throw exception
+                }
+            }
+            else{
+                //TODO log throw exception
+            }
+        }
+    }
+
+    public void setGroovyScript(String groovyCode) {
+        //TODO 代码加载失败
+        if (StringUtils.isNotBlank(groovyCode)) {
+            GroovyObject o = instanceClass(groovyCode);
+            taskSharedObject.put(ConfigKeys.GROOVY_SCRIPT_OBJECT, o);
+        }
+
     }
 
     public String getTaskId() {
@@ -232,5 +277,31 @@ public class TaskConfig{
                 .append(getVirtualId());//使用jvm进程Id可以在一台机器上模拟分布式
 
         return buf.toString();
+    }
+
+    /**
+     * 从Groovy脚本实例化对象
+     * @param scriptCode
+     * @return
+     */
+    private GroovyObject instanceClass(String scriptCode) {
+        Class<Script> klass = null;
+        GroovyObject parser = null;
+        try {
+            klass = new GroovyClassLoader().parseClass(scriptCode);
+        } catch (Exception e) {
+            //TODO log it
+        }
+
+        try {
+            if (klass == null) {
+                throw new Exception("ERROR ## 脚本加载异常.");
+            }
+            parser = (GroovyObject) klass.newInstance();
+        } catch (Exception e) {
+            //TODO log it
+        }
+
+        return parser;
     }
 }

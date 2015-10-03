@@ -35,6 +35,9 @@ public class ConfigKeys {
     public static final String SCHEDULER_BATCH_SIZE = "scheduler_batch_size";
     public static final String THREAD_COUNT = "task_thread_count";
     public static final String TASK_STATUS_OBJ = "task_status_object";
+    public static final String GROOVY_SCRIPT_CODE = "groovy_script_code";
+    public static final String GROOVY_FILE = "groovy_file";
+    public static final String GROOVY_SCRIPT_OBJECT = "groovy_script_object";
 
     /*模块类名*/
     public static final String SCHEDULER_CLASS_NAME = "scheduler_class_name";
