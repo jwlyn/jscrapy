@@ -85,4 +85,5 @@ public class HttpRequest extends Request{
     public void SetFormParameters(Map<String,String> params){
         this.parameters = params;
     }
+
 }

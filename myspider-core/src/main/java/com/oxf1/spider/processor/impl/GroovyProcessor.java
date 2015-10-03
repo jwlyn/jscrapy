@@ -20,7 +20,7 @@ public class GroovyProcessor extends MyspiderComponent implements Processor  {
     public ProcessResult process(Page page) {
         GroovyObject processor = getTaskConfig().getGroovyProcessor();
         ProcessResult result = (ProcessResult)processor.invokeMethod("process", page);
-
+        result.setRequest(page.getRequest());
         return result;
     }
 

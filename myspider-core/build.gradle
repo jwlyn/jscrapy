@@ -28,6 +28,7 @@ dependencies {
     compile "gaillard:mongo-queue-java:$mongodbQueue"
     compile "org.yaml:snakeyaml:$snakyaml"
     compile "org.codehaus.groovy:groovy-all:$groovy"
+    compile "joda-time:joda-time:$jodaTime"
 
     compile("org.springframework.boot:spring-boot-starter-web")
     providedRuntime("org.springframework.boot:spring-boot-starter-jetty")
