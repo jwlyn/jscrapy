@@ -1,9 +1,9 @@
 package com.oxf1.spider.request;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -17,10 +17,9 @@ public abstract class Request {
      * @param jsonString
      * @return
      */
-    public static Request build(String jsonString, Class clazz) throws IOException {
+    public static Request build(String jsonString, Class clazz) throws JSONException {
         if(StringUtils.isNotBlank(jsonString)) {
-            ObjectMapper mapper = new ObjectMapper();
-            Request req =  (Request)mapper.readValue(jsonString, clazz);
+            Request req = (Request)JSON.parseObject(jsonString, clazz);
             return req;
         }
 

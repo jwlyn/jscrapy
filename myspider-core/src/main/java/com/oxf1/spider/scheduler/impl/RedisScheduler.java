@@ -1,5 +1,6 @@
 package com.oxf1.spider.scheduler.impl;
 
+import com.alibaba.fastjson.JSONException;
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.request.Request;
@@ -11,7 +12,6 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class RedisScheduler  extends Scheduler {
                 req.add(request);
             }
 
-        } catch (IOException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
             //TODO
             logger.error("redis取url出错了{}", e);

@@ -2,6 +2,8 @@ package com.oxf1.spider.util;
 
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 从配置文件加载一个任务之前利用这个类校验参数的完备性和合法性
@@ -9,6 +11,7 @@ import com.oxf1.spider.config.ConfigKeys;
  * Created by cxu on 2015/10/3.
  */
 public class ConfigValidateUtil {
+    final static Logger logger = LoggerFactory.getLogger(ConfigValidateUtil.class);
     public static boolean validate(TaskConfig taskConfig) {
         boolean result = true;
         //验证必须的参数
@@ -46,7 +49,7 @@ public class ConfigValidateUtil {
             boolean exists = cfg.checkValueExists(configKey);
             isOk = isOk && exists;
             if (!exists) {
-                System.err.printf("需要参数:\t%s\n", configKey);
+                logger.error("需要参数: {}", configKey);
             }
         }
 
@@ -66,7 +69,7 @@ public class ConfigValidateUtil {
                 return true;
             }
         }
-        System.err.printf("下列参数中必须要有一个存在:\t%s\n", configKeys);
+        logger.error("下列参数中必须要有一个存在: {}", configKeys);
         return false;
     }
 

@@ -1,6 +1,6 @@
 package com.oxf1.spider.pipline.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson.JSON;
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.config.SysDefaultConfig;
@@ -53,8 +53,7 @@ public class LocalFilePipline extends Pipline {
             for (DataItem dataItem : dataItems) {
                 try {
                     File dataFile = new File(dataFilePath);
-                    ObjectMapper mapper = new ObjectMapper();
-                    String data = mapper.writeValueAsString(dataItem.getDataItem());
+                    String data = JSON.toJSONString(dataItem.getDataItem());
                     synchronized (super.getTaskConfig()) {//任务级别的锁，只锁住同一个任务的多个线程
                         FileUtils.writeStringToFile(dataFile, data + "\n", StandardCharsets.UTF_8.name(), true);
                     }

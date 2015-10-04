@@ -28,3 +28,4 @@ build
 gradle
 gradlew
 gradlew.bat
+*.bat

@@ -1,5 +1,6 @@
 package com.oxf1.spider.scheduler.impl;
 
+import com.alibaba.fastjson.JSONException;
 import com.leansoft.bigqueue.BigQueueImpl;
 import com.leansoft.bigqueue.IBigQueue;
 import com.oxf1.spider.TaskConfig;
@@ -78,7 +79,7 @@ public class FileQueueScheduler extends Scheduler {
                 try{
                     Request request = HttpRequest.build(json, HttpRequest.class);
                     req.add(request);
-                }catch(IOException e){
+                }catch(JSONException e){
                     throw new MySpiderFetalException(MySpiderExceptionCode.LOCAL_QUEUE_SCHEDULE_DEJSON_ERROR);
                 }
             }

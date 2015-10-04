@@ -6,5 +6,11 @@ dependencies {
     testCompile "junit:junit:$junit"
     compile "commons-io:commons-io:$commonsIo"
     compile "org.apache.commons:commons-lang3:$commonsLang3"
-    compile("us.codecraft:webmagic-core:$webmagic")
+    compile("us.codecraft:webmagic-core:$webmagic"){
+        exclude group: "commons-io", module: "commons-io"
+        exclude group: "commons-lang", module: "commons-lang"
+        exclude group: "org.slf4j", module: "slf4j-api"
+        exclude group: "com.google.guava", module: "guava"
+        exclude group: "commons-logging", module: "commons-logging"
+    }
 }

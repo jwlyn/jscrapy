@@ -18,14 +18,13 @@ public class Application {
 
         TaskConfig taskConfig = new TaskConfig(taskConfigFile);
         if (!ConfigValidateUtil.validate(taskConfig)) {
-            logger.info("请按照提示检查配置！");
+            logger.info("{}请按照提示检查配置！", "hello ");
             return;
         }else{
             logger.info("配置校验通过！");
         }
         //验证通过
 
-        //TODO log it
         System.exit(0);
     }
 

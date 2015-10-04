@@ -8,28 +8,31 @@ bootRepackage {
 
 dependencies {
     //runtime ""
-    //testCompile "junit:junit:$junit"
-    compile "com.fasterxml.jackson.core:jackson-databind:$jackson"
+    //testCompile ""
+/*    compile "com.fasterxml.jackson.core:jackson-databind:$jackson"
     compile "com.fasterxml.jackson.core:jackson-core:$jackson"
-    compile "com.fasterxml.jackson.core:jackson-annotations:$jackson"
+    compile "com.fasterxml.jackson.core:jackson-annotations:$jackson"*/
     compile "org.apache.commons:commons-lang3:$commonsLang3"
-    //compile "org.apache.commons:commons-vfs2:$commonsVfs2"
     compile "commons-io:commons-io:$commonsIo"
     compile "commons-codec:commons-codec:$commonsCodec"
     compile "net.sf.ehcache:ehcache:$ehcache"
     compile "com.leansoft:bigqueue:$bigqueue"
+    compile "com.alibaba:fastjson:$fastJson"
 
     compile("us.codecraft:webmagic-core:$webmagic") {
-        exclude module: 'commons-io:slf4j-api'
+        exclude group: "commons-io", module: "commons-io"
+        exclude group: "commons-lang", module: "commons-lang"
+        exclude group: "org.slf4j", module: "slf4j-api"
+        exclude group: "com.google.guava", module: "guava"
+        exclude group: "commons-logging", module: "commons-logging"
     }
     compile "redis.clients:jedis:$jedis"
-    compile "org.slf4j:slf4j-api:$slf4jApi"
     compile "org.mongodb:mongo-java-driver:$mongodbDriver"
     compile "gaillard:mongo-queue-java:$mongodbQueue"
     compile "org.yaml:snakeyaml:$snakyaml"
     compile "org.codehaus.groovy:groovy-all:$groovy"
     compile "joda-time:joda-time:$jodaTime"
 
-    compile("org.springframework.boot:spring-boot-starter-web")
-    providedRuntime("org.springframework.boot:spring-boot-starter-jetty")
+    //compile("org.springframework.boot:spring-boot-starter-web")
+    //providedRuntime("org.springframework.boot:spring-boot-starter-jetty")
 }

@@ -1,8 +1,7 @@
 package com.oxf1.spider.request.impl;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -10,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * Created by cxu on 2014/11/21.
@@ -51,20 +52,27 @@ public class HttpRequest extends Request{
 
     @Override
     public String asJson() {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();//TODO
-            logger.error("httpRequest ->json error {}", e);
+        JSONObject jsonObject = new JSONObject(true);
+        jsonObject.put("url", this.url);
+        jsonObject.put("http_method", this.httpMethod.name());
+
+        /*Map里的key一定要排序之后，因为去重用的是md5*/
+        if (parameters != null && !parameters.isEmpty()) {
+            Map<String, Object> jsonParam = new TreeMap<String, Object>();
+            Set<Map.Entry<String, String>> entrySet = this.parameters.entrySet();
+            for (Map.Entry<String, String> entry : entrySet) {
+                jsonParam.put(entry.getKey(), entry.getValue());
+            }
+            JSONObject params = new JSONObject(jsonParam);
+            jsonObject.put("parameters", params);
         }
 
-        return null;
+        return jsonObject.toJSONString();
     }
 
     @Override
     public String fp() {
-        String s = this.asJson();//这个地方key的值不一定按照顺序 TODO
+        String s = this.asJson();
         return DigestUtils.sha1Hex(s);
     }
 
@@ -73,18 +81,18 @@ public class HttpRequest extends Request{
         return this.asJson();
     }
 
-    @JsonProperty("url")
+    @JSONField(name="url")
     public void setUrl(String url){
         this.url = url;
     }
 
-    @JsonProperty("http_method")
+    @JSONField(name="http_method")
     public void setHttpMethod(String method)
     {
         this.httpMethod = HttpRequestMethod.valueOf(method);
     }
 
-    @JsonProperty("post_parms")
+    @JSONField(name="parameters")
     public void SetFormParameters(Map<String,String> params){
         this.parameters = params;
     }
