@@ -9,9 +9,6 @@ bootRepackage {
 dependencies {
     //runtime ""
     //testCompile ""
-/*    compile "com.fasterxml.jackson.core:jackson-databind:$jackson"
-    compile "com.fasterxml.jackson.core:jackson-core:$jackson"
-    compile "com.fasterxml.jackson.core:jackson-annotations:$jackson"*/
     compile "org.apache.commons:commons-lang3:$commonsLang3"
     compile "commons-io:commons-io:$commonsIo"
     compile "commons-codec:commons-codec:$commonsCodec"
@@ -33,6 +30,10 @@ dependencies {
     compile "org.codehaus.groovy:groovy-all:$groovy"
     compile "joda-time:joda-time:$jodaTime"
 
-    //compile("org.springframework.boot:spring-boot-starter-web")
-    //providedRuntime("org.springframework.boot:spring-boot-starter-jetty")
+    compile("org.springframework.boot:spring-boot-starter-web"){
+        exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+    }
+    compile "org.slf4j:jcl-over-slf4j:1.7.12"
+
+    providedRuntime("org.springframework.boot:spring-boot-starter-jetty")
 }
