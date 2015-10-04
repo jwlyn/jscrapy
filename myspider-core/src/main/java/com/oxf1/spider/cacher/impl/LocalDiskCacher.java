@@ -4,6 +4,9 @@ import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.cacher.Cacher;
 import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.config.SysDefaultConfig;
+import com.oxf1.spider.exception.MySpiderExceptionCode;
+import com.oxf1.spider.exception.MySpiderFetalException;
+import com.oxf1.spider.exception.MySpiderRecoverableException;
 import com.oxf1.spider.page.Page;
 import com.oxf1.spider.request.Request;
 import org.apache.commons.io.FileUtils;
@@ -27,7 +30,7 @@ public class LocalDiskCacher extends Cacher {
      * 构造函数
      * @param taskConfig
      */
-    public LocalDiskCacher(TaskConfig taskConfig) {
+    public LocalDiskCacher(TaskConfig taskConfig) throws MySpiderFetalException {
         super(taskConfig);
         String spiderWorkDir = taskConfig.getTaskWorkDir();
         if(StringUtils.isBlank(spiderWorkDir)){
@@ -40,14 +43,15 @@ public class LocalDiskCacher extends Cacher {
         try {
             FileUtils.forceMkdir(new File(this.cacheDir));
         } catch (IOException e) {
-            //TODO
-            e.printStackTrace();
             logger.error("创建目录{}时失败{}", cacheDir, e);
+            MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.DISK_CACHER_MK_DIR_ERROR);
+            exp.setErrorMessage(e.getLocalizedMessage());
+            throw exp;
         }
     }
 
     @Override
-    public Page loadPage(Request request) {
+    public Page loadPage(Request request) throws MySpiderRecoverableException {
         String file = this.getCacheFilePath(request);
         Page page = null;
         File f = new File(file);
@@ -57,11 +61,12 @@ public class LocalDiskCacher extends Cacher {
                 page = new Page(pageContent);
                 page.setRequest(request);
                 page.setIsFromCache(true);
-                //TODO log
                 logger.info("缓存命中文件{}", file);
             } catch (IOException e) {
-                e.printStackTrace();
                 logger.error("读文件{}时失败{}", file, e);
+                MySpiderRecoverableException exp = new MySpiderRecoverableException(MySpiderExceptionCode.DISK_CACHER_READ_ERROR);
+                exp.setErrorMessage(e.getLocalizedMessage());
+                throw exp;
             }
         }
         else{
@@ -72,26 +77,30 @@ public class LocalDiskCacher extends Cacher {
     }
 
     @Override
-    public void cachePage(Page page) {
+    public void cachePage(Page page) throws MySpiderFetalException {
         String file = this.getCacheFilePath(page.getRequest());
         try {
             //覆盖方式写
             FileUtils.write(new File(file), page.getRawText(), StandardCharsets.UTF_8, false);
             logger.info("缓存文件{}", file);
         } catch (IOException e) {
-            e.printStackTrace();
             logger.error("缓存文件{}时发生异常{}", file, e);
+            MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.DISK_CACHER_CACHE_FILE_ERROR);
+            exp.setErrorMessage(e.getLocalizedMessage());
+            throw exp;
         }
     }
 
 
     @Override
-    public void close() {
+    public void close() throws MySpiderRecoverableException {
         try {
             FileUtils.deleteDirectory(new File(this.cacheDir));
         } catch (IOException e) {
-            e.printStackTrace();
             logger.error("清空目录{}时发生异常{}", cacheDir, e);
+            MySpiderRecoverableException exp = new MySpiderRecoverableException(MySpiderExceptionCode.DISK_CACHER_DEL_DIR_ERROR);
+            exp.setErrorMessage(e.getLocalizedMessage());
+            throw exp;
         }
     }
 

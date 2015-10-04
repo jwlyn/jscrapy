@@ -5,6 +5,9 @@ import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.config.SysDefaultConfig;
 import com.oxf1.spider.data.DataItem;
+import com.oxf1.spider.exception.MySpiderExceptionCode;
+import com.oxf1.spider.exception.MySpiderFetalException;
+import com.oxf1.spider.exception.MySpiderRecoverableException;
 import com.oxf1.spider.pipline.Pipline;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -28,7 +31,7 @@ public class LocalFilePipline extends Pipline {
      * @param taskConfig
      * @throws IOException
      */
-    public LocalFilePipline(TaskConfig taskConfig){
+    public LocalFilePipline(TaskConfig taskConfig) throws MySpiderFetalException {
 
         super(taskConfig);
         String spiderWorkDir = taskConfig.getTaskWorkDir();
@@ -41,14 +44,15 @@ public class LocalFilePipline extends Pipline {
         try {
             FileUtils.forceMkdir(new File(baseDir));
         } catch (IOException e) {
-            //TODO exp
-            e.printStackTrace();
             logger.error("创建目录{}失败 {}", baseDir, e);
+            MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.LOCAL_PIPLINE_MK_DIR_ERROR);
+            exp.setErrorMessage(e.getLocalizedMessage());
+            throw exp;
         }
     }
 
     @Override
-    public void save(List<DataItem> dataItems) {
+    public void save(List<DataItem> dataItems) throws MySpiderFetalException {
         if (dataItems != null && dataItems.size()>0) {
             for (DataItem dataItem : dataItems) {
                 try {
@@ -58,23 +62,25 @@ public class LocalFilePipline extends Pipline {
                         FileUtils.writeStringToFile(dataFile, data + "\n", StandardCharsets.UTF_8.name(), true);
                     }
                 } catch (IOException e) {
-                    //TODO
-                    e.printStackTrace();
                     logger.error("写文件{}失败{}", dataFilePath, e);
+                    MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.LOCAL_PIPLINE_WRITE_FILE_ERROR);
+                    exp.setErrorMessage(e.getLocalizedMessage());
+                    throw exp;
                 }
             }
         }
     }
 
     @Override
-    public void close() {
+    public void close() throws MySpiderRecoverableException {
         String baseDir = FilenameUtils.getFullPath(dataFilePath);
         try {
             FileUtils.deleteDirectory(new File(baseDir));
         } catch (IOException e) {
-            e.printStackTrace();
-            //TODO log it
             logger.error("删除目录{}时失败{}", baseDir, e);
+            MySpiderRecoverableException exp = new MySpiderRecoverableException(MySpiderExceptionCode.LOCAL_PIPLINE_DEL_DIR_ERROR);
+            exp.setErrorMessage(e.getLocalizedMessage());
+            throw exp;
         }
     }
 }

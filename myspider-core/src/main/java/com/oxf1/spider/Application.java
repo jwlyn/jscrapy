@@ -18,7 +18,7 @@ public class Application {
 
         TaskConfig taskConfig = new TaskConfig(taskConfigFile);
         if (!ConfigValidateUtil.validate(taskConfig)) {
-            logger.info("{}请按照提示检查配置！", "hello ");
+            logger.info("请按照提示检查配置!");
             return;
         }else{
             logger.info("配置校验通过！");

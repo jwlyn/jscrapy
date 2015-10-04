@@ -3,6 +3,7 @@ package scheduler;
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.exception.MySpiderException;
 import com.oxf1.spider.exception.MySpiderFetalException;
+import com.oxf1.spider.exception.MySpiderRecoverableException;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
 import com.oxf1.spider.request.impl.HttpRequest;
@@ -34,7 +35,7 @@ public class LocalSchedulerTest {
     }
 
     @AfterClass
-    public void tearDown() throws IOException {
+    public void tearDown() throws IOException, MySpiderRecoverableException {
 
         this.sched.close();
     }

@@ -1,5 +1,7 @@
 package com.oxf1.spider.config;
 
+import com.oxf1.spider.exception.MySpiderFetalException;
+
 import java.io.IOException;
 
 /**
@@ -7,6 +9,6 @@ import java.io.IOException;
  */
 public interface ConfigOperator {
     public Object loadValue(String key);
-    public void put(String key, Object value);
+    public void put(String key, Object value) throws MySpiderFetalException;
     public void reload() throws IOException;
 }

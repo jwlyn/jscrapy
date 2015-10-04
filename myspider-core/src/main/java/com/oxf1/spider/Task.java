@@ -4,6 +4,7 @@ import com.oxf1.spider.cacher.Cacher;
 import com.oxf1.spider.component.MyspiderComponent;
 import com.oxf1.spider.dedup.DeDup;
 import com.oxf1.spider.downloader.Downloader;
+import com.oxf1.spider.exception.MySpiderFetalException;
 import com.oxf1.spider.pipline.Pipline;
 import com.oxf1.spider.processor.Processor;
 import com.oxf1.spider.scheduler.Scheduler;
@@ -29,12 +30,12 @@ public class Task extends MyspiderComponent {
         threads = Executors.newFixedThreadPool(threadCount);
     }
 
-    public void cancel() {
+    public void cancel() throws MySpiderFetalException {
         getTaskConfig().setTaskStatus(TaskStatus.Status.CANCEL);
         threads.shutdown();
     }
 
-    public void run() {
+    public void run() throws MySpiderFetalException {
         TaskConfig cfg = getTaskConfig();
         cfg.setTaskStatus(TaskStatus.Status.RUN);
 
@@ -69,7 +70,7 @@ public class Task extends MyspiderComponent {
         }
     }
 
-    public void pause() {
+    public void pause() throws MySpiderFetalException {
         getTaskConfig().setTaskStatus(TaskStatus.Status.PAUSE);
         threads.shutdown();
     }

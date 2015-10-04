@@ -1,8 +1,12 @@
 package com.oxf1.spider.config.impl;
 
 import com.oxf1.spider.config.ConfigOperator;
+import com.oxf1.spider.exception.MySpiderExceptionCode;
+import com.oxf1.spider.exception.MySpiderFetalException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -15,7 +19,7 @@ import java.util.LinkedHashMap;
  * Created by cxu on 2015/9/18.
  */
 public class YamlConfigOperator  implements ConfigOperator {
-
+    final static Logger logger = LoggerFactory.getLogger(YamlConfigOperator.class);
     String persistencePath;//持久化文件的磁盘地址
     private LinkedHashMap<String, Object> configMap = new LinkedHashMap<String, Object>(20);
 
@@ -39,7 +43,7 @@ public class YamlConfigOperator  implements ConfigOperator {
     }
 
     @Override
-    public void put(String key, Object value) {
+    public void put(String key, Object value) throws MySpiderFetalException {
         configMap.put(key, value);
         onChange();
     }
@@ -47,7 +51,7 @@ public class YamlConfigOperator  implements ConfigOperator {
     /**
      * 当配置变化的时候，持久化到磁盘一份
      */
-    public void onChange(){
+    public void onChange() throws MySpiderFetalException {
         Yaml yaml = new Yaml();
         String config = yaml.dumpAsMap(configMap);
         try {
@@ -55,17 +59,12 @@ public class YamlConfigOperator  implements ConfigOperator {
                 FileUtils.writeStringToFile(new File(this.persistencePath), config, StandardCharsets.UTF_8.name(), false);
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            //TODO
+            logger.error("写入yaml配置文件失败{}", e);
+            MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.YAML_WRITE_FILE_ERROR);
+            exp.setErrorMessage(e.getLocalizedMessage());
+            throw exp;
         }
     }
-
-/*    public static void main(String[]arg) throws IOException {
-        String cfg = "C:\\Users\\cxu\\.myspider\\10.15.86.67@task_name@task_id@8384@cxu-PC\\cfg.yaml";
-        YamlConfigOperator opr = new YamlConfigOperator(cfg);
-        opr.reload();
-        System.out.println(opr);
-    }*/
 
     @Override
     public String toString() {

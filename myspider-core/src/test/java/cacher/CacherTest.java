@@ -4,6 +4,8 @@ import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.cacher.Cacher;
 import com.oxf1.spider.cacher.impl.LocalDiskCacher;
 import com.oxf1.spider.cacher.impl.MongoCacher;
+import com.oxf1.spider.exception.MySpiderFetalException;
+import com.oxf1.spider.exception.MySpiderRecoverableException;
 import com.oxf1.spider.page.Page;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
@@ -32,7 +34,7 @@ public class CacherTest {
     }
 
     @DataProvider(name = "dp")
-    public Cacher[][] dataProvider() throws IOException {
+    public Cacher[][] dataProvider() throws IOException, MySpiderFetalException {
         return new Cacher[][]{
                 {initLocalDiskCacher()},
                 {initMongoCacher()}
@@ -40,7 +42,7 @@ public class CacherTest {
     }
 
     @Test(dataProvider = "dp")
-    public void test(Cacher cacher) {
+    public void test(Cacher cacher) throws MySpiderRecoverableException, MySpiderFetalException {
         cacher.cachePage(page);
         Page pg = cacher.loadPage(request);
         assertNotNull(pg);
@@ -61,7 +63,7 @@ public class CacherTest {
     /**
      * @return
      */
-    private Cacher initLocalDiskCacher() throws IOException {
+    private Cacher initLocalDiskCacher() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/CacherTest.yaml");
         TaskConfig taskConfig = null;
         taskConfig = new TaskConfig(path);

@@ -51,9 +51,7 @@ public class RedisScheduler  extends Scheduler {
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
-            //TODO
-            logger.error("redis取url出错了{}", e);
+            logger.error("json build出错 {}", e);
         }
         return req;
     }

@@ -6,6 +6,7 @@ import com.oxf1.spider.dedup.impl.EhCacheDedup;
 import com.oxf1.spider.dedup.impl.MemoryDedup;
 import com.oxf1.spider.dedup.impl.MongoDedup;
 import com.oxf1.spider.dedup.impl.RedisDedup;
+import com.oxf1.spider.exception.MySpiderRecoverableException;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
 import com.oxf1.spider.request.impl.HttpRequest;
@@ -37,7 +38,7 @@ public class DeDupTest {
 
 
     @Test(dataProvider = "dp")
-    public void test(DeDup dedup){
+    public void test(DeDup dedup) throws MySpiderRecoverableException {
 
         List<Request> req1 = new ArrayList<Request>();
         req1.add(rq);

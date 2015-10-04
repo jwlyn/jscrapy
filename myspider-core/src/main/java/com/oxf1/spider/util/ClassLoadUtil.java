@@ -4,6 +4,8 @@ import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.cacher.Cacher;
 import com.oxf1.spider.dedup.DeDup;
 import com.oxf1.spider.downloader.Downloader;
+import com.oxf1.spider.exception.MySpiderExceptionCode;
+import com.oxf1.spider.exception.MySpiderFetalException;
 import com.oxf1.spider.pipline.Pipline;
 import com.oxf1.spider.processor.Processor;
 import com.oxf1.spider.scheduler.Scheduler;
@@ -18,7 +20,7 @@ import java.lang.reflect.Constructor;
 public class ClassLoadUtil {
     final static Logger logger = LoggerFactory.getLogger(ClassLoadUtil.class);
 
-    public static Scheduler loadScheduler(String className, TaskConfig arg) {
+    public static Scheduler loadScheduler(String className, TaskConfig arg) throws MySpiderFetalException {
         Object o = loadClass(className, arg);
         if (o != null) {
             return (Scheduler)o;
@@ -28,7 +30,7 @@ public class ClassLoadUtil {
         }
     }
 
-    public static DeDup loadDedup(String className, TaskConfig arg) {
+    public static DeDup loadDedup(String className, TaskConfig arg) throws MySpiderFetalException {
         Object o = loadClass(className, arg);
         if (o != null) {
             return (DeDup)o;
@@ -38,7 +40,7 @@ public class ClassLoadUtil {
         }
     }
 
-    public static Downloader loadDownloader(String className, TaskConfig arg) {
+    public static Downloader loadDownloader(String className, TaskConfig arg) throws MySpiderFetalException {
         Object o = loadClass(className, arg);
         if (o != null) {
             return (Downloader)o;
@@ -48,7 +50,7 @@ public class ClassLoadUtil {
         }
     }
 
-    public static Processor loadProcessor(String className, TaskConfig arg) {
+    public static Processor loadProcessor(String className, TaskConfig arg) throws MySpiderFetalException {
         Object o = loadClass(className, arg);
         if (o != null) {
             return (Processor)o;
@@ -58,7 +60,7 @@ public class ClassLoadUtil {
         }
     }
 
-    public static Cacher loadCacher(String className, TaskConfig arg) {
+    public static Cacher loadCacher(String className, TaskConfig arg) throws MySpiderFetalException {
         Object o = loadClass(className, arg);
         if (o != null) {
             return (Cacher)o;
@@ -68,7 +70,7 @@ public class ClassLoadUtil {
         }
     }
 
-    public static Pipline loadPipline(String className, TaskConfig arg) {
+    public static Pipline loadPipline(String className, TaskConfig arg) throws MySpiderFetalException {
         Object o = loadClass(className, arg);
         if (o != null) {
             return (Pipline)o;
@@ -78,7 +80,7 @@ public class ClassLoadUtil {
         }
     }
 
-    private static Object loadClass(String className, TaskConfig arg) {
+    private static Object loadClass(String className, TaskConfig arg) throws MySpiderFetalException {
         Object o = null;
         try {
             Class c = Class.forName(className);
@@ -86,6 +88,7 @@ public class ClassLoadUtil {
             o = constructor.newInstance(arg);
         } catch (Exception e) {
             logger.error("构造{}时出错{}", className, e);
+            throw new MySpiderFetalException(MySpiderExceptionCode.CLASS_LOAD_ERROR);
         }
 
         return o;

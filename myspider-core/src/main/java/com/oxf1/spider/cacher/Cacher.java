@@ -2,6 +2,8 @@ package com.oxf1.spider.cacher;
 
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.component.MyspiderComponent;
+import com.oxf1.spider.exception.MySpiderFetalException;
+import com.oxf1.spider.exception.MySpiderRecoverableException;
 import com.oxf1.spider.page.Page;
 import com.oxf1.spider.request.Request;
 
@@ -19,8 +21,8 @@ public abstract class Cacher extends MyspiderComponent{
      * @param request
      * @return 命中则返回，否则null
      */
-    public abstract Page loadPage(Request request);
+    public abstract Page loadPage(Request request) throws MySpiderRecoverableException;
 
-    public abstract void cachePage(Page page);
+    public abstract void cachePage(Page page) throws MySpiderFetalException;
 
 }

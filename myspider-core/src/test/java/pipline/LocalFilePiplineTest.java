@@ -3,6 +3,8 @@ package pipline;
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.data.DataItem;
+import com.oxf1.spider.exception.MySpiderFetalException;
+import com.oxf1.spider.exception.MySpiderRecoverableException;
 import com.oxf1.spider.pipline.Pipline;
 import com.oxf1.spider.pipline.impl.LocalFilePipline;
 import org.apache.commons.io.FileUtils;
@@ -38,7 +40,7 @@ public class LocalFilePiplineTest {
     }
 
     @Test
-    public void testSingleThread() throws IOException, InterruptedException {
+    public void testSingleThread() throws IOException, InterruptedException, MySpiderRecoverableException, MySpiderFetalException {
         Pipline pipline = new LocalFilePipline(this.taskConfig);
         DataItem dt = new DataItem();
         dt.put("a", "123")

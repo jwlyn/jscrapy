@@ -5,6 +5,8 @@ import com.oxf1.spider.component.MyspiderComponent;
 import com.oxf1.spider.dedup.DeDup;
 import com.oxf1.spider.downloader.Downloader;
 import com.oxf1.spider.exception.MySpiderException;
+import com.oxf1.spider.exception.MySpiderFetalException;
+import com.oxf1.spider.exception.MySpiderRecoverableException;
 import com.oxf1.spider.page.Page;
 import com.oxf1.spider.pipline.Pipline;
 import com.oxf1.spider.data.ProcessResult;
@@ -55,7 +57,12 @@ public class Spider extends MyspiderComponent implements Runnable{
             }
 
             for (Request req : requests) {//处理每一个请求
-                Page pg = cacher.loadPage(req);
+                Page pg = null;
+                try {
+                    pg = cacher.loadPage(req);
+                } catch (MySpiderRecoverableException e) {
+                    logger.error("读取缓存页面文件失败{}", e);
+                }
                 if (pg == null) {//缓存没有命中，从网络下载
                     pg = downloader.download(req);
                     if (pg == null) {
@@ -87,8 +94,13 @@ public class Spider extends MyspiderComponent implements Runnable{
 
                 //存储数据
                 for (Pipline pipline : piplines) {
-                    pipline.save(result.getData());
-                    status.addDataItemCount(result.getData().size());
+                    try {
+                        pipline.save(result.getData());
+                        status.addDataItemCount(result.getData().size());
+                    } catch (MySpiderFetalException e) {
+                        logger.error("保存文件时出错 {}", e);
+                        //TODO 数据保存出错统计
+                    }
                 }
             }
             if (requests.size() == 0) {//睡眠一段等待命令或者新的url到来
@@ -107,7 +119,11 @@ public class Spider extends MyspiderComponent implements Runnable{
         if(TaskStatus.Status.CANCEL.name().equalsIgnoreCase(taskStatus)){
             //这种情况下，任务取消，删除：dedup队列，网页缓存，存储的数据，请求队列
             logger.info("任务{}被取消", getTaskConfig().getTaskFp());
-            this.cleanTaskEnv();
+            try {
+                this.cleanTaskEnv();
+            } catch (MySpiderRecoverableException e) {
+                logger.info("清除任务相关文件失败 {}", e);
+            }
         }
         else if(TaskStatus.Status.PAUSE.name().equalsIgnoreCase(taskStatus)){
             logger.info("任务{}暂停", getTaskConfig().getTaskFp());
@@ -125,7 +141,7 @@ public class Spider extends MyspiderComponent implements Runnable{
     /**
      * 情况任务占用的资源和产生的数据
      */
-    private void cleanTaskEnv() {
+    private void cleanTaskEnv() throws MySpiderRecoverableException {
         dedup.close();
         cacher.close();
         for (Pipline p : piplines) {

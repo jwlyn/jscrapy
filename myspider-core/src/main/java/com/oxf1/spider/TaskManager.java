@@ -1,5 +1,6 @@
 package com.oxf1.spider;
 
+import com.oxf1.spider.exception.MySpiderFetalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +26,7 @@ public class TaskManager {
         return TASK_MANAGER;
     }
 
-    public void runTask(TaskConfig taskConfig) {
+    public void runTask(TaskConfig taskConfig) throws MySpiderFetalException {
         String taskId = taskConfig.getTaskId();
         Task task = tasks.get(taskId);
         if (task != null) {
@@ -38,7 +39,7 @@ public class TaskManager {
         }
     }
 
-    public void cancelTask(TaskConfig taskConfig) {
+    public void cancelTask(TaskConfig taskConfig) throws MySpiderFetalException {
         String taskId = taskConfig.getTaskId();
         Task task = tasks.get(taskId);
         if (task == null) {
@@ -50,7 +51,7 @@ public class TaskManager {
         }
     }
 
-    public void pauseTask(TaskConfig taskConfig) {
+    public void pauseTask(TaskConfig taskConfig) throws MySpiderFetalException {
         String taskId = taskConfig.getTaskId();
         Task task = tasks.get(taskId);
         if (task == null) {

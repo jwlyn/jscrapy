@@ -4,6 +4,7 @@ import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.config.ConfigOperator;
 import com.oxf1.spider.config.SysDefaultConfig;
 import com.oxf1.spider.config.impl.YamlConfigOperator;
+import com.oxf1.spider.exception.MySpiderFetalException;
 import com.oxf1.spider.scheduler.Scheduler;
 import com.oxf1.spider.status.TaskStatus;
 import groovy.lang.GroovyClassLoader;
@@ -169,7 +170,7 @@ public class TaskConfig {
         return loadString(ConfigKeys.TASK_STATUS);
     }
 
-    public void setTaskStatus(TaskStatus.Status status) {
+    public void setTaskStatus(TaskStatus.Status status) throws MySpiderFetalException {
         put(ConfigKeys.TASK_STATUS, status.name());
     }
 
@@ -225,7 +226,7 @@ public class TaskConfig {
      * @param key
      * @param value
      */
-    public void put(String key, Object value) {
+    public void put(String key, Object value) throws MySpiderFetalException {
         cfg.put(key, value);
     }
 
