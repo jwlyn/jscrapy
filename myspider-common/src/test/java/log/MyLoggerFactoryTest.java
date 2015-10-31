@@ -36,7 +36,7 @@ public class MyLoggerFactoryTest {
 
     private String getLogPath() {
         String workDir = System.getProperty("user.home");
-        String path = workDir + File.separator + ".myspider" + File.separator;
+        String path = workDir + File.separator + ".myspider" + File.separator + "logs" + File.separator;
         return path;
     }
 }
