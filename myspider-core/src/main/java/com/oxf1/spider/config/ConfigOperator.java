@@ -10,5 +10,7 @@ import java.io.IOException;
 public interface ConfigOperator {
     public Object loadValue(String key);
     public void put(String key, Object value) throws MySpiderFetalException;
-    public void reload() throws IOException;
+    public void reload() throws IOException, MySpiderFetalException;
+
+    public void rebaseConfigDir(String path) throws MySpiderFetalException;
 }

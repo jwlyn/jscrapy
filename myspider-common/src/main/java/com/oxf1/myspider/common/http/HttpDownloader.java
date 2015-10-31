@@ -1,4 +1,4 @@
-package com.oxf1.myspider.http;
+package com.oxf1.myspider.common.http;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;

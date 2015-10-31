@@ -23,17 +23,32 @@ public class YamlConfigOperator  implements ConfigOperator {
     String persistencePath;//持久化文件的磁盘地址
     private LinkedHashMap<String, Object> configMap = new LinkedHashMap<String, Object>(20);
 
-    public YamlConfigOperator(String persistencePath){
-        this.persistencePath = persistencePath;
+    public YamlConfigOperator(String persistencePath) throws MySpiderFetalException {
+        this.persistencePath = persistencePath;//TODO
+        reload();
     }
 
     /**
      * 重新从文件里load参数
      */
-    public void reload() throws IOException {
+    public void reload() throws MySpiderFetalException {
         Yaml yaml = new Yaml();
-        String yamlStr = FileUtils.readFileToString(new File(this.persistencePath));
+        String yamlStr = null;
+        try {
+            yamlStr = FileUtils.readFileToString(new File(this.persistencePath));
+        } catch (IOException e) {
+            logger.error("读取yaml配置文件失败{}", e);
+            MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.YAML_READ_FILE_ERROR);
+            exp.setErrorMessage(e.getLocalizedMessage());
+            throw exp;
+        }
         configMap = (LinkedHashMap<String, Object>)yaml.loadAs(yamlStr, LinkedHashMap.class);
+    }
+
+    @Override
+    public void rebaseConfigDir(String path) throws MySpiderFetalException {
+        this.persistencePath = path;
+        onChange();
     }
 
     @Override

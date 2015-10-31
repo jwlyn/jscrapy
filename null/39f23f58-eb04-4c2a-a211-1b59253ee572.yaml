@@ -1,0 +1,5 @@
+task_id: task_id
+task_name: task_name
+virtual_id: VIRTUAL_ID
+spider_work_dir: c:/code/temp
+wait_url_sleep_time_ms: 1000

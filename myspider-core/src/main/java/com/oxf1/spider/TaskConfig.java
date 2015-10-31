@@ -4,6 +4,7 @@ import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.config.ConfigOperator;
 import com.oxf1.spider.config.SysDefaultConfig;
 import com.oxf1.spider.config.impl.YamlConfigOperator;
+import com.oxf1.spider.exception.MySpiderExceptionCode;
 import com.oxf1.spider.exception.MySpiderFetalException;
 import com.oxf1.spider.scheduler.Scheduler;
 import com.oxf1.spider.status.TaskStatus;
@@ -38,38 +39,43 @@ public class TaskConfig {
      *
      * @param taskConfigFile
      */
-    public TaskConfig(String taskConfigFile) throws IOException {
+    public TaskConfig(String taskConfigFile) throws MySpiderFetalException {
         this.cfg = new YamlConfigOperator(taskConfigFile);
-        this.cfg.reload();
         this.taskSharedObject = new ConcurrentHashMap<String, Object>(5);
-
+        String taskConfigFilePath = getTaskWorkDir() + getTaskFp() + File.separator + "task.yaml";
+        cfg.rebaseConfigDir(taskConfigFilePath);
         taskId = loadString(ConfigKeys.TASK_ID);
         taskName = loadString(ConfigKeys.TASK_NAME);
         initTaskStatusObject();
-
-        String groovyCode = null;
-        String groovyFile = loadString(ConfigKeys.GROOVY_FILE);
-        if (groovyFile != null) {
-            File f = new File(groovyFile);
-            if (f.exists() && !f.isDirectory()) {//绝对路径
-                groovyCode = FileUtils.readFileToString(f);
-            } else {//相对路径？
-                String path = FilenameUtils.getFullPath(taskConfigFile);
-                path = path + groovyFile;
-                f = new File(path);
-                if (f.exists() && !f.isDirectory()) {
+        try {
+            String groovyCode = null;
+            String groovyFile = loadString(ConfigKeys.GROOVY_FILE);
+            if (groovyFile != null) {
+                File f = new File(groovyFile);
+                if (f.exists() && !f.isDirectory()) {//绝对路径
                     groovyCode = FileUtils.readFileToString(f);
+                } else {//相对路径？
+                    String path = FilenameUtils.getFullPath(taskConfigFile);
+                    path = path + groovyFile;
+                    f = new File(path);
+                    if (f.exists() && !f.isDirectory()) {
+                        groovyCode = FileUtils.readFileToString(f);
+                    }
                 }
-            }
-            if (StringUtils.isNotBlank(groovyCode)) {
-                setGroovyScript(groovyCode);
+                if (StringUtils.isNotBlank(groovyCode)) {
+                    setGroovyScript(groovyCode);
+                } else {
+                    logger.error("groovy file {} is empty", groovyFile);
+                }
             } else {
-                logger.error("groovy file {} is empty", groovyFile);
+                logger.error("groovy file {} not exists", groovyFile);
             }
-        } else {
-            logger.error("groovy file {} not exists", groovyFile);
+        } catch (IOException e) {
+            logger.error("加载Groovy文件失败 {}", e);
+            MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.GROOVY_PARSER_NOT_FOUND);
+            exp.setErrorMessage(e.getLocalizedMessage());
+            throw exp;
         }
-
     }
 
     public void setGroovyScript(String groovyCode) {

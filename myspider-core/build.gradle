@@ -9,6 +9,8 @@ bootRepackage {
 dependencies {
     //runtime ""
     //testCompile ""
+    compile project(':myspider-common')
+
     compile "org.apache.commons:commons-lang3:$commonsLang3"
     compile "commons-io:commons-io:$commonsIo"
     compile "commons-codec:commons-codec:$commonsCodec"
@@ -30,6 +32,8 @@ dependencies {
     compile "org.codehaus.groovy:groovy-all:$groovy"
     compile "joda-time:joda-time:$jodaTime"
 	compile "ch.grengine:grengine:$grengine"
+    //compile "commons-fileupload:commons-fileupload:$commonsFileupload"
+
 
     compile("org.springframework.boot:spring-boot-starter-web"){
         exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"

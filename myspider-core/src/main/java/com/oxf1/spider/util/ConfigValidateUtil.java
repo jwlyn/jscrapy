@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ConfigValidateUtil {
     final static Logger logger = LoggerFactory.getLogger(ConfigValidateUtil.class);
-    public static boolean validate(TaskConfig taskConfig) {
+    public static boolean validate(TaskConfig taskConfig, StringBuffer errorMsg) {
         boolean result = true;
         //验证必须的参数
         String[] requiredParameters = {ConfigKeys.TASK_ID,
@@ -32,7 +32,7 @@ public class ConfigValidateUtil {
                 ConfigKeys.GROOVY_FILE,
         };
 
-        result = result && require(taskConfig, requiredParameters);
+        result = result && require(taskConfig, requiredParameters, errorMsg);
 
         return result;
     }
@@ -43,13 +43,14 @@ public class ConfigValidateUtil {
      * @param allKeys
      * @return
      */
-    private static boolean require(TaskConfig cfg, String[]allKeys) {
+    private static boolean require(TaskConfig cfg, String[]allKeys, StringBuffer errorMsg) {
         boolean isOk = true;
         for (String configKey : allKeys) {
             boolean exists = cfg.checkValueExists(configKey);
             isOk = isOk && exists;
             if (!exists) {
                 logger.error("需要参数: {}", configKey);
+                errorMsg.append("需要参数：").append(configKey).append("\n");
             }
         }
 

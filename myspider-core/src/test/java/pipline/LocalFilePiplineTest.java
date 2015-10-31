@@ -27,7 +27,7 @@ public class LocalFilePiplineTest {
     private TaskConfig taskConfig;
 
     @BeforeClass
-    public void setup() throws IOException {
+    public void setup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(LocalFilePiplineTest.class, "/LocalFilePiplineTest.yaml");
         this.taskConfig = new TaskConfig(path);
     }

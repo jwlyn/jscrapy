@@ -22,7 +22,7 @@ public class TaskManager {
         tasks = new ConcurrentHashMap<String, Task>();
     }
 
-    public TaskManager instance(){
+    public static TaskManager instance(){
         return TASK_MANAGER;
     }
 

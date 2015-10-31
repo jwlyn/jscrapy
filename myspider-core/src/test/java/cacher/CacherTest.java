@@ -52,7 +52,7 @@ public class CacherTest {
     /**
      * @return
      */
-    private Cacher initMongoCacher() throws IOException {
+    private Cacher initMongoCacher() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/MongoCacherTest.yaml");
         TaskConfig taskConfig = null;
         taskConfig = new TaskConfig(path);

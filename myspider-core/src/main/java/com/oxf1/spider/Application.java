@@ -1,58 +1,74 @@
 package com.oxf1.spider;
 
-import com.oxf1.spider.util.ConfigValidateUtil;
+import com.alibaba.fastjson.JSON;
+import com.oxf1.myspider.common.http.FetchResponse;
+import com.oxf1.myspider.common.http.HttpDownloader;
+import com.oxf1.myspider.common.http.HttpMethod;
+import com.oxf1.myspider.common.http.HttpRequest;
+import com.oxf1.spider.controller.response.ResponseBase;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * Created by cxu on 2015/10/2.
  */
-@Controller
-@EnableAutoConfiguration
+
+@SpringBootApplication
 public class Application {
     final static Logger logger = LoggerFactory.getLogger(Application.class);
 
-    @RequestMapping("/")
-    @ResponseBody
-    String home() {
-        return "Hello World!";
-    }
     public static void main(String[]args) throws IOException {
-        //TODO 把过程变成，如果用户传递了文件而且存在，直接启动Web，然后post这个请求到入口。
 
+        SpringApplication.run(Application.class, args);//启动
+
+        /**
+         * 如果有同时指明了任务就提交任务
+         */
         String taskConfigFile = parseTaskConfigFile();
         if (StringUtils.isNotBlank(taskConfigFile)) {
-            TaskConfig taskConfig = new TaskConfig(taskConfigFile);
-            if (!ConfigValidateUtil.validate(taskConfig)) {
-                logger.info("请按照提示检查配置!");
-                return;
-            }else{
-                logger.info("配置校验通过！");
+            File f = new File(taskConfigFile);
+            if(!f.exists()) {
+                logger.error("文件 {} 不存在！", taskConfigFile);
             }
-            //验证通过
-
-            System.exit(0);
-        }
-        else{
-            SpringApplication.run(Application.class, args);
+            else{//提交任务到本地
+                String yamlFileContent = FileUtils.readFileToString(f);
+                String url = "http://localhost:8080/task/start";
+                HttpRequest req = new HttpRequest();
+                req.setUrl(url);
+                req.setHttpMethod(HttpMethod.POST);
+                req.addRequestParameters("taskConfig", yamlFileContent);
+                HttpDownloader dl = new HttpDownloader();
+                try {
+                    FetchResponse resp = dl.download(req);
+                    String json = new String(resp.getContent(), resp.getCharset());
+                    ResponseBase result = JSON.parseObject(json, ResponseBase.class);
+                    if (result.isSuccess()) {
+                        logger.info("任务启动成功！");
+                    }else{
+                        logger.error(result.getErrorReason());
+                        logger.error("任务启动失败！");
+                    }
+                } catch (URISyntaxException e) {
+                    logger.error("URISyntaxException {}", url);
+                }
+            }
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public static String parseTaskConfigFile() {
         String taskConfigFile = System.getProperty("task.config");
         return taskConfigFile;
-    }
-
-    public static void printUsage() {
-        System.out.println("Usage: java -Dtask.config=<path/to/task.yaml> -jar yourJar.jar");
-        System.exit(-1);
     }
 }

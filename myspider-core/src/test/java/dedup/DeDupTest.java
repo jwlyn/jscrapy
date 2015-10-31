@@ -6,6 +6,7 @@ import com.oxf1.spider.dedup.impl.EhCacheDedup;
 import com.oxf1.spider.dedup.impl.MemoryDedup;
 import com.oxf1.spider.dedup.impl.MongoDedup;
 import com.oxf1.spider.dedup.impl.RedisDedup;
+import com.oxf1.spider.exception.MySpiderFetalException;
 import com.oxf1.spider.exception.MySpiderRecoverableException;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
@@ -27,7 +28,7 @@ public class DeDupTest {
     private Request rq = new HttpRequest("http://url1", HttpRequestMethod.HTTP_DELETE, null);
 
     @DataProvider(name="dp")
-    public DeDup[][] dataProvider() throws IOException {
+    public DeDup[][] dataProvider() throws IOException, MySpiderFetalException {
         return new DeDup[][]{
                 {initEhcacheDedup()} ,
                 {initMemoryDedup()},
@@ -66,7 +67,7 @@ public class DeDupTest {
      *
      * @return
      */
-    private DeDup initEhcacheDedup() throws IOException {
+    private DeDup initEhcacheDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/EhCacheDedupTest.yaml");
         TaskConfig taskConfig = new TaskConfig(path);
         DeDup dp = new EhCacheDedup(taskConfig);
@@ -77,7 +78,7 @@ public class DeDupTest {
      *
      * @return
      */
-    private DeDup initMemoryDedup() throws IOException {
+    private DeDup initMemoryDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/MemoryDedupTest.yaml");
         TaskConfig taskConfig = new TaskConfig(path);
         DeDup dp = new MemoryDedup(taskConfig);
@@ -88,7 +89,7 @@ public class DeDupTest {
      *
      * @return
      */
-    private DeDup initMongoDedup() throws IOException {
+    private DeDup initMongoDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/MongoDedupTest.yaml");
         TaskConfig taskConfig = new TaskConfig(path);
         DeDup dp = new MongoDedup(taskConfig);
@@ -99,7 +100,7 @@ public class DeDupTest {
      *
      * @return
      */
-    private DeDup initRedisDedup() throws IOException {
+    private DeDup initRedisDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/RedisDedupTest.yaml");
         TaskConfig taskConfig = new TaskConfig(path);
         DeDup dp = new RedisDedup(taskConfig);

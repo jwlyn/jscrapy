@@ -1,4 +1,4 @@
-package com.oxf1.myspider.http;
+package com.oxf1.myspider.common.http;
 
 /**
  * Created by cxu on 2015/9/29.

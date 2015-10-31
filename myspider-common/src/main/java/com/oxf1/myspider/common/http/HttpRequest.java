@@ -1,4 +1,4 @@
-package com.oxf1.myspider.http;
+package com.oxf1.myspider.common.http;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +46,10 @@ public class HttpRequest {
 
     public void setRequestParameters(HashMap<String, String> requestParameters) {
         this.requestParameters = requestParameters;
+    }
+
+    public void addRequestParameters(String key, String value) {
+        this.requestParameters.put(key, value);
     }
 
     public WatchableSpiderProxy getProxy() {
