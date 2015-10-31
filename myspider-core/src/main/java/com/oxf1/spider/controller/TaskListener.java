@@ -37,7 +37,7 @@ public class TaskListener {
     public ResponseBase startTask(@RequestParam(value = "taskConfig", required = true) String yamlContent) {
         ResponseBase response = new ResponseBase();
         if (StringUtils.isNotBlank(yamlContent)) {
-            String tempDir = System.getProperty("java.io.tempDir");
+            String tempDir = System.getProperty("java.io.tmpdir");
             String uuid = UUID.randomUUID().toString();
             String file = tempDir + File.separator + uuid + ".yaml";
             try {

@@ -49,8 +49,8 @@ public class ConfigValidateUtil {
             boolean exists = cfg.checkValueExists(configKey);
             isOk = isOk && exists;
             if (!exists) {
-                logger.error("需要参数: {}", configKey);
-                errorMsg.append("需要参数：").append(configKey).append("\n");
+                logger.error("缺少必须参数: {}", configKey);
+                errorMsg.append("缺少必须参数：").append(configKey).append("\n");
             }
         }
 
