@@ -16,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by cxu on 2015/10/2.
@@ -25,7 +26,7 @@ import java.net.URISyntaxException;
 public class Application {
     final static Logger logger = LoggerFactory.getLogger(Application.class);
 
-    public static void main(String[]args) throws IOException {
+    public static void main(String[]args) throws IOException, InterruptedException {
 
         SpringApplication.run(Application.class, args);//启动
 
@@ -45,6 +46,7 @@ public class Application {
                 req.setUrl(url);
                 req.setHttpMethod(HttpMethod.POST);
                 req.addRequestParameters("taskConfig", yamlFileContent);
+                TimeUnit.MILLISECONDS.sleep(4000);//等待启动完成
                 HttpDownloader dl = new HttpDownloader();
                 try {
                     FetchResponse resp = dl.download(req);

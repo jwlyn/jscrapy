@@ -34,12 +34,14 @@ dependencies {
 	//compile "ch.grengine:grengine:$grengine"
     //compile "commons-fileupload:commons-fileupload:$commonsFileupload"
 
-
     compile("org.springframework.boot:spring-boot-starter-web"){
         exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
         exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
+        exclude group: "com.fast.xml.jackson.core", module: "jackson-annotations"
+        exclude group: "com.fast.xml.jackson.core", module: "jackson-core"
+        exclude group: "com.fast.xml.jackson.core", module: "jackson-databind"
     }
     compile "org.slf4j:jcl-over-slf4j:1.7.12"
 
-    providedRuntime("org.springframework.boot:spring-boot-starter-jetty")
+    compile ("org.springframework.boot:spring-boot-starter-jetty")
 }
