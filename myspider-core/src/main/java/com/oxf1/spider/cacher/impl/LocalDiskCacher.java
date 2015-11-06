@@ -3,14 +3,12 @@ package com.oxf1.spider.cacher.impl;
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.cacher.Cacher;
 import com.oxf1.spider.config.ConfigKeys;
-import com.oxf1.spider.config.SysDefaultConfig;
 import com.oxf1.spider.exception.MySpiderExceptionCode;
 import com.oxf1.spider.exception.MySpiderFetalException;
 import com.oxf1.spider.exception.MySpiderRecoverableException;
 import com.oxf1.spider.page.Page;
 import com.oxf1.spider.request.Request;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,12 +30,7 @@ public class LocalDiskCacher extends Cacher {
      */
     public LocalDiskCacher(TaskConfig taskConfig) throws MySpiderFetalException {
         super(taskConfig);
-        String spiderWorkDir = taskConfig.getTaskWorkDir();
-        if(StringUtils.isBlank(spiderWorkDir)){
-            spiderWorkDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
-        }
-        spiderWorkDir = spiderWorkDir + taskConfig.getTaskFp() + File.separator + "cacher" + File.separator;
-        this.cacheDir = spiderWorkDir;//组合出这个任务在本地磁盘的目录
+        this.cacheDir = getTaskWorkDir(taskConfig);//组合出这个任务在本地磁盘的目录
         taskConfig.put(ConfigKeys.RT_LOCAL_CACHER_DIR, this.cacheDir);
 
         try {
@@ -115,5 +108,16 @@ public class LocalDiskCacher extends Cacher {
             file = request.fp() + ".html";
         }
         return this.cacheDir + file;
+    }
+
+    /**
+     *
+     * @param taskConfig
+     * @return
+     */
+    private String getTaskWorkDir(TaskConfig taskConfig) {
+        String spiderWorkDir = taskConfig.getTaskWorkDir();
+        String taskWorkDir = spiderWorkDir + taskConfig.getTaskFp() + File.separator + "cacher" + File.separator;
+        return taskWorkDir;
     }
 }

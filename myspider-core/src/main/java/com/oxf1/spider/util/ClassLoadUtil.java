@@ -11,6 +11,7 @@ import com.oxf1.spider.processor.Processor;
 import com.oxf1.spider.scheduler.Scheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.MessageFormatter;
 
 import java.lang.reflect.Constructor;
 
@@ -88,7 +89,10 @@ public class ClassLoadUtil {
             o = constructor.newInstance(arg);
         } catch (Exception e) {
             logger.error("构造{}时出错{}", className, e);
-            throw new MySpiderFetalException(MySpiderExceptionCode.CLASS_LOAD_ERROR);
+            String errorMessage = MessageFormatter.format("构造对象{}时出错", className).getMessage();
+            MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.CLASS_LOAD_ERROR);
+            exp.setErrorMessage(errorMessage);
+            throw  exp;
         }
 
         return o;

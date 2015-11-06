@@ -42,7 +42,7 @@ public class TaskConfig {
     public TaskConfig(String taskConfigFile) throws MySpiderFetalException {
         this.cfg = new YamlConfigOperator(taskConfigFile);
         this.taskSharedObject = new ConcurrentHashMap<String, Object>(5);
-        String taskConfigFilePath = getTaskWorkDir() + getTaskFp() + File.separator + "task.yaml";
+        String taskConfigFilePath = getTaskConfigFilePath();
         cfg.rebaseConfigDir(taskConfigFilePath);
         taskId = loadString(ConfigKeys.TASK_ID);
         taskName = loadString(ConfigKeys.TASK_NAME);
@@ -168,6 +168,10 @@ public class TaskConfig {
         String workDir = loadString(ConfigKeys.SPIDER_WORK_DIR);
         if (StringUtils.isBlank(workDir)) {
             workDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
+        }
+        if(!workDir.endsWith(File.separator)){
+            workDir = workDir + File.separator;
+            //put(ConfigKeys.SPIDER_WORK_DIR, workDir);
         }
         return workDir;
     }
@@ -322,5 +326,13 @@ public class TaskConfig {
         }
 
         return parser;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private String getTaskConfigFilePath(){
+        return getTaskWorkDir() + getTaskFp() + File.separator + "task.yaml";
     }
 }

@@ -3,7 +3,6 @@ package com.oxf1.spider.pipline.impl;
 import com.alibaba.fastjson.JSON;
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
-import com.oxf1.spider.config.SysDefaultConfig;
 import com.oxf1.spider.data.DataItem;
 import com.oxf1.spider.exception.MySpiderExceptionCode;
 import com.oxf1.spider.exception.MySpiderFetalException;
@@ -11,7 +10,6 @@ import com.oxf1.spider.exception.MySpiderRecoverableException;
 import com.oxf1.spider.pipline.Pipline;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,9 +33,7 @@ public class LocalFilePipline extends Pipline {
 
         super(taskConfig);
         String spiderWorkDir = taskConfig.getTaskWorkDir();
-        if(StringUtils.isBlank(spiderWorkDir)){
-            spiderWorkDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
-        }
+
         this.dataFilePath = spiderWorkDir + taskConfig.getTaskFp() + File.separator + "pipline" + File.separator + taskConfig.getTaskName() + ".json";//完整的目录+文件名字。解析之后的数据保存的位置
         taskConfig.put(ConfigKeys.RT_LOCAL_FILE_PIPLINE_DATA_FILE, this.dataFilePath);
         String baseDir = FilenameUtils.getFullPath(dataFilePath);

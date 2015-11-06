@@ -5,7 +5,6 @@ import com.leansoft.bigqueue.BigQueueImpl;
 import com.leansoft.bigqueue.IBigQueue;
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;
-import com.oxf1.spider.config.SysDefaultConfig;
 import com.oxf1.spider.exception.MySpiderExceptionCode;
 import com.oxf1.spider.exception.MySpiderFetalException;
 import com.oxf1.spider.request.Request;
@@ -33,10 +32,6 @@ public class FileQueueScheduler extends Scheduler {
         super(taskConfig);
 
         String spiderWorkDir = taskConfig.getTaskWorkDir();
-        if(StringUtils.isBlank(spiderWorkDir)){
-            spiderWorkDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
-        }
-
         this.queueFilePath = spiderWorkDir + taskConfig.getTaskFp() + File.separator + "scheduler" + File.separator;
         this.queueName = taskConfig.getTaskName();
         taskConfig.put(ConfigKeys.RT_LOCAL_QUEUE_DIR, queueFilePath);

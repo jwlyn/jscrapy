@@ -8,7 +8,7 @@ public enum  MySpiderExceptionCode {
     LOCAL_QUEUE_SCHEDULE_DEQUEUE_ERROR("LocalQueueScheduler.java: Request出队列时出错"),
     LOCAL_QUEUE_SCHEDULE_DEJSON_ERROR("LocalQueueScheduler.java: Request出队列后反解析json成为Request时出错"),
     LOCAL_QUEUE_SCHEDULE_INIT_ERROR("LocalQueueScheduler.java: 构造本地的bigQueue时出错"),
-    CLASS_LOAD_ERROR("构造对象时发生错误"),
+    CLASS_LOAD_ERROR("构造对象{}时发生错误"),
     LOCAL_PIPLINE_DEL_DIR_ERROR("删除本地目录失败"),
     LOCAL_PIPLINE_MK_DIR_ERROR("创建目录失败"),
     LOCAL_PIPLINE_WRITE_FILE_ERROR("写文件失败"),

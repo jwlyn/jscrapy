@@ -10,7 +10,7 @@ public class ConfigKeys {
     public static final String VIRTUAL_ID = "virtual_id";
 
     //保存本地任务的配置，缓存，数据等的总目录地址
-    public static String SPIDER_WORK_DIR = "spider_work_dir";
+    public static final String SPIDER_WORK_DIR = "spider_work_dir";
     public static final String SCHEDULER_BATCH_SIZE = "scheduler_batch_size";
     public static final String THREAD_COUNT = "task_thread_count";
     //GROOVY_FILE必须有
