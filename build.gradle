@@ -47,6 +47,7 @@ allprojects {
         slf4jApi = "1.7.12"
         log4j="1.2.17"
         slf4jLog4j="1.7.12"
+        jclOverSlf4j="1.7.12"
         bigqueue="0.7.0"
         jedis="2.7.2"
         webmagic="0.5.2"
