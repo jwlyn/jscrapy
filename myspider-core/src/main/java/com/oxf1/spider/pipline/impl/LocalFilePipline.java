@@ -40,7 +40,7 @@ public class LocalFilePipline extends Pipline {
         try {
             FileUtils.forceMkdir(new File(baseDir));
         } catch (IOException e) {
-            logger.error("创建目录{}失败 {}", baseDir, e);
+            log(logger, "error", "创建目录{}失败 {}", baseDir, e);
             MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.LOCAL_PIPLINE_MK_DIR_ERROR);
             exp.setErrorMessage(e.getLocalizedMessage());
             throw exp;
@@ -58,7 +58,7 @@ public class LocalFilePipline extends Pipline {
                         FileUtils.writeStringToFile(dataFile, data + "\n", StandardCharsets.UTF_8.name(), true);
                     }
                 } catch (IOException e) {
-                    logger.error("写文件{}失败{}", dataFilePath, e);
+                    log(logger, "error", "写文件{}失败{}", dataFilePath, e);
                     MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.LOCAL_PIPLINE_WRITE_FILE_ERROR);
                     exp.setErrorMessage(e.getLocalizedMessage());
                     throw exp;
@@ -73,7 +73,7 @@ public class LocalFilePipline extends Pipline {
         try {
             FileUtils.deleteDirectory(new File(baseDir));
         } catch (IOException e) {
-            logger.error("删除目录{}时失败{}", baseDir, e);
+            log(logger, "error", "删除目录{}时失败{}", baseDir, e);
             MySpiderRecoverableException exp = new MySpiderRecoverableException(MySpiderExceptionCode.LOCAL_PIPLINE_DEL_DIR_ERROR);
             exp.setErrorMessage(e.getLocalizedMessage());
             throw exp;

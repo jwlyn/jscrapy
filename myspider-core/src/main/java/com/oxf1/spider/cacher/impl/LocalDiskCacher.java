@@ -32,7 +32,7 @@ public class LocalDiskCacher extends Cacher {
         try {
             FileUtils.forceMkdir(new File(taskWorkDir));
         } catch (IOException e) {
-            logger.error("创建目录{}时失败{}", taskWorkDir, e);
+            log(logger, "error", "创建目录{}时失败{}", taskWorkDir, e);
             MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.DISK_CACHER_MK_DIR_ERROR);
             exp.setErrorMessage(e.getLocalizedMessage());
             throw exp;
@@ -50,16 +50,16 @@ public class LocalDiskCacher extends Cacher {
                 page = new Page(pageContent);
                 page.setRequest(request);
                 page.setIsFromCache(true);
-                logger.info("缓存命中文件{}", file);
+                log(logger, "info", "缓存命中文件{}", file);
             } catch (IOException e) {
-                logger.error("读文件{}时失败{}", file, e);
+                log(logger, "error", "读文件{}时失败{}", file, e);
                 MySpiderRecoverableException exp = new MySpiderRecoverableException(MySpiderExceptionCode.DISK_CACHER_READ_ERROR);
                 exp.setErrorMessage(e.getLocalizedMessage());
                 throw exp;
             }
         }
         else{
-            logger.info("缓存没有命中文件{}", file);
+            log(logger, "info", "缓存没有命中文件{}", file);
         }
 
         return page;
@@ -71,9 +71,9 @@ public class LocalDiskCacher extends Cacher {
         try {
             //覆盖方式写
             FileUtils.write(new File(file), page.getRawText(), StandardCharsets.UTF_8, false);
-            logger.info("缓存文件{}", file);
+            log(logger, "info", "缓存文件{}", file);
         } catch (IOException e) {
-            logger.error("缓存文件{}时发生异常{}", file, e);
+            log(logger, "error", "缓存文件{}时发生异常{}", file, e);
             MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.DISK_CACHER_CACHE_FILE_ERROR);
             exp.setErrorMessage(e.getLocalizedMessage());
             throw exp;
@@ -87,7 +87,7 @@ public class LocalDiskCacher extends Cacher {
         try {
             FileUtils.deleteDirectory(new File(taskWorkDir));
         } catch (IOException e) {
-            logger.error("清空目录{}时发生异常{}", taskWorkDir, e);
+            log(logger, "error", "清空目录{}时发生异常{}", taskWorkDir, e);
             MySpiderRecoverableException exp = new MySpiderRecoverableException(MySpiderExceptionCode.DISK_CACHER_DEL_DIR_ERROR);
             exp.setErrorMessage(e.getLocalizedMessage());
             throw exp;

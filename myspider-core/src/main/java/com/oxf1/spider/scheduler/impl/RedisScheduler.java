@@ -51,7 +51,7 @@ public class RedisScheduler  extends Scheduler {
             }
 
         } catch (JSONException e) {
-            logger.error("json build出错 {}", e);
+            log(logger, "error", "json build出错 {}", e);
         }
         return req;
     }
