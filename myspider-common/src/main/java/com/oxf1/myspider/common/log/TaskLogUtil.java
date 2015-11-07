@@ -36,19 +36,24 @@ public class TaskLogUtil {
      */
     public static void log(Object logger, String methodName, String msg) {
         //动态调用
+        if (logger == null) {
+            return;
+        }
         Method method = null;
         try {
-            method = logger.getClass().getDeclaredMethod(methodName, new Class[]{String.class});
+            method = logger.getClass().getMethod(methodName, new Class[]{String.class});
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+
         }
 
-        try {
-            method.invoke(logger, msg);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        if (method != null) {
+            try {
+                method.invoke(logger, msg);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

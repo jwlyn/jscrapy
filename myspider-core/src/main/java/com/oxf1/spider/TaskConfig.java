@@ -4,6 +4,7 @@ import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.config.ConfigOperator;
 import com.oxf1.spider.config.SysDefaultConfig;
 import com.oxf1.spider.config.impl.YamlConfigOperator;
+import com.oxf1.spider.config.util.ConfigPrepareUtil;
 import com.oxf1.spider.exception.MySpiderExceptionCode;
 import com.oxf1.spider.exception.MySpiderFetalException;
 import com.oxf1.spider.scheduler.Scheduler;
@@ -26,8 +27,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class TaskConfig {
     final static Logger logger = LoggerFactory.getLogger(TaskConfig.class);
-    private final String taskId;
-    private final String taskName;
     private final ConfigOperator cfg;
     /**
      * 存放同一个任务需要的多线程共享对象
@@ -44,8 +43,7 @@ public class TaskConfig {
         this.taskSharedObject = new ConcurrentHashMap<String, Object>(5);
         String taskConfigFilePath = getTaskConfigFilePath();
         cfg.rebaseConfigDir(taskConfigFilePath);
-        taskId = loadString(ConfigKeys.TASK_ID);
-        taskName = loadString(ConfigKeys.TASK_NAME);
+
         initTaskStatusObject();
         try {
             String groovyCode = null;
@@ -76,6 +74,7 @@ public class TaskConfig {
             exp.setErrorMessage(e.getLocalizedMessage());
             throw exp;
         }
+        ConfigPrepareUtil.prepareConfig(this);
     }
 
     public void setGroovyScript(String groovyCode) {
@@ -316,12 +315,14 @@ public class TaskConfig {
      * @return
      */
     public String getTaskFp() {
+        String taskId = loadString(ConfigKeys.TASK_ID);
+        String taskName = loadString(ConfigKeys.TASK_NAME);
         StringBuffer buf = new StringBuffer(10);
         buf.append(SysDefaultConfig.HOST)
                 .append("@")
-                .append(this.taskName)
+                .append(taskName)
                 .append("@")
-                .append(this.taskId)
+                .append(taskId)
                 .append("@")
                 .append(getVirtualId());//使用jvm进程Id可以在一台机器上模拟分布式
 

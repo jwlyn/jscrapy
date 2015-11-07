@@ -49,7 +49,7 @@ public class ConfigValidateUtil {
             boolean exists = cfg.checkValueExists(configKey);
             isOk = isOk && exists;
             if (!exists) {
-                logger.error("缺少必须参数: {}", configKey);
+                logger.error("缺少必须参数: {}", new Object[]{configKey});
                 errorMsg.append("缺少必须参数：").append(configKey).append("\n");
             }
         }
@@ -70,7 +70,7 @@ public class ConfigValidateUtil {
                 return true;
             }
         }
-        logger.error("下列参数中必须要有一个存在: {}", configKeys);
+        logger.error("下列参数中必须要有一个存在: {}", configKeys.toString());
         return false;
     }
 

@@ -36,7 +36,7 @@ public class LocalFilePiplineTest {
     public void tearDown() throws IOException {
         /*删除文件*/
         String tempDir = taskConfig.getSpiderWorkDir() + taskConfig.getTaskFp();
-        FileUtils.deleteDirectory(new File(tempDir));
+        FileUtils.forceDeleteOnExit(new File(tempDir));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package cacher;
 
+import com.oxf1.myspider.common.log.MyLoggerFactory;
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.cacher.Cacher;
 import com.oxf1.spider.cacher.impl.LocalDiskCacher;
@@ -42,11 +43,15 @@ public class CacherTest {
     }
 
     @Test(dataProvider = "dp")
-    public void test(Cacher cacher) throws MySpiderRecoverableException, MySpiderFetalException {
-        cacher.cachePage(page);
-        Page pg = cacher.loadPage(request);
-        assertNotNull(pg);
-        cacher.close();
+    public void test(Cacher cacher) throws  MySpiderFetalException {
+        try {
+            cacher.cachePage(page);
+            Page pg = cacher.loadPage(request);
+            assertNotNull(pg);
+            cacher.close();
+        } catch (MySpiderRecoverableException e) {
+
+        }
     }
 
     /**
@@ -56,6 +61,7 @@ public class CacherTest {
         String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/MongoCacherTest.yaml");
         TaskConfig taskConfig = null;
         taskConfig = new TaskConfig(path);
+        taskConfig.setTaskLogger(MyLoggerFactory.getModuleLogger(taskConfig.getTaskFp(), taskConfig.getTaskLogDir()));
         Cacher cacher = new MongoCacher(taskConfig);
         return cacher;
     }
@@ -67,6 +73,7 @@ public class CacherTest {
         String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/CacherTest.yaml");
         TaskConfig taskConfig = null;
         taskConfig = new TaskConfig(path);
+        taskConfig.setTaskLogger(MyLoggerFactory.getModuleLogger(taskConfig.getTaskFp(), taskConfig.getTaskLogDir()));
         Cacher cacher = new LocalDiskCacher(taskConfig);
         return cacher;
     }
