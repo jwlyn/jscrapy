@@ -45,7 +45,7 @@ public class LocalSchedulerTest {
 
         List<Request> req = new ArrayList<Request>();
         for(int i=0; i<1000; i++){
-            Request request = new HttpRequest(Double.toHexString(Math.random()), HttpRequestMethod.HTTP_GET, null);
+            Request request = new HttpRequest(Double.toHexString(Math.random()), HttpRequestMethod.GET, null);
             req.add(request);
         }
         sched.push(req);

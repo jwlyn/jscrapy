@@ -28,7 +28,7 @@ public class CacherTest {
 
     @BeforeClass
     public void setup() {
-        request = new HttpRequest("http://oxf1.com/test", HttpRequestMethod.HTTP_DELETE, null);
+        request = new HttpRequest("http://oxf1.com/test", HttpRequestMethod.DELETE, null);
         page = new Page("this is html content, hahaha!");
         page.setRequest(request);
     }

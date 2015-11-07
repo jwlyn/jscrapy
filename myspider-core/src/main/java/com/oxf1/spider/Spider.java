@@ -46,6 +46,7 @@ public class Spider extends MyspiderComponent implements Runnable{
 
         while(!Thread.currentThread().isInterrupted() &&
                 getTaskConfig().getTaskStatus().equalsIgnoreCase(TaskStatus.Status.RUN.name())){
+
             TaskStatus status = getTaskConfig().getTaskStatusObject();
             List<Request> requests = null;
             try {
@@ -63,7 +64,12 @@ public class Spider extends MyspiderComponent implements Runnable{
                 } catch (MySpiderRecoverableException e) {
                     logger.error("读取缓存页面文件失败{}", e);
                 }
-                if (pg == null) {//缓存没有命中，从网络下载
+                if(pg!=null){//缓存命中了
+                    if(pg.isFromCache()){
+                        status.addCacheUrl(1);
+                        status.addPageSizeKb(pg.sizeInKb());
+                    }
+                }else {//缓存没有命中，从网络下载
                     pg = downloader.download(req);
                     if (pg == null) {
                         status.addFailedUrl(1);
@@ -71,13 +77,9 @@ public class Spider extends MyspiderComponent implements Runnable{
                         status.addNetUrl(1);
                         status.addPageSizeKb(pg.sizeInKb());
                     }
-                }else{//看一下是否缓存命中
-                    if(pg.isFromCache()){
-                        status.addCacheUrl(1);
-                        status.addPageSizeKb(pg.sizeInKb());
-                    }
                 }
                 if (pg == null) {
+                    logger.error("页面下载失败 page=null");
                     continue;
                 }
                 ProcessResult result = processor.process(pg);
@@ -102,7 +104,17 @@ public class Spider extends MyspiderComponent implements Runnable{
                         //TODO 数据保存出错统计
                     }
                 }
+
+                if (!pg.isFromCache()) {//sleep
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(1000);//TODO 参数化
+                    } catch (InterruptedException e) {
+                        logger.info("等待新的URL过程中发生InterruptedException");
+                        break;
+                    }
+                }
             }
+
             if (requests.size() == 0) {//睡眠一段等待命令或者新的url到来
                 int sleepTimeMs = getTaskConfig().getWaitUrlSleepTimeMs();
                 try {

@@ -33,6 +33,11 @@ public class HttpRequest extends Request{
         this.parameters = parameters;
     }
 
+    public HttpRequest(String url) {
+        this.url = url;
+        this.httpMethod = HttpRequestMethod.GET;
+    }
+
     private HttpRequest(){}
 
     @Override

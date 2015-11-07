@@ -33,7 +33,7 @@ public class RedisSchedulerTest {
 
         List<Request> request = new ArrayList<Request>();
         for(int i=0; i<100; i++){
-            request.add(new HttpRequest("http://x.com", HttpRequestMethod.HTTP_DELETE, null));
+            request.add(new HttpRequest("http://x.com", HttpRequestMethod.DELETE, null));
         }
         sched.push(request);
 

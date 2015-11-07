@@ -8,17 +8,17 @@ import java.util.Map;
 /**
  * Created by cxu on 2015/9/29.
  */
-public class HttpRequest {
+public class FetchRequest {
 
     private String url;
     private HttpMethod httpMethod = HttpMethod.GET; //请求方法
-    private HashMap<String, String> requestParameters = new HashMap<String, String>();//请求参数
+    private Map<String, String> requestParameters = new HashMap<String, String>();//请求参数
 
     private WatchableSpiderProxy proxy;
     private Map<String,String> header = new HashMap<String, String>();
     private List<Integer> acceptCode;
 
-    public HttpRequest() {
+    public FetchRequest() {
         acceptCode = new ArrayList<Integer>();
         acceptCode.add(200);
         header.put(HttpHeaderName.USER_AGENT, "myspider@github");
@@ -40,11 +40,11 @@ public class HttpRequest {
         this.httpMethod = httpMethod;
     }
 
-    public HashMap<String, String> getRequestParameters() {
+    public Map<String, String> getRequestParameters() {
         return requestParameters;
     }
 
-    public void setRequestParameters(HashMap<String, String> requestParameters) {
+    public void setRequestParameters(Map<String, String> requestParameters) {
         this.requestParameters = requestParameters;
     }
 

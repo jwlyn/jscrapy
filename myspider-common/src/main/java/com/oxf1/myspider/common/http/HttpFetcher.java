@@ -41,19 +41,19 @@ import java.util.Set;
 /**
  * Created by cxu on 2015/9/29.
  */
-public class HttpDownloader {
+public class HttpFetcher {
     //TODO 增加httpClient的缓存功能，每次构造一个连接是比较费时的
 
-    public FetchResponse download(HttpRequest httpRequest) throws SocketTimeoutException, URISyntaxException, UnsupportedEncodingException, IOException {
+    public FetchResponse download(FetchRequest fetchRequest) throws SocketTimeoutException, URISyntaxException, UnsupportedEncodingException, IOException {
         FetchResponse finalResponse = new FetchResponse();
 
-        HttpRequestBase req = this.buildRequest(httpRequest);
-        CloseableHttpClient httpClient = this.buildHttpClient(httpRequest);
+        HttpRequestBase req = this.buildRequest(fetchRequest);
+        CloseableHttpClient httpClient = this.buildHttpClient(fetchRequest);
         CloseableHttpResponse response = null;
         try {
             response = httpClient.execute(req);
             int statusCode = response.getStatusLine().getStatusCode();
-            if (!httpRequest.isAccept(statusCode)) {
+            if (!fetchRequest.isAccept(statusCode)) {
                 //TODO log it
                 finalResponse.setSuccess(false);
                 finalResponse.setStatusCode(statusCode);
@@ -82,33 +82,35 @@ public class HttpDownloader {
 
     /**
      * 组装http请求
-     * @param httpRequest
+     * @param fetchRequest
      * @return
      * @throws URISyntaxException
      * @throws UnsupportedEncodingException
      */
-    private HttpRequestBase buildRequest(HttpRequest httpRequest) throws URISyntaxException, UnsupportedEncodingException{
+    private HttpRequestBase buildRequest(FetchRequest fetchRequest) throws URISyntaxException, UnsupportedEncodingException{
 
         HttpRequestBase httpMethod = null;
 
-        if (httpRequest.getHttpMethod() == HttpMethod.GET) {
-            URIBuilder bd = new URIBuilder(httpRequest.getUrl());
+        if (fetchRequest.getHttpMethod() == HttpMethod.GET) {
+            URIBuilder bd = new URIBuilder(fetchRequest.getUrl());
 
             //设置GET的请求参数
-            final Map<String, String> parameters = httpRequest.getRequestParameters();
-            Set<String> parameterNames = parameters.keySet();
-            for (String pName : parameterNames) {
-                bd.addParameter(pName, parameters.get(pName));
+            final Map<String, String> parameters = fetchRequest.getRequestParameters();
+            if (parameters != null) {
+                Set<String> parameterNames = parameters.keySet();
+                for (String pName : parameterNames) {
+                    bd.addParameter(pName, parameters.get(pName));
+                }
             }
 
             URI uri = bd.build();
             httpMethod = new HttpGet(uri);
         }
-        else if (httpRequest.getHttpMethod() == HttpMethod.POST) {
-            httpMethod = new HttpPost(httpRequest.getUrl());
+        else if (fetchRequest.getHttpMethod() == HttpMethod.POST) {
+            httpMethod = new HttpPost(fetchRequest.getUrl());
             //设置POST参数
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-            final Map<String, String> parameters = httpRequest.getRequestParameters();
+            final Map<String, String> parameters = fetchRequest.getRequestParameters();
             Set<String> parameterNames = parameters.keySet();
             for (String pName : parameterNames) {
                 nvps.add(new BasicNameValuePair(pName, parameters.get(pName)));
@@ -117,14 +119,14 @@ public class HttpDownloader {
         }
 
         //设置头：cookie, isAjax, referer, userAgent等
-        final Map<String, String> headers = httpRequest.getHeader();
+        final Map<String, String> headers = fetchRequest.getHeader();
         Set<String> headerNames = headers.keySet();
         for (String hdName : headerNames) {
             httpMethod.setHeader(hdName, headers.get(hdName));
         }
 
         //设置代理
-        WatchableSpiderProxy proxy = httpRequest.getProxy();
+        WatchableSpiderProxy proxy = fetchRequest.getProxy();
         RequestConfig.Builder requestConfigBuilder = RequestConfig.custom()
                 /*.setConnectionRequestTimeout(this.taskConfig.getHttpTimeoutMs())
                 .setSocketTimeout(this.taskConfig.getHttpTimeoutMs())
@@ -144,13 +146,13 @@ public class HttpDownloader {
 
     /**
      * 下载客户端
-     * @param httpRequest
+     * @param fetchRequest
      * @return
      */
-    private CloseableHttpClient buildHttpClient(HttpRequest httpRequest) {
+    private CloseableHttpClient buildHttpClient(FetchRequest fetchRequest) {
 
         HttpClientBuilder httpClientBuilder = HttpClients.custom();
-        WatchableSpiderProxy proxy = httpRequest.getProxy();
+        WatchableSpiderProxy proxy = fetchRequest.getProxy();
 
         if (proxy != null) {//代理认证
             CredentialsProvider credsProvider = new BasicCredentialsProvider();

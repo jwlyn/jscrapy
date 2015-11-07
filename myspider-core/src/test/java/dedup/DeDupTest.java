@@ -25,7 +25,7 @@ import static org.testng.Assert.assertEquals;
  * Created by cxu on 2015/9/19.
  */
 public class DeDupTest {
-    private Request rq = new HttpRequest("http://url1", HttpRequestMethod.HTTP_DELETE, null);
+    private Request rq = new HttpRequest("http://url1", HttpRequestMethod.DELETE, null);
 
     @DataProvider(name="dp")
     public DeDup[][] dataProvider() throws IOException, MySpiderFetalException {
@@ -48,8 +48,8 @@ public class DeDupTest {
 
         //先测试写入原来一样的，返回非空
         Request rq1 = rq;
-        Request rq2 = new HttpRequest("http://url2", HttpRequestMethod.HTTP_DELETE, null);
-        Request rq3 = new HttpRequest("http://url3", HttpRequestMethod.HTTP_DELETE, null);
+        Request rq2 = new HttpRequest("http://url2", HttpRequestMethod.DELETE, null);
+        Request rq3 = new HttpRequest("http://url3", HttpRequestMethod.DELETE, null);
 
         List<Request> req = new ArrayList<Request>();
         req.add(rq1);

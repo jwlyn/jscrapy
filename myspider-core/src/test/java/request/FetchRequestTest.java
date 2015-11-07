@@ -14,13 +14,13 @@ import static org.testng.Assert.assertEquals;
 /**
  * Created by cxu on 2015/5/21.
  */
-public class HttpRequestTest {
+public class FetchRequestTest {
     @DataProvider(name = "queue_request_provider")
     public Object[][] rangeData() {
 
         return new Object[][] {
-                {"{\"url\":\"http://oxf1.com\",\"http_method\":\"HTTP_POST\",\"post_parms\":{\"site\":\"oxf1\", \"person\":\"cxu\"}}", "http://oxf1.com", HttpRequestMethod.HTTP_POST },
-                {"{\"url\":\"http://oxf1.com/test.html\",\"http_method\":\"HTTP_GET\"}", "http://oxf1.com/test.html", HttpRequestMethod.HTTP_GET },
+                {"{\"url\":\"http://oxf1.com\",\"http_method\":\"POST\",\"post_parms\":{\"site\":\"oxf1\", \"person\":\"cxu\"}}", "http://oxf1.com", HttpRequestMethod.POST},
+                {"{\"url\":\"http://oxf1.com/test.html\",\"http_method\":\"GET\"}", "http://oxf1.com/test.html", HttpRequestMethod.GET},
                 {"{}", null, null },
         };
     }

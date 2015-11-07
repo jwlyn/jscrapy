@@ -20,12 +20,20 @@ public class Page {
         this.isFromCache = isFromCache;
     }
 
+    public Page() {
+
+    }
+
     public Page(String rawText){
         this.rawText = rawText;
     }
 
     public String getRawText() {
         return rawText;
+    }
+
+    public void setRawText(String rawText) {
+        this.rawText = rawText;
     }
 
     public Request getRequest(){

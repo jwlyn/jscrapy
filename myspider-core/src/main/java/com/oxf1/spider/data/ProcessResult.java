@@ -50,7 +50,7 @@ public class ProcessResult {
 
     public ProcessResult addLinks(String link) {
         if (StringUtils.isNotBlank(link)) {
-            Request req = new HttpRequest(link, HttpRequestMethod.HTTP_GET, null);
+            Request req = new HttpRequest(link, HttpRequestMethod.GET, null);
             links.add(req);
         }
 
@@ -60,7 +60,7 @@ public class ProcessResult {
     public ProcessResult addLinks(List<String> links) {
         if (links != null) {
             for (String s : links) {
-                Request req = new HttpRequest(s, HttpRequestMethod.HTTP_GET, null);
+                Request req = new HttpRequest(s, HttpRequestMethod.GET, null);
                 this.links.add(req);
             }
         }
