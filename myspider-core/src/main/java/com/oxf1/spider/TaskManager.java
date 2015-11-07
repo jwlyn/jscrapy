@@ -1,10 +1,14 @@
 package com.oxf1.spider;
 
 import com.oxf1.spider.exception.MySpiderFetalException;
+import com.oxf1.spider.status.TaskStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -61,5 +65,30 @@ public class TaskManager {
             task.pause();
             tasks.remove(taskId);
         }
+    }
+
+    public List<TaskStatus> getTaskStatus() {
+        List<TaskStatus> status = new ArrayList<>();
+        Set<String> taskIds = tasks.keySet();
+        for (String taskId : taskIds) {
+            Task task = tasks.get(taskId);
+            if (task != null) {
+                TaskStatus sts = task.getTaskConfig().getTaskStatusObject();
+                status.add(sts);
+            }
+        }
+
+        return status;
+    }
+
+    public TaskStatus getTaskStatus(String taskId) {
+        TaskStatus status = null;
+
+        Task task = tasks.get(taskId);
+        if (task != null) {
+            status = task.getTaskConfig().getTaskStatusObject();
+        }
+
+        return status;
     }
 }

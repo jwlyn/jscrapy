@@ -84,6 +84,10 @@ public class Task extends MyspiderComponent {
 
     }
 
+    public TaskConfig getTaskConfig() {
+        return getTaskConfig();
+    }
+
     @Override
     public String toString() {
         TaskConfig cfg = getTaskConfig();
