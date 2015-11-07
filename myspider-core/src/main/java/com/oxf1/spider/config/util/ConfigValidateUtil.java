@@ -1,4 +1,4 @@
-package com.oxf1.spider.util;
+package com.oxf1.spider.config.util;
 
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.config.ConfigKeys;

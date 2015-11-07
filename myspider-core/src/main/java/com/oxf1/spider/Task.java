@@ -1,5 +1,6 @@
 package com.oxf1.spider;
 
+import com.oxf1.myspider.common.log.MyLoggerFactory;
 import com.oxf1.spider.cacher.Cacher;
 import com.oxf1.spider.component.MyspiderComponent;
 import com.oxf1.spider.dedup.DeDup;
@@ -50,6 +51,9 @@ public class Task extends MyspiderComponent {
         Scheduler scheduler = ClassLoadUtil.loadScheduler(schedulerClass, cfg);
         cfg.setSchedulerObject(scheduler);
 
+        String logPath  = cfg.getTaskLogDir();
+        org.apache.log4j.Logger logger = MyLoggerFactory.getModuleLogger(cfg.getTaskFp(), logPath);
+        cfg.setTaskLogger(logger);
         int threadCount = getTaskConfig().getThreadCount();
         for (int i = 0; i < threadCount; i++) {
             Spider sp = new Spider(getTaskConfig());

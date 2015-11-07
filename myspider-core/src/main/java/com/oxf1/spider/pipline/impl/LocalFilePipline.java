@@ -32,7 +32,7 @@ public class LocalFilePipline extends Pipline {
     public LocalFilePipline(TaskConfig taskConfig) throws MySpiderFetalException {
 
         super(taskConfig);
-        String spiderWorkDir = taskConfig.getTaskWorkDir();
+        String spiderWorkDir = taskConfig.getSpiderWorkDir();
 
         this.dataFilePath = spiderWorkDir + taskConfig.getTaskFp() + File.separator + "pipline" + File.separator + taskConfig.getTaskName() + ".json";//完整的目录+文件名字。解析之后的数据保存的位置
         taskConfig.put(ConfigKeys.RT_LOCAL_FILE_PIPLINE_DATA_FILE, this.dataFilePath);

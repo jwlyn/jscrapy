@@ -2,9 +2,10 @@ package com.oxf1.spider.controller;
 
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.TaskManager;
+import com.oxf1.spider.config.util.ConfigPrepareUtil;
+import com.oxf1.spider.config.util.ConfigValidateUtil;
 import com.oxf1.spider.controller.response.ResponseBase;
 import com.oxf1.spider.exception.MySpiderFetalException;
-import com.oxf1.spider.util.ConfigValidateUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -48,10 +49,13 @@ public class TaskListener {
                     logger.error("校验配置失败!");
                     return new ResponseBase(false, "not-set-yet", errorBuffer.toString());
                 }else{//验证通过
+                    ConfigPrepareUtil.prepareConfig(taskConfig);
                     logger.info("配置校验通过！启动任务");
                     TaskManager.instance().runTask(taskConfig);
                     return new ResponseBase(true, "not-set-yet", "启动成功");
                 }
+
+
 
             } catch (MySpiderFetalException e) {
                 return new ResponseBase(false, "not-set-yet", e.getErrorMessage());

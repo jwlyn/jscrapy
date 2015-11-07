@@ -97,6 +97,14 @@ public class TaskConfig {
     }
 
     /**
+     * 每个任务分别记录日志的路径
+     * @return
+     */
+    public String getTaskLogDir() {
+        return loadString(ConfigKeys.RT_TASK_LOG_DIR);
+    }
+
+    /**
      * scheduler每次从队列里取出的请求数目, 默认1个
      *
      * @return
@@ -164,16 +172,25 @@ public class TaskConfig {
      *
      * @return
      */
-    public String getTaskWorkDir() {
+    public String getSpiderWorkDir() {
         String workDir = loadString(ConfigKeys.SPIDER_WORK_DIR);
         if (StringUtils.isBlank(workDir)) {
             workDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
         }
         if(!workDir.endsWith(File.separator)){
             workDir = workDir + File.separator;
-            //put(ConfigKeys.SPIDER_WORK_DIR, workDir);
         }
         return workDir;
+    }
+
+    public String getTaskWorkDir() {
+        String taskWorkDir = loadString(ConfigKeys.RT_LOCAL_TASK_WORK_DIR);
+        return taskWorkDir;
+    }
+
+    public String getTaskCacheDir() {
+        String taskCacheDir = loadString(ConfigKeys.RT_LOCAL_TASK_CACHER_DIR);
+        return taskCacheDir;
     }
 
     public String getTaskStatus() {
@@ -262,6 +279,18 @@ public class TaskConfig {
         taskSharedObject.put(ConfigKeys.RT_SCHEDULER_OBJECT, scheduler);
     }
 
+    /**
+     * 任务级别的日志
+     * @param logger
+     */
+    public void setTaskLogger(org.apache.log4j.Logger logger) {
+        taskSharedObject.put(ConfigKeys.TASK_LOGGER, logger);
+    }
+
+    public org.apache.log4j.Logger getTaskLogger() {
+        return (org.apache.log4j.Logger)taskSharedObject.get(ConfigKeys.TASK_LOGGER);
+    }
+
     public void addTaskSharedObject(String key, Object obj) {
         taskSharedObject.put(key, obj);
     }
@@ -333,6 +362,6 @@ public class TaskConfig {
      * @return
      */
     private String getTaskConfigFilePath(){
-        return getTaskWorkDir() + getTaskFp() + File.separator + "task.yaml";
+        return getSpiderWorkDir() + getTaskFp() + File.separator + "task.yaml";
     }
 }

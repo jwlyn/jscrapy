@@ -40,7 +40,6 @@ public class MyLoggerFactory {
         appender.setEncoding("UTF-8");
         appender.activateOptions();
         logger.addAppender(appender);
-
         return logger;
     }
 

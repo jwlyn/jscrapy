@@ -18,6 +18,7 @@ public class ConfigKeys {
 
     /*任务当时应该处于的状态：运行、暂停(保存队列)、结束(需要清空队列)*/
     public static final String TASK_STATUS = "task_status";
+    public static final String TASK_LOGGER = "task_logger";
     public static final String WAIT_URL_SLEEP_TIME_MS = "wait_url_sleep_time_ms";
 
     /*模块类名*/
@@ -49,8 +50,10 @@ public class ConfigKeys {
     ------------------------------------------------------------------------------------
      */
     public static final String RT_LOCAL_FILE_PIPLINE_DATA_FILE = "rt_local_file_pipline_data_file";
-    public static final String RT_LOCAL_CACHER_DIR = "rt_local_cacher_dir";
+    public static final String RT_LOCAL_TASK_WORK_DIR = "rt_local_task_work_dir";
+    public static final String RT_LOCAL_TASK_CACHER_DIR = "rt_local_task_cacher_dir";
     public static final String RT_LOCAL_QUEUE_DIR = "rt_local_queue_dir";
+    public static final String RT_TASK_LOG_DIR = "rt_task_log_dir";//分任务记录的日志
 
     /*Groovy解析脚本对象*/
     public static final String RT_GROOVY_PROCESSOR_OBJECT = "rt_groovy_processor_object";

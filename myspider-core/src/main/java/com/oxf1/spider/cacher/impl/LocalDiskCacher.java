@@ -2,7 +2,6 @@ package com.oxf1.spider.cacher.impl;
 
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.cacher.Cacher;
-import com.oxf1.spider.config.ConfigKeys;
 import com.oxf1.spider.exception.MySpiderExceptionCode;
 import com.oxf1.spider.exception.MySpiderFetalException;
 import com.oxf1.spider.exception.MySpiderRecoverableException;
@@ -21,8 +20,6 @@ import java.nio.charset.StandardCharsets;
  */
 public class LocalDiskCacher extends Cacher {
     final static Logger logger = LoggerFactory.getLogger(LocalDiskCacher.class);
-    //缓存文件的最外层目录
-    private String cacheDir;
 
     /**
      * 构造函数
@@ -30,13 +27,12 @@ public class LocalDiskCacher extends Cacher {
      */
     public LocalDiskCacher(TaskConfig taskConfig) throws MySpiderFetalException {
         super(taskConfig);
-        this.cacheDir = getTaskWorkDir(taskConfig);//组合出这个任务在本地磁盘的目录
-        taskConfig.put(ConfigKeys.RT_LOCAL_CACHER_DIR, this.cacheDir);
+        String taskWorkDir = getTaskWorkDir();//组合出这个任务在本地磁盘的目录
 
         try {
-            FileUtils.forceMkdir(new File(this.cacheDir));
+            FileUtils.forceMkdir(new File(taskWorkDir));
         } catch (IOException e) {
-            logger.error("创建目录{}时失败{}", cacheDir, e);
+            logger.error("创建目录{}时失败{}", taskWorkDir, e);
             MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.DISK_CACHER_MK_DIR_ERROR);
             exp.setErrorMessage(e.getLocalizedMessage());
             throw exp;
@@ -87,10 +83,11 @@ public class LocalDiskCacher extends Cacher {
 
     @Override
     public void close() throws MySpiderRecoverableException {
+        String taskWorkDir = getTaskWorkDir();
         try {
-            FileUtils.deleteDirectory(new File(this.cacheDir));
+            FileUtils.deleteDirectory(new File(taskWorkDir));
         } catch (IOException e) {
-            logger.error("清空目录{}时发生异常{}", cacheDir, e);
+            logger.error("清空目录{}时发生异常{}", taskWorkDir, e);
             MySpiderRecoverableException exp = new MySpiderRecoverableException(MySpiderExceptionCode.DISK_CACHER_DEL_DIR_ERROR);
             exp.setErrorMessage(e.getLocalizedMessage());
             throw exp;
@@ -107,17 +104,26 @@ public class LocalDiskCacher extends Cacher {
         if(request!=null){
             file = request.fp() + ".html";
         }
-        return this.cacheDir + file;
+        return getTaskCacheDir() + file;
     }
 
     /**
      *
-     * @param taskConfig
      * @return
      */
-    private String getTaskWorkDir(TaskConfig taskConfig) {
-        String spiderWorkDir = taskConfig.getTaskWorkDir();
-        String taskWorkDir = spiderWorkDir + taskConfig.getTaskFp() + File.separator + "cacher" + File.separator;
-        return taskWorkDir;
+    private String getTaskWorkDir() {
+        TaskConfig taskConfig = getTaskConfig();
+        return taskConfig.getTaskWorkDir();
     }
+
+    /**
+     *
+     * @return
+     */
+    private String getTaskCacheDir() {
+        TaskConfig taskConfig = getTaskConfig();
+        return taskConfig.getTaskCacheDir();
+    }
+
+
 }
