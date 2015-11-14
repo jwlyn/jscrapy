@@ -1,11 +1,10 @@
 package com.oxf1.myspider.common.log;
 
+import com.oxf1.myspider.common.datetime.DatetimeUtil;
 import org.apache.log4j.*;
 import org.slf4j.Logger;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by cxu on 2015/10/27.
@@ -26,7 +25,7 @@ public class MyLoggerFactory {
         if(!logPath.endsWith(File.separator)){
             logPath = logPath + File.separator;
         }
-        logPath = logPath + getTime("yyyyMMdd") + ".log";
+        logPath = logPath + DatetimeUtil.getTime("yyyyMMdd") + ".log";
 
         org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(taskFp);
         logger.removeAllAppenders();
@@ -43,13 +42,4 @@ public class MyLoggerFactory {
         return logger;
     }
 
-    /**
-     *
-     * @param format
-     * @return
-     */
-    public static String getTime(String format) {
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        return sdf.format(new Date());
-    }
 }

@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/status")
-public class StatusExport {
+public class TaskStatusMonitor {
     /**
      *
      * @return
@@ -27,6 +27,11 @@ public class StatusExport {
         return sts;
     }
 
+    /**
+     *
+     * @param taskId
+     * @return
+     */
     @RequestMapping(value = "/task/{id}", method = RequestMethod.GET)
     @ResponseBody
     public TaskStatus taskStatus(@PathVariable(value = "id")String taskId) {

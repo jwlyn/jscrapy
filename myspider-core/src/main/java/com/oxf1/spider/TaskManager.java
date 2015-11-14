@@ -1,10 +1,12 @@
 package com.oxf1.spider;
 
+import com.oxf1.myspider.common.datetime.DatetimeUtil;
 import com.oxf1.spider.exception.MySpiderFetalException;
 import com.oxf1.spider.status.TaskStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -90,5 +92,20 @@ public class TaskManager {
         }
 
         return status;
+    }
+
+    /**
+     * 没找到返回null
+     * @param taskId
+     * @return
+     */
+    public String getTaskLogFilePath(String taskId) {
+        String logFilePath = null;
+        Task task = tasks.get(taskId);
+        if (task != null) {
+            logFilePath = task.getTaskConfig().getTaskLogDir() + File.separator + DatetimeUtil.getTime("yyyyMMdd") + ".log";
+        }
+
+        return logFilePath;
     }
 }

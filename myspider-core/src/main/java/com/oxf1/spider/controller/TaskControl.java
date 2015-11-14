@@ -26,8 +26,8 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping("/task")
-public class TaskListener {
-    final static Logger logger = LoggerFactory.getLogger(TaskListener.class);
+public class TaskControl {
+    final static Logger logger = LoggerFactory.getLogger(TaskControl.class);
 
     /**
      * 启动一个任务
