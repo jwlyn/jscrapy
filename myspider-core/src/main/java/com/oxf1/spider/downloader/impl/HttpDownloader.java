@@ -2,8 +2,9 @@ package com.oxf1.spider.downloader.impl;
 
 import com.oxf1.myspider.common.http.FetchRequest;
 import com.oxf1.myspider.common.http.FetchResponse;
-import com.oxf1.myspider.common.http.HttpFetcher;
 import com.oxf1.myspider.common.http.HttpMethod;
+import com.oxf1.myspider.common.http.fetcher.HttpFetcher;
+import com.oxf1.myspider.common.http.fetcher.impl.JoddHttpFetcher;
 import com.oxf1.spider.TaskConfig;
 import com.oxf1.spider.component.MyspiderComponent;
 import com.oxf1.spider.downloader.Downloader;
@@ -23,7 +24,7 @@ public class HttpDownloader extends MyspiderComponent implements Downloader {
 
     public HttpDownloader(TaskConfig taskConfig) {
         super(taskConfig);
-        fetcher = new HttpFetcher();
+        fetcher = new JoddHttpFetcher();//TODO 配置化
     }
 
     @Override

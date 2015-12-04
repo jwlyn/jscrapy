@@ -1,5 +1,7 @@
-package com.oxf1.myspider.common.http;
+package com.oxf1.myspider.contrib.fetcher;
 
+import com.oxf1.myspider.common.http.*;
+import com.oxf1.myspider.common.http.fetcher.HttpFetcher;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.NameValuePair;
@@ -41,7 +43,7 @@ import java.util.Set;
 /**
  * Created by cxu on 2015/9/29.
  */
-public class HttpFetcher {
+public class ApacheHttpFetcher implements HttpFetcher {
     //TODO 增加httpClient的缓存功能，每次构造一个连接是比较费时的
 
     public FetchResponse download(FetchRequest fetchRequest) throws SocketTimeoutException, URISyntaxException, UnsupportedEncodingException, IOException {

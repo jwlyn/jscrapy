@@ -3,6 +3,12 @@ dependencies {
     //compile ""
 
     //runtime ""
-    testCompile "junit:junit:$junit"
-
+    compile project(':myspider-common')
+    compile("us.codecraft:webmagic-core:$webmagic"){
+        exclude group: "commons-io", module: "commons-io"
+        //exclude group: "commons-lang", module: "commons-lang"
+        exclude group: "org.slf4j", module: "slf4j-api"
+        exclude group: "com.google.guava", module: "guava"
+        exclude group: "commons-logging", module: "commons-logging"
+    }
 }

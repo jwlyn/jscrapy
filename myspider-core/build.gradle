@@ -30,7 +30,9 @@ dependencies {
     compile "gaillard:mongo-queue-java:$mongodbQueue"
     compile "org.yaml:snakeyaml:$snakyaml"
     compile "org.codehaus.groovy:groovy-all:$groovy"
-    compile "joda-time:joda-time:$jodaTime"
+    //compile "joda-time:joda-time:$jodaTime"
+
+    compile "org.slf4j:jcl-over-slf4j:$jclOverSlf4j"
 
     compile("org.springframework.boot:spring-boot-starter-web"){
         exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
@@ -39,7 +41,6 @@ dependencies {
         exclude group: "com.fast.xml.jackson.core", module: "jackson-core"
         exclude group: "com.fast.xml.jackson.core", module: "jackson-databind"
     }
-    compile "org.slf4j:jcl-over-slf4j:$jclOverSlf4j"
-    //compile "javax.servlet.jsp.jstl:jstl:1.2"
+
     providedRuntime ("org.springframework.boot:spring-boot-starter-jetty")
 }

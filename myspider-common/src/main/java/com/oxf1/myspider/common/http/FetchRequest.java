@@ -17,6 +17,7 @@ public class FetchRequest {
     private WatchableSpiderProxy proxy;
     private Map<String,String> header = new HashMap<String, String>();
     private List<Integer> acceptCode;
+    private String charset;//站点的编码
 
     public FetchRequest() {
         acceptCode = new ArrayList<Integer>();
@@ -120,5 +121,13 @@ public class FetchRequest {
      */
     public boolean isAccept(int httpStatusCode) {
         return this.acceptCode.contains(httpStatusCode);
+    }
+
+    public String getCharset() {
+        return charset;
+    }
+
+    public void setCharset(String charset) {
+        this.charset = charset;
     }
 }
