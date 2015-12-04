@@ -1,10 +1,10 @@
 package com.oxf1.spider.data;
 
+import com.oxf1.myspider.common.datetime.DatetimeUtil;
 import com.oxf1.spider.request.HttpRequestMethod;
 import com.oxf1.spider.request.Request;
 import com.oxf1.spider.request.impl.HttpRequest;
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -90,9 +90,7 @@ public class ProcessResult {
     }
 
     private String getTimeStrNow() {
-        DateTime dateTime = new DateTime();
-        String timeNow = dateTime.toString("yyyy-MM-dd HH:mm:ss");
-        return timeNow;
+        return DatetimeUtil.getTime("yyyy-MM-dd HH:mm:ss");
     }
 
     public void setRequest(Request request) {

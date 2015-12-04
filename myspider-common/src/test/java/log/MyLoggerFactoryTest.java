@@ -1,5 +1,6 @@
 package log;
 
+import com.oxf1.myspider.common.datetime.DatetimeUtil;
 import com.oxf1.myspider.common.log.MyLoggerFactory;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -30,7 +31,7 @@ public class MyLoggerFactoryTest {
 
     private String getLogFilePath() {
         String logPath = getLogPath();
-        String file = logPath + MyLoggerFactory.getTime("yyyyMMdd") + ".log";
+        String file = logPath + DatetimeUtil.getTime("yyyyMMdd") + ".log";
         return file;
     }
 
