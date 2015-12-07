@@ -9,3 +9,5 @@ dependencies {
     compile "org.jodd:jodd-http:$joddVersion"
     compile "log4j:log4j:$log4j"
 }
+
+sourceCompatibility = 1.7

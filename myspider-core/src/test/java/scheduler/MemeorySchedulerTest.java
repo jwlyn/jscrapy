@@ -1,12 +1,12 @@
 package scheduler;
 
-import com.oxf1.spider.TaskConfig;
-import com.oxf1.spider.exception.MySpiderException;
-import com.oxf1.spider.request.HttpRequestMethod;
-import com.oxf1.spider.request.Request;
-import com.oxf1.spider.request.impl.HttpRequest;
-import com.oxf1.spider.scheduler.Scheduler;
-import com.oxf1.spider.scheduler.impl.MemoryScheduler;
+import com.oxf1.myspider.TaskConfig;
+import com.oxf1.myspider.exception.MySpiderException;
+import com.oxf1.myspider.request.HttpRequestMethod;
+import com.oxf1.myspider.request.Request;
+import com.oxf1.myspider.request.impl.HttpRequest;
+import com.oxf1.myspider.scheduler.Scheduler;
+import com.oxf1.myspider.scheduler.impl.MemoryScheduler;
 import org.testng.annotations.Test;
 import util.ResourcePathUtils;
 

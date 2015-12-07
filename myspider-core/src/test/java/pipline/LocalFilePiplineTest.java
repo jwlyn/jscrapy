@@ -1,12 +1,12 @@
 package pipline;
 
-import com.oxf1.spider.TaskConfig;
-import com.oxf1.spider.config.ConfigKeys;
-import com.oxf1.spider.data.DataItem;
-import com.oxf1.spider.exception.MySpiderFetalException;
-import com.oxf1.spider.exception.MySpiderRecoverableException;
-import com.oxf1.spider.pipline.Pipline;
-import com.oxf1.spider.pipline.impl.LocalFilePipline;
+import com.oxf1.myspider.TaskConfig;
+import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.data.DataItem;
+import com.oxf1.myspider.exception.MySpiderFetalException;
+import com.oxf1.myspider.exception.MySpiderRecoverableException;
+import com.oxf1.myspider.pipline.Pipline;
+import com.oxf1.myspider.pipline.impl.LocalFilePipline;
 import org.apache.commons.io.FileUtils;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;

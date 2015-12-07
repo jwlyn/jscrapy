@@ -1,1 +1,7 @@
-include "myspider-common", "myspider-core", "myspider-contrib", "myspider-admin"
+include "myspider-admin"
+include 'myspider-slave'
+include "myspider-core"
+include "myspider-contrib"
+include "myspider-common"
+
+

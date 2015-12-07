@@ -1,8 +1,8 @@
 package request;
 
-import com.oxf1.spider.request.HttpRequestMethod;
-import com.oxf1.spider.request.Request;
-import com.oxf1.spider.request.impl.HttpRequest;
+import com.oxf1.myspider.request.HttpRequestMethod;
+import com.oxf1.myspider.request.Request;
+import com.oxf1.myspider.request.impl.HttpRequest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 

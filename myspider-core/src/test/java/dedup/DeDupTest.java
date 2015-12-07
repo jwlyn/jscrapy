@@ -1,16 +1,16 @@
 package dedup;
 
-import com.oxf1.spider.TaskConfig;
-import com.oxf1.spider.dedup.DeDup;
-import com.oxf1.spider.dedup.impl.EhCacheDedup;
-import com.oxf1.spider.dedup.impl.MemoryDedup;
-import com.oxf1.spider.dedup.impl.MongoDedup;
-import com.oxf1.spider.dedup.impl.RedisDedup;
-import com.oxf1.spider.exception.MySpiderFetalException;
-import com.oxf1.spider.exception.MySpiderRecoverableException;
-import com.oxf1.spider.request.HttpRequestMethod;
-import com.oxf1.spider.request.Request;
-import com.oxf1.spider.request.impl.HttpRequest;
+import com.oxf1.myspider.TaskConfig;
+import com.oxf1.myspider.dedup.DeDup;
+//import com.oxf1.myspider.dedup.impl.EhCacheDedup;
+import com.oxf1.myspider.dedup.impl.MemoryDedup;
+import com.oxf1.myspider.dedup.impl.MongoDedup;
+import com.oxf1.myspider.dedup.impl.RedisDedup;
+import com.oxf1.myspider.exception.MySpiderFetalException;
+import com.oxf1.myspider.exception.MySpiderRecoverableException;
+import com.oxf1.myspider.request.HttpRequestMethod;
+import com.oxf1.myspider.request.Request;
+import com.oxf1.myspider.request.impl.HttpRequest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import util.ResourcePathUtils;
@@ -30,7 +30,7 @@ public class DeDupTest {
     @DataProvider(name="dp")
     public DeDup[][] dataProvider() throws IOException, MySpiderFetalException {
         return new DeDup[][]{
-                {initEhcacheDedup()} ,
+                //{initEhcacheDedup()} ,
                 {initMemoryDedup()},
                 {initMongoDedup()},
                 {initRedisDedup()},
@@ -67,12 +67,12 @@ public class DeDupTest {
      *
      * @return
      */
-    private DeDup initEhcacheDedup() throws IOException, MySpiderFetalException {
+    /*private DeDup initEhcacheDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/EhCacheDedupTest.yaml");
         TaskConfig taskConfig = new TaskConfig(path);
         DeDup dp = new EhCacheDedup(taskConfig);
         return dp;
-    }
+    }*/
 
     /**
      *

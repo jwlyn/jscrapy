@@ -1,13 +1,13 @@
 package downloader;
 
-import com.oxf1.spider.TaskConfig;
-import com.oxf1.spider.downloader.Downloader;
-import com.oxf1.spider.downloader.impl.HttpDownloader;
-import com.oxf1.spider.exception.MySpiderFetalException;
-import com.oxf1.spider.page.Page;
-import com.oxf1.spider.parser.Html;
-import com.oxf1.spider.request.Request;
-import com.oxf1.spider.request.impl.HttpRequest;
+import com.oxf1.myspider.TaskConfig;
+import com.oxf1.myspider.downloader.Downloader;
+import com.oxf1.myspider.downloader.impl.HttpDownloader;
+import com.oxf1.myspider.exception.MySpiderFetalException;
+import com.oxf1.myspider.page.Page;
+import com.oxf1.myspider.parser.Html;
+import com.oxf1.myspider.request.Request;
+import com.oxf1.myspider.request.impl.HttpRequest;
 import org.testng.annotations.Test;
 import util.ResourcePathUtils;
 

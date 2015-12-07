@@ -49,53 +49,53 @@ task_thread_count: 1 #任务线程数目
 
 #=====================================================================
 # scheduler_class_name可选的参数
-# com.oxf1.spider.scheduler.impl.MemoryScheduler    基于内存的队列
-# com.oxf1.spider.scheduler.impl.FileQueueScheduler 基于文件的队列
-# com.oxf1.spider.scheduler.impl.MongoScheduler     基于mongodb
-# com.oxf1.spider.scheduler.impl.RedisScheduler     基于Redis队列
+# com.oxf1.myspiderer.scheduler.impl.MemoryScheduler    基于内存的队列
+# com.oxf1.myspiderer.scheduler.impl.FileQueueScheduler 基于文件的队列
+# com.oxf1.myspiderer.scheduler.impl.MongoScheduler     基于mongodb
+# com.oxf1.myspiderer.scheduler.impl.RedisScheduler     基于Redis队列
 #=====================================================================
-scheduler_class_name: com.oxf1.spider.scheduler.impl.MemoryScheduler
+scheduler_class_name: com.oxf1.myspiderer.scheduler.impl.MemoryScheduler
 
 #=====================================================================
 # dedup_class_name 可选的参数
-# com.oxf1.spider.dedup.impl.EhCacheDedup 基于ehcache去重
-# com.oxf1.spider.dedup.impl.MemoryDedup  基于内存去重
-# com.oxf1.spider.dedup.impl.MongoDedup   基于mongodb去重
-# com.oxf1.spider.dedup.impl.RedisDedup   基于Redis去重
+# com.oxf1.myspiderer.dedup.impl.EhCacheDedup 基于ehcache去重
+# com.oxf1.myspiderer.dedup.impl.MemoryDedup  基于内存去重
+# com.oxf1.myspiderer.dedup.impl.MongoDedup   基于mongodb去重
+# com.oxf1.myspiderer.dedup.impl.RedisDedup   基于Redis去重
 #=====================================================================
-dedup_class_name: com.oxf1.spider.dedup.impl.MemoryDedup
+dedup_class_name: com.oxf1.myspiderer.dedup.impl.MemoryDedup
 
 #=====================================================================
 # downloader_class_name 可选的参数
-# com.oxf1.spider.dedup.impl.EhCacheDedup 基于ehcache去重
-# com.oxf1.spider.dedup.impl.MemoryDedup  基于内存去重
-# com.oxf1.spider.dedup.impl.MongoDedup   基于mongodb去重
-# com.oxf1.spider.dedup.impl.RedisDedup   基于Redis去重
+# com.oxf1.myspiderer.dedup.impl.EhCacheDedup 基于ehcache去重
+# com.oxf1.myspiderer.dedup.impl.MemoryDedup  基于内存去重
+# com.oxf1.myspiderer.dedup.impl.MongoDedup   基于mongodb去重
+# com.oxf1.myspiderer.dedup.impl.RedisDedup   基于Redis去重
 #=====================================================================
 downloader_class_name: downloader.GroovyProcessor
 
 #=====================================================================
 # pipline_class_name 可选的参数
-# com.oxf1.spider.pipline.impl.LocalFilePipline 数据存储到本机
-# com.oxf1.spider.pipline.impl.MongoDbPipline  数据保存到mongodb里
+# com.oxf1.myspiderer.pipline.impl.LocalFilePipline 数据存储到本机
+# com.oxf1.myspiderer.pipline.impl.MongoDbPipline  数据保存到mongodb里
 #=====================================================================
-pipline_class_name: com.oxf1.spider.pipline.impl.LocalFilePipline
+pipline_class_name: com.oxf1.myspiderer.pipline.impl.LocalFilePipline
 
 #=====================================================================
 # processor_class_name 可选的参数
-# com.oxf1.spider.processor.impl.GroovyProcessor 基于ehcache去重
+# com.oxf1.myspiderer.processor.impl.GroovyProcessor 基于ehcache去重
 #=====================================================================
-processor_class_name: com.oxf1.spider.processor.impl.GroovyProcessor
+processor_class_name: com.oxf1.myspiderer.processor.impl.GroovyProcessor
 
 #=====================================================================
 # cacher_class_name 可选的参数
-# com.oxf1.spider.cacher.impl.LocalDiskCacher 缓存页面到磁盘
-# com.oxf1.spider.cacher.impl.MongoCacher     缓存页面到mongodb
+# com.oxf1.myspiderer.cacher.impl.LocalDiskCacher 缓存页面到磁盘
+# com.oxf1.myspiderer.cacher.impl.MongoCacher     缓存页面到mongodb
 #=====================================================================
-cacher_class_name: com.oxf1.spider.cacher.impl.LocalDiskCacher
+cacher_class_name: com.oxf1.myspiderer.cacher.impl.LocalDiskCacher
 
 #=====================================================================
 # groovy_file 可选的参数
-# com.oxf1.spider.dedup.impl.EhCacheDedup 基于ehcache去重
+# com.oxf1.myspiderer.dedup.impl.EhCacheDedup 基于ehcache去重
 #=====================================================================
 groovy_file: TaskExcample.groovy

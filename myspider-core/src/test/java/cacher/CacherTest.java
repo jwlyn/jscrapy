@@ -1,16 +1,16 @@
 package cacher;
 
 import com.oxf1.myspider.common.log.MyLoggerFactory;
-import com.oxf1.spider.TaskConfig;
-import com.oxf1.spider.cacher.Cacher;
-import com.oxf1.spider.cacher.impl.LocalDiskCacher;
-import com.oxf1.spider.cacher.impl.MongoCacher;
-import com.oxf1.spider.exception.MySpiderFetalException;
-import com.oxf1.spider.exception.MySpiderRecoverableException;
-import com.oxf1.spider.page.Page;
-import com.oxf1.spider.request.HttpRequestMethod;
-import com.oxf1.spider.request.Request;
-import com.oxf1.spider.request.impl.HttpRequest;
+import com.oxf1.myspider.TaskConfig;
+import com.oxf1.myspider.cacher.Cacher;
+import com.oxf1.myspider.cacher.impl.LocalDiskCacher;
+import com.oxf1.myspider.cacher.impl.MongoCacher;
+import com.oxf1.myspider.exception.MySpiderFetalException;
+import com.oxf1.myspider.exception.MySpiderRecoverableException;
+import com.oxf1.myspider.page.Page;
+import com.oxf1.myspider.request.HttpRequestMethod;
+import com.oxf1.myspider.request.Request;
+import com.oxf1.myspider.request.impl.HttpRequest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

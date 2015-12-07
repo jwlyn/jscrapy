@@ -3,7 +3,10 @@ dependencies {
     //compile ""
 
     //runtime ""
-    compile project(':myspider-common')
+    //compile project(':myspider-common')
+    compile project(':myspider-core')
+
+    compile "net.sf.ehcache:ehcache:$ehcache"
     compile("us.codecraft:webmagic-core:$webmagic"){
         exclude group: "commons-io", module: "commons-io"
         //exclude group: "commons-lang", module: "commons-lang"

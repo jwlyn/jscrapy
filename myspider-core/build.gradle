@@ -1,20 +1,15 @@
-apply plugin: 'spring-boot'
-apply plugin: 'war'
 
-bootRepackage {
-    mainClass = 'com.oxf1.spider.Application'
-    classifier = "exec"
-}
 
 dependencies {
     //runtime ""
     //testCompile ""
     compile project(':myspider-common')
+    //testCompile project(":myspider-contrib")
 
     compile "org.apache.commons:commons-lang3:$commonsLang3"
     compile "commons-io:commons-io:$commonsIo"
     compile "commons-codec:commons-codec:$commonsCodec"
-    compile "net.sf.ehcache:ehcache:$ehcache"
+
     compile "com.leansoft:bigqueue:$bigqueue"
     compile "com.alibaba:fastjson:$fastJson"
 
@@ -24,23 +19,16 @@ dependencies {
         exclude group: "org.slf4j", module: "slf4j-api"
         exclude group: "com.google.guava", module: "guava"
         exclude group: "commons-logging", module: "commons-logging"
+        exclude group: "org.apache.httpcomponents", module: "httpclient"
     }
+
     compile "redis.clients:jedis:$jedis"
     compile "org.mongodb:mongo-java-driver:$mongodbDriver"
-    compile "gaillard:mongo-queue-java:$mongodbQueue"
+    //compile "gaillard:mongo-queue-java:$mongodbQueue"
     compile "org.yaml:snakeyaml:$snakyaml"
     compile "org.codehaus.groovy:groovy-all:$groovy"
     //compile "joda-time:joda-time:$jodaTime"
 
     compile "org.slf4j:jcl-over-slf4j:$jclOverSlf4j"
 
-    compile("org.springframework.boot:spring-boot-starter-web"){
-        exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
-        exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
-        exclude group: "com.fast.xml.jackson.core", module: "jackson-annotations"
-        exclude group: "com.fast.xml.jackson.core", module: "jackson-core"
-        exclude group: "com.fast.xml.jackson.core", module: "jackson-databind"
-    }
-
-    providedRuntime ("org.springframework.boot:spring-boot-starter-jetty")
 }
