@@ -14,4 +14,6 @@ dependencies {
         exclude group: "com.google.guava", module: "guava"
         exclude group: "commons-logging", module: "commons-logging"
     }
+
+    compile "com.leansoft:bigqueue:$bigqueue"
 }

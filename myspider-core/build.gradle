@@ -9,8 +9,6 @@ dependencies {
     compile "org.apache.commons:commons-lang3:$commonsLang3"
     compile "commons-io:commons-io:$commonsIo"
     compile "commons-codec:commons-codec:$commonsCodec"
-
-    compile "com.leansoft:bigqueue:$bigqueue"
     compile "com.alibaba:fastjson:$fastJson"
 
     compile("us.codecraft:webmagic-core:$webmagic") {

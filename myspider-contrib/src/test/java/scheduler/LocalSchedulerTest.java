@@ -8,7 +8,7 @@ import com.oxf1.myspider.request.HttpRequestMethod;
 import com.oxf1.myspider.request.Request;
 import com.oxf1.myspider.request.impl.HttpRequest;
 import com.oxf1.myspider.scheduler.Scheduler;
-import com.oxf1.myspider.scheduler.impl.FileQueueScheduler;
+import com.oxf1.myspider.contrib.scheduler.FileQueueScheduler;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

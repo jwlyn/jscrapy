@@ -1,4 +1,4 @@
-package com.oxf1.myspider.scheduler.impl;
+package com.oxf1.myspider.contrib.scheduler;
 
 import com.alibaba.fastjson.JSONException;
 import com.leansoft.bigqueue.BigQueueImpl;
