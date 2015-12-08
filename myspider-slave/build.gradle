@@ -14,14 +14,13 @@ dependencies {
     compile project(":myspider-core")
     compile("org.springframework.boot:spring-boot-starter-web"){
         exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
-        //exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
-        exclude group: "com.faster.xml.jackson.core", module: "jackson-annotations"
-        exclude group: "com.faster.xml.jackson.core", module: "jackson-core"
-        exclude group: "com.faster.xml.jackson.core", module: "jackson-databind"
+        exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
+        exclude group: "com.fasterxml.jackson.core", module: "jackson-annotations"
+        exclude group: "com.fasterxml.jackson.core", module: "jackson-core"
+        exclude group: "com.fasterxml.jackson.core", module: "jackson-databind"
     }
 
-
-    //providedRuntime ("org.springframework.boot:spring-boot-starter-tomcat")
+    providedRuntime ("org.springframework.boot:spring-boot-starter-tomcat")
     providedRuntime "org.apache.tomcat.embed:tomcat-embed-jasper"
     providedRuntime 'org.apache.tomcat.embed:tomcat-embed-logging-juli:8.0.26'
 }

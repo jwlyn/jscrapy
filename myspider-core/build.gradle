@@ -4,8 +4,6 @@ dependencies {
     //runtime ""
     //testCompile ""
     compile project(':myspider-common')
-    //testCompile project(":myspider-contrib")
-
     compile "org.apache.commons:commons-lang3:$commonsLang3"
     compile "commons-io:commons-io:$commonsIo"
     compile "commons-codec:commons-codec:$commonsCodec"
@@ -22,11 +20,7 @@ dependencies {
 
     compile "redis.clients:jedis:$jedis"
     compile "org.mongodb:mongo-java-driver:$mongodbDriver"
-    //compile "gaillard:mongo-queue-java:$mongodbQueue"
     compile "org.yaml:snakeyaml:$snakyaml"
     compile "org.codehaus.groovy:groovy-all:$groovy"
-    //compile "joda-time:joda-time:$jodaTime"
-
     compile "org.slf4j:jcl-over-slf4j:$jclOverSlf4j"
-
 }
