@@ -61,6 +61,7 @@ allprojects {
         urlrestJava = "1.4.7"
         fastJson="1.2.7"
         joddVersion = "3.6.7"
+        mapdbVersion = "2.0-beta12"
 
         junit="4.8.2"
         testng="6.8.21"

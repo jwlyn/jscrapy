@@ -4,13 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * 代表了一个Queue里的url请求
  * Created by cxu on 2014/11/21.
  */
-public abstract class Request {
+public abstract class Request implements Serializable{
 
     /**
      * 从队列里的json字符串来创建一个HttpRequest

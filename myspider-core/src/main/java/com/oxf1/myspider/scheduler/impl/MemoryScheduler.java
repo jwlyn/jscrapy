@@ -1,5 +1,6 @@
 package com.oxf1.myspider.scheduler.impl;
 
+import com.oxf1.myspider.Task;
 import com.oxf1.myspider.TaskConfig;
 import com.oxf1.myspider.config.ConfigKeys;
 import com.oxf1.myspider.exception.MySpiderException;
@@ -32,14 +33,14 @@ public class MemoryScheduler  extends Scheduler {
 
     @Override
     public int push(List<Request> requests) throws MySpiderException {
-        ConcurrentLinkedQueue<Request> queue = (ConcurrentLinkedQueue<Request>)this.getTaskConfig().getTaskSharedObject(ConfigKeys.MEM_SCHEDULER_QUEUE);
+        ConcurrentLinkedQueue<Request> queue = this.getQueue();
         queue.addAll(requests);
         return requests.size();
     }
 
     @Override
     public List<Request> poll(int n) throws MySpiderException {
-        ConcurrentLinkedQueue<Request> queue = (ConcurrentLinkedQueue<Request>)this.getTaskConfig().getTaskSharedObject(ConfigKeys.MEM_SCHEDULER_QUEUE);
+        ConcurrentLinkedQueue<Request> queue = this.getQueue();
         List<Request> requests = new ArrayList<Request>(n);
         for (int i = 0; i < n; i++) {
             Request req = queue.poll();
@@ -59,5 +60,11 @@ public class MemoryScheduler  extends Scheduler {
     @Override
     public void close() {
         //do nothing
+    }
+
+    private ConcurrentLinkedQueue<Request> getQueue() {
+        TaskConfig taskConfig = getTaskConfig();
+        ConcurrentLinkedQueue<Request> queue = (ConcurrentLinkedQueue<Request>)this.getTaskConfig().getTaskSharedObject(ConfigKeys.MEM_SCHEDULER_QUEUE);
+        return queue;
     }
 }

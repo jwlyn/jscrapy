@@ -44,6 +44,9 @@ public class ConfigKeys {
     /*内存队列*/
     public static final String MEM_DEDUP_SET = "memory_dedup_set";
     public static final String MEM_SCHEDULER_QUEUE = "memory_scheduler_queue";
+    /*mapdb*/
+    public static final String DISK_DEDUP_SET = "disk_dedup_set";
+    public static final String DISK_SCHEDULER_QUEUE = "disk_scheduler_queue";
     /*----------------------------------------------------------------------------------
     run time config
      在运行时组合生成的配置

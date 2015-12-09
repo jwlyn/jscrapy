@@ -3,6 +3,7 @@ package dedup;
 import com.oxf1.myspider.TaskConfig;
 import com.oxf1.myspider.dedup.DeDup;
 //import com.oxf1.myspider.dedup.impl.EhCacheDedup;
+import com.oxf1.myspider.dedup.impl.DiskDedup;
 import com.oxf1.myspider.dedup.impl.MemoryDedup;
 import com.oxf1.myspider.dedup.impl.MongoDedup;
 import com.oxf1.myspider.dedup.impl.RedisDedup;
@@ -34,6 +35,7 @@ public class DeDupTest {
                 {initMemoryDedup()},
                 {initMongoDedup()},
                 {initRedisDedup()},
+                {initDiskDedup()},
         };
     }
 
@@ -104,6 +106,19 @@ public class DeDupTest {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/RedisDedupTest.yaml");
         TaskConfig taskConfig = new TaskConfig(path);
         DeDup dp = new RedisDedup(taskConfig);
+        return dp;
+    }
+
+    /**
+     *
+     * @return
+     * @throws IOException
+     * @throws MySpiderFetalException
+     */
+    private DeDup initDiskDedup() throws IOException, MySpiderFetalException {
+        String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/DiskDedupTest.yaml");
+        TaskConfig taskConfig = new TaskConfig(path);
+        DeDup dp = new DiskDedup(taskConfig);
         return dp;
     }
 }

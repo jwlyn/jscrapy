@@ -23,4 +23,5 @@ dependencies {
     compile "org.yaml:snakeyaml:$snakyaml"
     compile "org.codehaus.groovy:groovy-all:$groovy"
     compile "org.slf4j:jcl-over-slf4j:$jclOverSlf4j"
+    compile "org.mapdb:mapdb:$mapdbVersion"
 }
