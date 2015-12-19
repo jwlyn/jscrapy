@@ -25,7 +25,7 @@ import static org.testng.Assert.assertEquals;
 /**
  * Created by cxu on 2015/9/19.
  */
-public class DeDupTest {
+public class DeDupTest{
     private Request rq = new HttpRequest("http://url1", HttpRequestMethod.DELETE, null);
 
     @DataProvider(name="dp")

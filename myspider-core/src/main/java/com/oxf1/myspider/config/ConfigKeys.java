@@ -36,6 +36,7 @@ public class ConfigKeys {
      */
     /*redis*/
     public static final String REDIS_DEDUP_SERVER = "redis_dedup_server";
+    public static final String REDIS_SCHEDULER_SERVER = "redis_scheduler_server";
     /*mongodb*/
     public static final String MONGODB_HOST = "mongodb_host";
     public static final String MONGODB_PORT = "mongodb_port";
