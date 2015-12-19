@@ -1,4 +1,5 @@
 # myspider
+[![Build Status](https://travis-ci.org/oxf1/myspider.svg?branch=master)](https://travis-ci.org/oxf1/myspider)
 ## 功能
 - 用户友好,一个管控界面解决全部问题
 - 新站点抓取无需重新部署
