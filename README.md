@@ -1,5 +1,6 @@
 # myspider
 [![Build Status](https://travis-ci.org/oxf1/myspider.svg?branch=master)](https://travis-ci.org/oxf1/myspider)
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/oxf1/myspider/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 ## 功能
 - 用户友好,一个管控界面解决全部问题
 - 新站点抓取无需重新部署
