@@ -83,6 +83,9 @@
     </dependencies>
 
     <build>
+        <filters>
+            <filter>${user.dir}/build.properties</filter>
+        </filters>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
