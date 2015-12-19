@@ -1,5 +1,4 @@
-
-        <!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 
         CacheManager Configuration
         ==========================
@@ -57,8 +56,7 @@
                  updateCheck="true" monitoring="autodetect"
                  dynamicConfig="true" maxBytesLocalHeap="400M" maxBytesLocalOffHeap="2G">
 
-        -->
-<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="true" monitoring="autodetect" dynamicConfig="true">
+        --><ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" dynamicConfig="true" monitoring="autodetect" updateCheck="true" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
     <!--
 
         DiskStore configuration
@@ -692,10 +690,10 @@
         The defaultCache has an implicit name "default" which is a reserved cache name.
 
     -->
-<!--    <defaultCache maxEntriesLocalHeap="0" eternal="false" timeToIdleSeconds="1200" timeToLiveSeconds="1200">
+    <!--    <defaultCache maxEntriesLocalHeap="0" eternal="false" timeToIdleSeconds="1200" timeToLiveSeconds="1200">
         <terracotta/>
     </defaultCache>-->
-<!--    <defaultCache name="sample"
+    <!--    <defaultCache name="sample"
            maxElementsInMemory="10000"
 
            eternal="true"
@@ -721,7 +719,7 @@
         defined on your system. On a standard Linux system this will be /tmp"
 
     -->
-<!--    <cache name="com_oxf1_myspider_task_config"
+    <!--    <cache name="com_oxf1_myspider_task_config"
            maxEntriesLocalHeap="1000"
            maxEntriesLocalDisk="1000000"
            eternal="true"
@@ -730,16 +728,7 @@
            transactionalMode="off"
            overflowToDisk="true">
     </cache>-->
-
-    <defaultCache name="com_oxf1_myspider_dedupe"
-           maxElementsInMemory="100000"
-           eternal="true"
-           diskPersistent="true"
-           overflowToDisk="true"
-           memoryStoreEvictionPolicy="FIFO"
-           statistics="false">
-    </defaultCache>
-
+    <defaultCache diskPersistent="true" eternal="true" maxElementsInMemory="100000" memoryStoreEvictionPolicy="FIFO" name="com_oxf1_myspider_dedupe" overflowToDisk="true" statistics="false"/>
     <!--
 
         Sample cache named sampleCache2
