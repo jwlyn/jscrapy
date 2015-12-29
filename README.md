@@ -44,3 +44,7 @@
 
 
 ## 使用手册
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/oxf1/myspider/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
