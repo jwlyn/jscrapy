@@ -4,10 +4,7 @@ import com.oxf1.myspider.common.http.FetchRequest;
 import com.oxf1.myspider.common.http.FetchResponse;
 import com.oxf1.myspider.common.http.WatchableSpiderProxy;
 import com.oxf1.myspider.common.http.fetcher.HttpFetcher;
-import jodd.http.HttpConnectionProvider;
-import jodd.http.HttpRequest;
-import jodd.http.HttpResponse;
-import jodd.http.ProxyInfo;
+import jodd.http.*;
 import jodd.http.net.SocketHttpConnectionProvider;
 import jodd.util.StringUtil;
 
@@ -15,6 +12,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -108,8 +106,16 @@ public class JoddHttpFetcher implements HttpFetcher {
         res.setCharset(charset);
         res.setStatusCode(response.statusCode());
 
+        HttpMultiMap<String> headers = response.headers();//other headers
+        Iterator<Map.Entry<String, String>> itr = headers.iterator();
+        while (itr != null && itr.hasNext()) {
+            Map.Entry<String, String> hdr = itr.next();
+            res.addHeader(hdr.getKey(), hdr.getValue());
+        }
+
         res.setContent(response.bodyBytes());
         res.setSuccess(true);
+
         return res;
     }
 }

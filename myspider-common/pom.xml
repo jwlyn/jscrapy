@@ -31,5 +31,10 @@
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${commons-collections.version}</version>
+        </dependency>
     </dependencies>
 </project>
