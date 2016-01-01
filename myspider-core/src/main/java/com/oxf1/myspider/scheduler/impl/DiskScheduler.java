@@ -1,20 +1,18 @@
 package com.oxf1.myspider.scheduler.impl;
 
 import com.oxf1.myspider.TaskConfig;
-import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.config.cfgkey.ConfigKeys;
 import com.oxf1.myspider.exception.MySpiderException;
 import com.oxf1.myspider.exception.MySpiderRecoverableException;
 import com.oxf1.myspider.request.Request;
 import com.oxf1.myspider.scheduler.Scheduler;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
-import org.mapdb.Serializer;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * 基于mapdb的单机大队列
@@ -24,15 +22,15 @@ public class DiskScheduler  extends Scheduler {
 
     public DiskScheduler(TaskConfig taskConfig) {
         super(taskConfig);
-        if(taskConfig.getTaskSharedObject(ConfigKeys.DISK_DEDUP_SET)==null){
+        if(taskConfig.getTaskSharedObject(ConfigKeys._DEDUP_DISK_SET_OBJ)==null){
             synchronized (taskConfig){
-                if(taskConfig.getTaskSharedObject(ConfigKeys.DISK_SCHEDULER_QUEUE)==null){
+                if(taskConfig.getTaskSharedObject(ConfigKeys._SCHEDULER_DISK_QUEUE_OBJ)==null){
                     String queueFilePath = this.getFilePath();
                     DB db = DBMaker.fileDB(new File(queueFilePath))
                             //.cacheSize(100000)
                             .make();
                     BlockingQueue<Request> queue = db.getQueue("fifo");//TODO
-                    taskConfig.addTaskSharedObject(ConfigKeys.DISK_SCHEDULER_QUEUE, queue);
+                    taskConfig.addTaskSharedObject(ConfigKeys._SCHEDULER_DISK_QUEUE_OBJ, queue);
                 }
             }
         }
@@ -86,7 +84,7 @@ public class DiskScheduler  extends Scheduler {
      */
     private BlockingQueue<Request> getQueue() {
         TaskConfig taskConfig = this.getTaskConfig();
-        BlockingQueue<Request> queue = (BlockingQueue<Request>)taskConfig.getTaskSharedObject(ConfigKeys.DISK_SCHEDULER_QUEUE);
+        BlockingQueue<Request> queue = (BlockingQueue<Request>)taskConfig.getTaskSharedObject(ConfigKeys._SCHEDULER_DISK_QUEUE_OBJ);
         return queue;
     }
 }

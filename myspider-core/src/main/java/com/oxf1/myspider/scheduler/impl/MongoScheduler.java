@@ -5,7 +5,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.oxf1.myspider.TaskConfig;
-import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.config.cfgkey.ConfigKeys;
 import com.oxf1.myspider.request.Request;
 import com.oxf1.myspider.scheduler.Scheduler;
 //import gaillard.mongo.Queue;
@@ -23,9 +23,9 @@ public class MongoScheduler extends Scheduler{
 
     public MongoScheduler(TaskConfig taskConfig) {
         super(taskConfig);
-        String dbHost = taskConfig.loadString(ConfigKeys.MONGODB_HOST);
-        int dbPort = taskConfig.loadInt(ConfigKeys.MONGODB_PORT);
-        String dbName = taskConfig.loadString(ConfigKeys.MONGODB_DEDUP_DB_NAME);
+        String dbHost = taskConfig.loadString(ConfigKeys.SCHEDULER_MONGO_HOST);
+        int dbPort = taskConfig.loadInt(ConfigKeys.SCHEDULER_MONGO_PORT);
+        String dbName = taskConfig.loadString(ConfigKeys.RT_EXT_DEDUP_MONGODB_DB_NAME);
         String tableName = taskConfig.getTaskName();
         Mongo mongo = new MongoClient(dbHost, dbPort);
         DB db = mongo.getDB(dbName);

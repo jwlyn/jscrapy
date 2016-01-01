@@ -1,5 +1,5 @@
-task_id: task_id
-task_name: task_name
-mongodb_host: ${mongo.dedup.server}
-mongodb_port: ${mongo.dedup.port}
-mongodb_dedup_db_name: myspider_dedup
+task.id: task.id
+task.name: task.name
+dedup.mongo.host: ${mongo.dedup.host}
+dedup.mongo.port: ${mongo.dedup.port}
+rt.ext.mongodb.dedup.db.name: myspider_dedup

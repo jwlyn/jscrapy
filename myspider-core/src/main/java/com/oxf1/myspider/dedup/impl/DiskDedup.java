@@ -1,7 +1,7 @@
 package com.oxf1.myspider.dedup.impl;
 
 import com.oxf1.myspider.TaskConfig;
-import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.config.cfgkey.ConfigKeys;
 import com.oxf1.myspider.dedup.DeDup;
 import com.oxf1.myspider.exception.MySpiderFetalException;
 import com.oxf1.myspider.exception.MySpiderRecoverableException;
@@ -12,8 +12,6 @@ import org.mapdb.DB;
 import org.mapdb.DBMaker;
 
 import java.io.File;
-import java.util.NavigableSet;
-import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -25,11 +23,11 @@ public class DiskDedup  extends DeDup {
     public DiskDedup(TaskConfig taskConfig) throws MySpiderFetalException {
 
         super(taskConfig);
-        if(taskConfig.getTaskSharedObject(ConfigKeys.DISK_DEDUP_SET)==null){
+        if(taskConfig.getTaskSharedObject(ConfigKeys._DEDUP_DISK_SET_OBJ)==null){
             synchronized (taskConfig){
-                if(taskConfig.getTaskSharedObject(ConfigKeys.DISK_DEDUP_SET)==null){
+                if(taskConfig.getTaskSharedObject(ConfigKeys._DEDUP_DISK_SET_OBJ)==null){
                     String setFilePath = getDiskSetPath();
-                    taskConfig.put(ConfigKeys.RT_LOCAL_QUEUE_DIR, setFilePath);
+                    taskConfig.put(ConfigKeys.RT_EXT_RT_LOCAL_QUEUE_DIR, setFilePath);
 
                     DB db = DBMaker.fileDB(new File(setFilePath))
                             //.cacheSize(100000)
@@ -39,7 +37,7 @@ public class DiskDedup  extends DeDup {
                             .nodeSize(64)
                             .makeOrGet();
 
-                    taskConfig.addTaskSharedObject(ConfigKeys.DISK_DEDUP_SET, existUrl);
+                    taskConfig.addTaskSharedObject(ConfigKeys._DEDUP_DISK_SET_OBJ, existUrl);
                 }
             }
         }
@@ -47,7 +45,7 @@ public class DiskDedup  extends DeDup {
 
     @Override
     protected boolean isDup(Request request) {
-        BTreeMap<String, Character> existUrl = (BTreeMap<String, Character>)getTaskConfig().getTaskSharedObject(ConfigKeys.DISK_DEDUP_SET);
+        BTreeMap<String, Character> existUrl = (BTreeMap<String, Character>)getTaskConfig().getTaskSharedObject(ConfigKeys._DEDUP_DISK_SET_OBJ);
         String id = request.fp();
         Character ret = existUrl.putIfAbsent(id, '1');
         return ret!=null;

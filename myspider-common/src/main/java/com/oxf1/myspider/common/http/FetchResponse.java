@@ -1,6 +1,5 @@
 package com.oxf1.myspider.common.http;
 
-import org.apache.commons.collections4.MultiMap;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 

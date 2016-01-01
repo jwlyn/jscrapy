@@ -2,7 +2,7 @@ package com.oxf1.myspider.pipline.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.oxf1.myspider.TaskConfig;
-import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.config.cfgkey.ConfigKeys;
 import com.oxf1.myspider.data.DataItem;
 import com.oxf1.myspider.exception.MySpiderExceptionCode;
 import com.oxf1.myspider.exception.MySpiderFetalException;
@@ -35,7 +35,7 @@ public class LocalFilePipline extends Pipline {
         String spiderWorkDir = taskConfig.getSpiderWorkDir();
 
         this.dataFilePath = spiderWorkDir + taskConfig.getTaskFp() + File.separator + "pipline" + File.separator + taskConfig.getTaskName() + ".json";//完整的目录+文件名字。解析之后的数据保存的位置
-        taskConfig.put(ConfigKeys.RT_LOCAL_FILE_PIPLINE_DATA_FILE, this.dataFilePath);
+        taskConfig.put(ConfigKeys.RT_EXT_RT_LOCAL_FILE_PIPLINE_DATA_FILE, this.dataFilePath);
         String baseDir = FilenameUtils.getFullPath(dataFilePath);
         try {
             FileUtils.forceMkdir(new File(baseDir));

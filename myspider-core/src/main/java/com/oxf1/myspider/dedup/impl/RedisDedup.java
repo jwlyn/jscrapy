@@ -1,7 +1,7 @@
 package com.oxf1.myspider.dedup.impl;
 
 import com.oxf1.myspider.TaskConfig;
-import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.config.cfgkey.ConfigKeys;
 import com.oxf1.myspider.dedup.DeDup;
 import com.oxf1.myspider.request.Request;
 import redis.clients.jedis.Jedis;
@@ -19,7 +19,7 @@ public class RedisDedup extends DeDup {
 
     public RedisDedup(TaskConfig taskConfig) {
         super(taskConfig);
-        String redisHost = taskConfig.loadString(ConfigKeys.REDIS_DEDUP_SERVER);
+        String redisHost = taskConfig.loadString(ConfigKeys.DEDUP_REDIS_HOST);
         this.pool = new JedisPool(new JedisPoolConfig(), redisHost);
     }
 

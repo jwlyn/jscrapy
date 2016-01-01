@@ -1,7 +1,7 @@
 package com.oxf1.myspider.dedup.impl;
 
 import com.oxf1.myspider.TaskConfig;
-import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.config.cfgkey.ConfigKeys;
 import com.oxf1.myspider.dedup.DeDup;
 import com.oxf1.myspider.request.Request;
 
@@ -19,11 +19,11 @@ public class MemoryDedup  extends DeDup {
      */
     public MemoryDedup(TaskConfig taskConfig) {
         super(taskConfig);
-        if(taskConfig.getTaskSharedObject(ConfigKeys.MEM_DEDUP_SET)==null){
+        if(taskConfig.getTaskSharedObject(ConfigKeys._DEDUP_MEM_SET_OBJ)==null){
             synchronized (taskConfig){
-                if(taskConfig.getTaskSharedObject(ConfigKeys.MEM_DEDUP_SET)==null){
+                if(taskConfig.getTaskSharedObject(ConfigKeys._DEDUP_MEM_SET_OBJ)==null){
                     ConcurrentHashMap<String, Character> existUrl = new ConcurrentHashMap<String, Character>(10000);
-                    taskConfig.addTaskSharedObject(ConfigKeys.MEM_DEDUP_SET, existUrl);
+                    taskConfig.addTaskSharedObject(ConfigKeys._DEDUP_MEM_SET_OBJ, existUrl);
                 }
             }
         }
@@ -31,7 +31,7 @@ public class MemoryDedup  extends DeDup {
 
     @Override
     protected boolean isDup(Request request) {
-        ConcurrentHashMap<String, Character> existUrl = (ConcurrentHashMap<String, Character>)getTaskConfig().getTaskSharedObject(ConfigKeys.MEM_DEDUP_SET);
+        ConcurrentHashMap<String, Character> existUrl = (ConcurrentHashMap<String, Character>)getTaskConfig().getTaskSharedObject(ConfigKeys._DEDUP_MEM_SET_OBJ);
         String id = request.fp();
         Character ret = existUrl.putIfAbsent(id, '1');
         return ret!=null;

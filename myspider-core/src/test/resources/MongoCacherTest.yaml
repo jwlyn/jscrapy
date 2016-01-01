@@ -1,6 +1,6 @@
-task_id: task_id
-task_name: task_name
-mongodb_host: ${mongo.cacher.server}
-mongodb_port: ${mongo.cacher.port}
-mongodb_cacher_db_name: myspider_cacher
+task.id: task.id
+task.name: task.name
+cacher.mongo.host: ${mongo.cacher.host}
+cacher.mongo.port: ${mongo.cacher.port}
+rt.ext.mongodb.cacher.db.name: myspider_cacher
 

@@ -1,8 +1,7 @@
 package com.oxf1.myspider.scheduler.impl;
 
-import com.oxf1.myspider.Task;
 import com.oxf1.myspider.TaskConfig;
-import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.config.cfgkey.ConfigKeys;
 import com.oxf1.myspider.exception.MySpiderException;
 import com.oxf1.myspider.request.Request;
 import com.oxf1.myspider.scheduler.Scheduler;
@@ -21,11 +20,11 @@ public class MemoryScheduler  extends Scheduler {
      */
     public MemoryScheduler(TaskConfig taskConfig) {
         super(taskConfig);
-        if(taskConfig.getTaskSharedObject(ConfigKeys.MEM_SCHEDULER_QUEUE)==null){
+        if(taskConfig.getTaskSharedObject(ConfigKeys._SCHEDULER_MEM_QUEUE_OBJ)==null){
             synchronized (taskConfig){
-                if(taskConfig.getTaskSharedObject(ConfigKeys.MEM_SCHEDULER_QUEUE)==null){
+                if(taskConfig.getTaskSharedObject(ConfigKeys._SCHEDULER_MEM_QUEUE_OBJ)==null){
                     ConcurrentLinkedQueue<Request> queue = new ConcurrentLinkedQueue<Request>();
-                    taskConfig.addTaskSharedObject(ConfigKeys.MEM_SCHEDULER_QUEUE, queue);
+                    taskConfig.addTaskSharedObject(ConfigKeys._SCHEDULER_MEM_QUEUE_OBJ, queue);
                 }
             }
         }
@@ -64,7 +63,7 @@ public class MemoryScheduler  extends Scheduler {
 
     private ConcurrentLinkedQueue<Request> getQueue() {
         TaskConfig taskConfig = getTaskConfig();
-        ConcurrentLinkedQueue<Request> queue = (ConcurrentLinkedQueue<Request>)this.getTaskConfig().getTaskSharedObject(ConfigKeys.MEM_SCHEDULER_QUEUE);
+        ConcurrentLinkedQueue<Request> queue = (ConcurrentLinkedQueue<Request>)this.getTaskConfig().getTaskSharedObject(ConfigKeys._SCHEDULER_MEM_QUEUE_OBJ);
         return queue;
     }
 }

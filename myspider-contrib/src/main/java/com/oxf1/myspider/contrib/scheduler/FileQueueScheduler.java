@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONException;
 import com.leansoft.bigqueue.BigQueueImpl;
 import com.leansoft.bigqueue.IBigQueue;
 import com.oxf1.myspider.TaskConfig;
-import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.config.cfgkey.ConfigKeys;
 import com.oxf1.myspider.exception.MySpiderExceptionCode;
 import com.oxf1.myspider.exception.MySpiderFetalException;
 import com.oxf1.myspider.request.Request;
@@ -34,7 +34,7 @@ public class FileQueueScheduler extends Scheduler {
         String spiderWorkDir = taskConfig.getSpiderWorkDir();
         this.queueFilePath = spiderWorkDir + taskConfig.getTaskFp() + File.separator + "scheduler" + File.separator;
         this.queueName = taskConfig.getTaskName();
-        taskConfig.put(ConfigKeys.RT_LOCAL_QUEUE_DIR, queueFilePath);
+        taskConfig.put(ConfigKeys.RT_EXT_RT_LOCAL_QUEUE_DIR, queueFilePath);
         try{
             bigQueue = new BigQueueImpl(queueFilePath, queueName);
         }catch(IOException e){

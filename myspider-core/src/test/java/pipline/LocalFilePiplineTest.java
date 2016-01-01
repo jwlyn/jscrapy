@@ -1,7 +1,7 @@
 package pipline;
 
 import com.oxf1.myspider.TaskConfig;
-import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.config.cfgkey.ConfigKeys;
 import com.oxf1.myspider.data.DataItem;
 import com.oxf1.myspider.exception.MySpiderFetalException;
 import com.oxf1.myspider.exception.MySpiderRecoverableException;
@@ -55,7 +55,7 @@ public class LocalFilePiplineTest {
         Thread.sleep(1000);
 
         try {
-            String dataSavePath = taskConfig.loadString(ConfigKeys.RT_LOCAL_FILE_PIPLINE_DATA_FILE);
+            String dataSavePath = taskConfig.loadString(ConfigKeys.RT_EXT_RT_LOCAL_FILE_PIPLINE_DATA_FILE);
             List<String> lines = FileUtils.readLines(new File(dataSavePath));
             assertEquals(100, lines.size());
         }finally {

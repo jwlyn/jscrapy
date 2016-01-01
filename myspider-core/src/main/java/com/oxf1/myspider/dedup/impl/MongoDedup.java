@@ -2,7 +2,7 @@ package com.oxf1.myspider.dedup.impl;
 
 import com.mongodb.*;
 import com.oxf1.myspider.TaskConfig;
-import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.config.cfgkey.ConfigKeys;
 import com.oxf1.myspider.dedup.DeDup;
 import com.oxf1.myspider.request.Request;
 
@@ -19,9 +19,9 @@ public class MongoDedup extends DeDup {
     public MongoDedup(TaskConfig taskConfig) {
         super(taskConfig);
 
-        String dbHost = taskConfig.loadString(ConfigKeys.MONGODB_HOST);
-        int dbPort = taskConfig.loadInt(ConfigKeys.MONGODB_PORT);
-        String dbName = taskConfig.loadString(ConfigKeys.MONGODB_DEDUP_DB_NAME);
+        String dbHost = taskConfig.loadString(ConfigKeys.DEDUP_MONGO_HOST);
+        int dbPort = taskConfig.loadInt(ConfigKeys.DEDUP_MONGO_PORT);
+        String dbName = taskConfig.loadString(ConfigKeys.RT_EXT_DEDUP_MONGODB_DB_NAME);
         String tableName = taskConfig.getTaskName();
         this.mongo = new MongoClient(dbHost, dbPort);
         this.db = mongo.getDB(dbName);

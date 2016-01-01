@@ -1,3 +1,3 @@
-task_id: task_id
-task_name: task_name
-redis_scheduler_server: ${redis.scheduler.server}
+task.id: task.id
+task.name: task.name
+scheduler.redis.host: ${redis.scheduler.host}

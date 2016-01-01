@@ -1,6 +1,6 @@
 package com.oxf1.myspider;
 
-import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.config.cfgkey.ConfigKeys;
 import com.oxf1.myspider.config.ConfigOperator;
 import com.oxf1.myspider.config.SysDefaultConfig;
 import com.oxf1.myspider.config.impl.YamlConfigOperator;
@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * //TODO 分层
  * Created by cxu on 2015/6/21.
  */
 public class TaskConfig {
@@ -47,7 +48,7 @@ public class TaskConfig {
         initTaskStatusObject();
         try {
             String groovyCode = null;
-            String groovyFile = loadString(ConfigKeys.GROOVY_FILE);
+            String groovyFile = loadString(ConfigKeys.PLUGIN_URL);
             if (groovyFile != null) {
                 File f = new File(groovyFile);
                 if (f.exists() && !f.isDirectory()) {//绝对路径
@@ -80,7 +81,7 @@ public class TaskConfig {
     public void setGroovyScript(String groovyCode) {
         if (StringUtils.isNotBlank(groovyCode)) {
             GroovyObject o = instanceClass(groovyCode);
-            taskSharedObject.put(ConfigKeys.RT_GROOVY_SCRIPT_OBJECT, o);
+            taskSharedObject.put(ConfigKeys._GROOVY_SCRIPT_OBJ, o);
         } else {
             logger.error("groovyCode is empty!");
         }
@@ -100,7 +101,7 @@ public class TaskConfig {
      * @return
      */
     public String getTaskLogDir() {
-        return loadString(ConfigKeys.RT_TASK_LOG_DIR);
+        return loadString(ConfigKeys.RT_EXT_RT_TASK_LOG_DIR);
     }
 
     /**
@@ -122,7 +123,7 @@ public class TaskConfig {
      * @return
      */
     public int getThreadCount() {
-        Integer threadCount = loadInt(ConfigKeys.THREAD_COUNT);
+        Integer threadCount = loadInt(ConfigKeys.TASK_THREAD_COUNT);
         if (threadCount == null) {
             threadCount = SysDefaultConfig.THREAD_COUNT;
         }
@@ -158,7 +159,7 @@ public class TaskConfig {
 
     public String getVirtualId() {
         String virtualId = null;
-        virtualId = loadString(ConfigKeys.VIRTUAL_ID);
+        virtualId = loadString(ConfigKeys.TASK_VIRTUAL_ID);
 
         if (StringUtils.isBlank(virtualId)) {
             virtualId = SysDefaultConfig.VIRTUAL_ID;
@@ -172,7 +173,7 @@ public class TaskConfig {
      * @return
      */
     public String getSpiderWorkDir() {
-        String workDir = loadString(ConfigKeys.SPIDER_WORK_DIR);
+        String workDir = loadString(ConfigKeys.TASK_WORK_DIR);
         if (StringUtils.isBlank(workDir)) {
             workDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
         }
@@ -183,21 +184,21 @@ public class TaskConfig {
     }
 
     public String getTaskWorkDir() {
-        String taskWorkDir = loadString(ConfigKeys.RT_LOCAL_TASK_WORK_DIR);
+        String taskWorkDir = loadString(ConfigKeys.RT_EXT_RT_LOCAL_TASK_WORK_DIR);
         return taskWorkDir;
     }
 
     public String getTaskCacheDir() {
-        String taskCacheDir = loadString(ConfigKeys.RT_LOCAL_TASK_CACHER_DIR);
+        String taskCacheDir = loadString(ConfigKeys.RT_EXT_RT_LOCAL_TASK_CACHER_DIR);
         return taskCacheDir;
     }
 
     public String getTaskStatus() {
-        return loadString(ConfigKeys.TASK_STATUS);
+        return loadString(ConfigKeys.RT_VAR_TASK_CTL_CMD);
     }
 
     public void setTaskStatus(TaskStatus.Status status) throws MySpiderFetalException {
-        put(ConfigKeys.TASK_STATUS, status.name());
+        put(ConfigKeys.RT_VAR_TASK_CTL_CMD, status.name());
     }
 
     /**
@@ -206,7 +207,7 @@ public class TaskConfig {
      * @return
      */
     public int getWaitUrlSleepTimeMs() {
-        Integer waitMs = loadInt(ConfigKeys.WAIT_URL_SLEEP_TIME_MS);
+        Integer waitMs = loadInt(ConfigKeys.TASK_WAIT_URL_TIMEOUT);
         if (waitMs == null) {
             waitMs = SysDefaultConfig.WAIT_URL_SLEEP_TIME_MS;
         }
@@ -257,7 +258,7 @@ public class TaskConfig {
     }
 
     public GroovyObject getGroovyProcessorObject() {
-        return (GroovyObject) this.getTaskSharedObject(ConfigKeys.RT_GROOVY_PROCESSOR_OBJECT);
+        return (GroovyObject) this.getTaskSharedObject(ConfigKeys._GROOVY_PROCESSOR_OBJ);
     }
 
     /**
@@ -266,7 +267,7 @@ public class TaskConfig {
      * @return
      */
     public Scheduler getSchedulerObject() {
-        return (Scheduler) this.getTaskSharedObject(ConfigKeys.RT_SCHEDULER_OBJECT);
+        return (Scheduler) this.getTaskSharedObject(ConfigKeys._SCHEDULER_OBJ);
     }
 
     /**
@@ -275,7 +276,7 @@ public class TaskConfig {
      * @param scheduler
      */
     public void setSchedulerObject(Scheduler scheduler) {
-        taskSharedObject.put(ConfigKeys.RT_SCHEDULER_OBJECT, scheduler);
+        taskSharedObject.put(ConfigKeys._SCHEDULER_OBJ, scheduler);
     }
 
     /**
@@ -283,11 +284,11 @@ public class TaskConfig {
      * @param logger
      */
     public void setTaskLogger(org.apache.log4j.Logger logger) {
-        taskSharedObject.put(ConfigKeys.TASK_LOGGER, logger);
+        taskSharedObject.put(ConfigKeys.RT_EXT_TASK_LOGGER, logger);
     }
 
     public org.apache.log4j.Logger getTaskLogger() {
-        return (org.apache.log4j.Logger)taskSharedObject.get(ConfigKeys.TASK_LOGGER);
+        return (org.apache.log4j.Logger)taskSharedObject.get(ConfigKeys.RT_EXT_TASK_LOGGER);
     }
 
     public void addTaskSharedObject(String key, Object obj) {
@@ -296,11 +297,11 @@ public class TaskConfig {
 
     public void initTaskStatusObject() {
         TaskStatus status = new TaskStatus();
-        taskSharedObject.put(ConfigKeys.RT_TASK_STATUS_OBJECT, status);
+        taskSharedObject.put(ConfigKeys._TASK_STATUS_OBJ, status);
     }
 
     public TaskStatus getTaskStatusObject() {
-        TaskStatus status = (TaskStatus) taskSharedObject.get(ConfigKeys.RT_TASK_STATUS_OBJECT);
+        TaskStatus status = (TaskStatus) taskSharedObject.get(ConfigKeys._TASK_STATUS_OBJ);
         return status;
     }
 

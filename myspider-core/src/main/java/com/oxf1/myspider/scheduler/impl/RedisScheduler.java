@@ -2,7 +2,7 @@ package com.oxf1.myspider.scheduler.impl;
 
 import com.alibaba.fastjson.JSONException;
 import com.oxf1.myspider.TaskConfig;
-import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.config.cfgkey.ConfigKeys;
 import com.oxf1.myspider.request.Request;
 import com.oxf1.myspider.request.impl.HttpRequest;
 import com.oxf1.myspider.scheduler.Scheduler;
@@ -24,7 +24,7 @@ public class RedisScheduler  extends Scheduler {
 
     public RedisScheduler(TaskConfig taskConfig) {
         super(taskConfig);
-        String redisHost = taskConfig.loadString(ConfigKeys.REDIS_SCHEDULER_SERVER);
+        String redisHost = taskConfig.loadString(ConfigKeys.SCHEDULER_REDIS_HOST);
         this.pool = new JedisPool(new JedisPoolConfig(), redisHost);
     }
 

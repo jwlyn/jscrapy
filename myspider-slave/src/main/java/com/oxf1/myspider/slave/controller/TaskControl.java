@@ -31,14 +31,14 @@ public class TaskControl {
      */
     @RequestMapping(value = "/start", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseBase startTask(@RequestParam(value = "taskConfig", required = true) String yamlContent) {
+    public ResponseBase startTask(@RequestParam(value = "taskConfig", required = true) String configFileContent) {
         ResponseBase response = new ResponseBase();
-        if (StringUtils.isNotBlank(yamlContent)) {
+        if (StringUtils.isNotBlank(configFileContent)) {
             String tempDir = System.getProperty("java.io.tmpdir");
             String uuid = UUID.randomUUID().toString();
             String file = tempDir + File.separator + uuid + ".yaml";
             try {
-                FileUtils.writeStringToFile(new File(file), yamlContent, false);
+                FileUtils.writeStringToFile(new File(file), configFileContent, false);
                 TaskConfig taskConfig = new TaskConfig(file);
                 StringBuffer errorBuffer = new StringBuffer();
                 if (!ConfigValidateUtil.validate(taskConfig, errorBuffer)) {

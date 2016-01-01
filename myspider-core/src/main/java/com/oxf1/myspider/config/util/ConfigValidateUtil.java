@@ -1,7 +1,7 @@
 package com.oxf1.myspider.config.util;
 
 import com.oxf1.myspider.TaskConfig;
-import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.config.cfgkey.ConfigKeys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,19 +17,19 @@ public class ConfigValidateUtil {
         //验证必须的参数
         String[] requiredParameters = {ConfigKeys.TASK_ID,
                 ConfigKeys.TASK_NAME,
-                ConfigKeys.VIRTUAL_ID,
-                ConfigKeys.SPIDER_WORK_DIR,
-                ConfigKeys.WAIT_URL_SLEEP_TIME_MS,
-                ConfigKeys.TASK_STATUS,
+                ConfigKeys.TASK_VIRTUAL_ID,
+                ConfigKeys.TASK_WORK_DIR,
+                ConfigKeys.TASK_WAIT_URL_TIMEOUT,
+                ConfigKeys.RT_VAR_TASK_CTL_CMD,
                 ConfigKeys.SCHEDULER_BATCH_SIZE,
-                ConfigKeys.THREAD_COUNT,
+                ConfigKeys.TASK_THREAD_COUNT,
                 ConfigKeys.SCHEDULER_CLASS_NAME,
                 ConfigKeys.DEDUP_CLASS_NAME,
                 ConfigKeys.DOWNLOADER_CLASS_NAME,
                 ConfigKeys.PIPLINE_CLASS_NAME,
                 ConfigKeys.PROCESSOR_CLASS_NAME,
                 ConfigKeys.CACHER_CLASS_NAME,
-                ConfigKeys.GROOVY_FILE,
+                ConfigKeys.PLUGIN_URL,
         };
 
         result = result && require(taskConfig, requiredParameters, errorMsg);

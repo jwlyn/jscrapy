@@ -1,7 +1,7 @@
 package com.oxf1.myspider.config.util;
 
 import com.oxf1.myspider.TaskConfig;
-import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.config.cfgkey.ConfigKeys;
 import com.oxf1.myspider.exception.MySpiderFetalException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -26,7 +26,7 @@ public class ConfigPrepareUtil {
         String spiderWorkDir = taskConfig.getSpiderWorkDir();
         if(StringUtils.isNotBlank(spiderWorkDir)){
             String taskWorkDir = spiderWorkDir + taskConfig.getTaskFp() + File.separator;
-            taskConfig.put(ConfigKeys.RT_LOCAL_TASK_WORK_DIR, taskWorkDir);
+            taskConfig.put(ConfigKeys.RT_EXT_RT_LOCAL_TASK_WORK_DIR, taskWorkDir);
         }
     }
 
@@ -34,12 +34,12 @@ public class ConfigPrepareUtil {
         String spiderWorkDir = taskConfig.getSpiderWorkDir();
         if(StringUtils.isNotBlank(spiderWorkDir)){
             String taskCacheDir = spiderWorkDir + taskConfig.getTaskFp() + File.separator+ "cacher" + File.separator;;
-            taskConfig.put(ConfigKeys.RT_LOCAL_TASK_CACHER_DIR, taskCacheDir);
+            taskConfig.put(ConfigKeys.RT_EXT_RT_LOCAL_TASK_CACHER_DIR, taskCacheDir);
         }
     }
 
     private static void prepareTaskLogDir(TaskConfig taskConfig) throws MySpiderFetalException {
         String logDir = taskConfig.getTaskWorkDir() + "logs" + File.separator;
-        taskConfig.put(ConfigKeys.RT_TASK_LOG_DIR, logDir);
+        taskConfig.put(ConfigKeys.RT_EXT_RT_TASK_LOG_DIR, logDir);
     }
 }

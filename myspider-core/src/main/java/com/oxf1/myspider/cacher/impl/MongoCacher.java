@@ -3,7 +3,7 @@ package com.oxf1.myspider.cacher.impl;
 import com.mongodb.*;
 import com.oxf1.myspider.TaskConfig;
 import com.oxf1.myspider.cacher.Cacher;
-import com.oxf1.myspider.config.ConfigKeys;
+import com.oxf1.myspider.config.cfgkey.ConfigKeys;
 import com.oxf1.myspider.page.Page;
 import com.oxf1.myspider.request.Request;
 import org.slf4j.Logger;
@@ -23,9 +23,9 @@ public class MongoCacher  extends Cacher {
 
     public MongoCacher(TaskConfig taskConfig) {
         super(taskConfig);
-        String dbHost = taskConfig.loadString(ConfigKeys.MONGODB_HOST);
-        int dbPort = taskConfig.loadInt(ConfigKeys.MONGODB_PORT);
-        String dbName = taskConfig.loadString(ConfigKeys.MONGODB_CACHER_DB_NAME);
+        String dbHost = taskConfig.loadString(ConfigKeys.CACHER_MONGODB_HOST);
+        int dbPort = taskConfig.loadInt(ConfigKeys.CACHER_MONGODB_PORT);
+        String dbName = taskConfig.loadString(ConfigKeys.RT_EXT_CACHER_MONGODB_DB_NAME);
         String tableName = taskConfig.getTaskName();
         this.mongo = new MongoClient(dbHost, dbPort);
         this.db = mongo.getDB(dbName);
