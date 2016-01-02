@@ -23,32 +23,25 @@ public class YamlConfigOperator  implements ConfigOperator {
     String persistencePath;//持久化文件的磁盘地址
     private LinkedHashMap<String, Object> configMap = new LinkedHashMap<String, Object>(20);
 
-    public YamlConfigOperator(String persistencePath) throws MySpiderFetalException {
-        this.persistencePath = persistencePath;//TODO
-        reload();
+    public YamlConfigOperator(String cfgFilePath) throws MySpiderFetalException {
+        laod(cfgFilePath);
     }
 
     /**
      * 重新从文件里load参数
      */
-    public void reload() throws MySpiderFetalException {
+    private void laod(String cfgFilePath) throws MySpiderFetalException {
         Yaml yaml = new Yaml();
         String yamlStr = null;
         try {
-            yamlStr = FileUtils.readFileToString(new File(this.persistencePath));
+            yamlStr = FileUtils.readFileToString(new File(cfgFilePath));
         } catch (IOException e) {
-            logger.error("读取yaml配置文件失败{}", e);
+            logger.error("读取配置文件失败{}", e);
             MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.YAML_READ_FILE_ERROR);
             exp.setErrorMessage(e.getLocalizedMessage());
             throw exp;
         }
         configMap = (LinkedHashMap<String, Object>)yaml.loadAs(yamlStr, LinkedHashMap.class);
-    }
-
-    @Override
-    public void rebaseConfigDir(String path) throws MySpiderFetalException {
-        this.persistencePath = path;
-        onChange();
     }
 
     @Override
@@ -63,10 +56,16 @@ public class YamlConfigOperator  implements ConfigOperator {
         onChange();
     }
 
+    @Override
+    public void setPersistencePath(String cfgSavePath) {
+        this.persistencePath = cfgSavePath;
+    }
+
     /**
      * 当配置变化的时候，持久化到磁盘一份
+     * //TODO 修改为APO的方式监控
      */
-    public void onChange() throws MySpiderFetalException {
+    private void onChange() throws MySpiderFetalException {
         Yaml yaml = new Yaml();
         String config = yaml.dumpAsMap(configMap);
         try {

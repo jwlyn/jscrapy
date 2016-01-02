@@ -10,7 +10,10 @@ import java.io.IOException;
 public interface ConfigOperator {
     public Object loadValue(String key);
     public void put(String key, Object value) throws MySpiderFetalException;
-    public void reload() throws IOException, MySpiderFetalException;
 
-    public void rebaseConfigDir(String path) throws MySpiderFetalException;
+    /**
+     * 配置文件的磁盘镜像位置
+     * @param cfgSavePath
+     */
+    public void setPersistencePath(String cfgSavePath);
 }

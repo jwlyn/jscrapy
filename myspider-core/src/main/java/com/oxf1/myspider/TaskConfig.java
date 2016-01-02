@@ -41,9 +41,8 @@ public class TaskConfig {
      */
     public TaskConfig(String taskConfigFile) throws MySpiderFetalException {
         this.cfg = new YamlConfigOperator(taskConfigFile);
+        this.cfg.setPersistencePath(getTaskConfigFilePath());
         this.taskSharedObject = new ConcurrentHashMap<String, Object>(5);
-        String taskConfigFilePath = getTaskConfigFilePath();
-        cfg.rebaseConfigDir(taskConfigFilePath);
 
         initTaskStatusObject();
         try {
@@ -258,7 +257,7 @@ public class TaskConfig {
     }
 
     public GroovyObject getGroovyProcessorObject() {
-        return (GroovyObject) this.getTaskSharedObject(ConfigKeys._GROOVY_PROCESSOR_OBJ);
+        return (GroovyObject) this.getTaskSharedObject(ConfigKeys._PROCESSOR_OBJ);
     }
 
     /**

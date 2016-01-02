@@ -67,10 +67,10 @@ public class ConfigKeys {
     /////////////////////////////////////////////////////////////////////////
     public static final String _SCHEDULER_MEM_QUEUE_OBJ = "_scheduler_mem_queue";
     public static final String _SCHEDULER_DISK_QUEUE_OBJ = "_scheduler_disk_queue";
+    public static final String _PROCESSOR_OBJ = "_processor_obj";
     public static final String _DEDUP_MEM_SET_OBJ = "_dedup_mem_set_obj";
     public static final String _DEDUP_DISK_SET_OBJ = "_dedup_disk_set_obj";
     public static final String _SCHEDULER_OBJ = "_scheduler_obj";
     public static final String _TASK_STATUS_OBJ = "_task_status_obj";
-    public static final String _GROOVY_PROCESSOR_OBJ = "_groovy_processor_obj";
     public static final String _GROOVY_SCRIPT_OBJ = "_groovy_script_obj";
 }
