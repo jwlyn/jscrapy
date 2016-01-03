@@ -1,101 +1,126 @@
+[task]
 #=====================================================================
-# id
+# task.id
 #
 #=====================================================================
-task_id: task_id
-
+id = task_id
 #=====================================================================
+# task.name
 # 对人友好的任务名字
 #
 #=====================================================================
-task_name: task_name
-
+name = task_name
 #=====================================================================
+# task.virtual.id
 # 虚拟的ID，可以在单机上模拟出伪分布式。参数起随意的名字，在分布式环境下无需关心。
 # 如果在一台机器上开多个实例，每个virtual_id就要配置成不一样的。
 #=====================================================================
-virtual_id: VIRTUAL_ID
-
+virtual.id = VIRTUAL_ID
 #=====================================================================
+# task.work.dir
 # 保存爬虫配置task.yaml的位置。如果不设置会默认放在user.home/.myspider/下
 # 在单机模式，保存的文件和数据都会放在这个地方，因此保证空间足够放的下你要抓的内容。
 #=====================================================================
-spider_work_dir: c:/code/play/temp
-
+work.dir = /path/to/workdir/
 #=====================================================================
+# task.wait.url.timeout
 # 当队里空的时候，线程再等待多久退出
-#
 #=====================================================================
-wait_url_sleep_time_ms: 1000
-
+wait.url.timeout = 1000
 #=====================================================================
-# 任务起始状态
+# task.status任务起始状态
 # RUN |　PAUSE | CANCEL
 #
 #=====================================================================
-task_status: RUN #这个放在这里不太合适，再看看
+status = RUN #这个放在这里不太合适，再看看
+#=====================================================================
+# task.thread.count
+#
+#=====================================================================
+thread.count = 1
 
+[scheduler]
 #=====================================================================
 # 每次从队列里拿出来多少个url
 #
 #=====================================================================
-scheduler_batch_size: 1 #每次去队列里拿到的url数目
+batch.size = 1 #每次去队列里拿到的url数目
+#=====================================================================
+# scheduler.class.name可选的参数
+# MemoryScheduler    基于内存的队列
+# FileQueueScheduler 基于文件的队列
+# MongoScheduler     基于mongodb
+# RedisScheduler     基于Redis队列
+#=====================================================================
+package = com.oxf1.myspiderer.scheduler.impl
+class.name = ${package}.MemoryScheduler
 
-#=====================================================================
-#
-#
-#=====================================================================
-task_thread_count: 1 #任务线程数目
+redis.host = 127.0.0.1
+mongo.host = 127.0.0.1
+mongo.port = 27017
 
+[dedup]
 #=====================================================================
-# scheduler_class_name可选的参数
-# com.oxf1.myspiderer.scheduler.impl.MemoryScheduler    基于内存的队列
-# com.oxf1.myspiderer.scheduler.impl.FileQueueScheduler 基于文件的队列
-# com.oxf1.myspiderer.scheduler.impl.MongoScheduler     基于mongodb
-# com.oxf1.myspiderer.scheduler.impl.RedisScheduler     基于Redis队列
+# dedup.class.name 可选的参数
+# EhCacheDedup 基于ehcache去重
+# MemoryDedup  基于内存去重
+# MongoDedup   基于mongodb去重
+# RedisDedup   基于Redis去重
 #=====================================================================
-scheduler_class_name: com.oxf1.myspiderer.scheduler.impl.MemoryScheduler
+package = com.oxf1.myspiderer.dedup.impl
+class.name = ${package}.MemoryDedup
 
-#=====================================================================
-# dedup_class_name 可选的参数
-# com.oxf1.myspiderer.dedup.impl.EhCacheDedup 基于ehcache去重
-# com.oxf1.myspiderer.dedup.impl.MemoryDedup  基于内存去重
-# com.oxf1.myspiderer.dedup.impl.MongoDedup   基于mongodb去重
-# com.oxf1.myspiderer.dedup.impl.RedisDedup   基于Redis去重
-#=====================================================================
-dedup_class_name: com.oxf1.myspiderer.dedup.impl.MemoryDedup
+redis.host = 127.0.0.1
+mongo.host = 127.0.0.1
 
+[pipline]
 #=====================================================================
-# downloader_class_name 可选的参数
-# com.oxf1.myspiderer.dedup.impl.EhCacheDedup 基于ehcache去重
-# com.oxf1.myspiderer.dedup.impl.MemoryDedup  基于内存去重
-# com.oxf1.myspiderer.dedup.impl.MongoDedup   基于mongodb去重
-# com.oxf1.myspiderer.dedup.impl.RedisDedup   基于Redis去重
+# class.name 可选的参数
+# LocalFilePipline 数据存储到本机
+# MongoDbPipline  数据保存到mongodb里
 #=====================================================================
-downloader_class_name: downloader.GroovyProcessor
+package = com.oxf1.myspiderer.pipline.impl
+class.name = ${package}.LocalFilePipline
 
+[downloader]
 #=====================================================================
-# pipline_class_name 可选的参数
-# com.oxf1.myspiderer.pipline.impl.LocalFilePipline 数据存储到本机
-# com.oxf1.myspiderer.pipline.impl.MongoDbPipline  数据保存到mongodb里
+# downloader.class.name 下载
 #=====================================================================
-pipline_class_name: com.oxf1.myspiderer.pipline.impl.LocalFilePipline
+package = com.oxf1.myspiderer.downloader.impl
+class.name = ${package}.HttpDownloader
 
+[processor]
 #=====================================================================
-# processor_class_name 可选的参数
-# com.oxf1.myspiderer.processor.impl.GroovyProcessor 基于ehcache去重
+# processor.class.name 可选的参数
+# GroovyProcessor 基于ehcache去重
 #=====================================================================
-processor_class_name: com.oxf1.myspiderer.processor.impl.GroovyProcessor
+package = com.oxf1.myspiderer.processor.impl
+class.name = ${package}.GroovyProcessor
 
+[cacher]
 #=====================================================================
-# cacher_class_name 可选的参数
-# com.oxf1.myspiderer.cacher.impl.LocalDiskCacher 缓存页面到磁盘
-# com.oxf1.myspiderer.cacher.impl.MongoCacher     缓存页面到mongodb
+# cacher.class.name 可选的参数
+# LocalDiskCacher 缓存页面到磁盘
+# MongoCacher     缓存页面到mongodb
 #=====================================================================
-cacher_class_name: com.oxf1.myspiderer.cacher.impl.LocalDiskCacher
+package = com.oxf1.myspiderer.cacher.impl
+class.name = ${package}.LocalDiskCacher
 
-#=====================================================================
-# groovy_file 可选的参数
-# com.oxf1.myspiderer.dedup.impl.EhCacheDedup 基于ehcache去重
-#=====================================================================
-groovy_file: TaskExcample.groovy
+mongo.host = 127.0.0.1
+mongo.port = 27017
+
+[plugin]
+url = http://xxx/my.jar
+
+[rt.ext] #运行开始确定的参数，无需认为添加。比如根据task.name确定的网页、数据文件保存位置等
+mongodb.dedup.db.name =
+mongodb.cacher.db.name =
+task.logger =
+local.file.pipline.data.file =
+local.task.work.dir =
+local.task.cacher.dir =
+local.queue.dir =
+task.log.dir =
+
+[rt.var] #运行过程中会不断变化RUN |　PAUSE | CANCEL
+task.control.cmd = RUN #这个放在这里不太合适，再看看
