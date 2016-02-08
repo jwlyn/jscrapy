@@ -58,7 +58,7 @@
         <module>myspider-core</module>
         <module>myspider-contrib</module>
         <module>myspider-admin</module>
-        <module>myspider-slave</module>
+        <module>myspider-worker</module>
     </modules>
     <dependencies>
         <dependency>
