@@ -50,9 +50,6 @@ public class TaskControl {
                     TaskManager.instance().runTask(taskConfig);
                     return new ResponseBase(true, "not-set-yet", "启动成功");
                 }
-
-
-
             } catch (MySpiderFetalException e) {
                 return new ResponseBase(false, "not-set-yet", e.getErrorMessage());
             } catch (IOException e) {
