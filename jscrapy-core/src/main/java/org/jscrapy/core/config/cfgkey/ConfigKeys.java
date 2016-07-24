@@ -42,9 +42,9 @@ public class ConfigKeys {
     public static final String PROCESSOR_CLASS_NAME = "processor.class.name";
 
     /////////////////////////////////////////////////////////////////////////
-    public static final String CACHER_CLASS_NAME  = "cacher.class.name";
-    public static final String CACHER_MONGODB_HOST = "cacher.mongo.host";
-    public static final String CACHER_MONGODB_PORT = "cacher.mongo.port";
+    public static final String CACHER_CLASS_NAME  = "pagecache.class.name";
+    public static final String CACHER_MONGODB_HOST = "pagecache.mongo.host";
+    public static final String CACHER_MONGODB_PORT = "pagecache.mongo.port";
 
     /////////////////////////////////////////////////////////////////////////
     // 发不到网络(nuxus)上的jar包(内含解析，提取链接、业务流程控制等逻辑)
@@ -52,11 +52,11 @@ public class ConfigKeys {
 
     /////////////////////////////////////////////////////////////////////////
     public static final String RT_EXT_DEDUP_MONGODB_DB_NAME = "rt.ext.mongodb.dedup.db.name";//去重
-    public static final String RT_EXT_CACHER_MONGODB_DB_NAME = "rt.ext.mongodb.cacher.db.name";//缓存
+    public static final String RT_EXT_CACHER_MONGODB_DB_NAME = "rt.ext.mongodb.pagecache.db.name";//缓存
     public static final String RT_EXT_TASK_LOGGER = "rt.ext.task.logger";
     public static final String RT_EXT_RT_LOCAL_FILE_PIPLINE_DATA_FILE = "rt.ext.local.file.pipline.data.file";
     public static final String RT_EXT_RT_LOCAL_TASK_WORK_DIR = "rt.ext.local.task.work.dir";
-    public static final String RT_EXT_RT_LOCAL_TASK_CACHER_DIR = "rt.ext.local.task.cacher.dir";
+    public static final String RT_EXT_RT_LOCAL_TASK_CACHER_DIR = "rt.ext.local.task.pagecache.dir";
     public static final String RT_EXT_RT_LOCAL_QUEUE_DIR = "rt.ext.local.queue.dir";
     public static final String RT_EXT_RT_TASK_LOG_DIR = "rt.ext.task.log.dir";//分任务记录的日志
 

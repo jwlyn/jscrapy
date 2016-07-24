@@ -1,6 +1,8 @@
 package dedup;
 
 import org.jscrapy.contrib.dedup.EhCacheDedup;
+import org.jscrapy.contrib.dedup.MemoryDedup;
+import org.jscrapy.contrib.dedup.RedisDedup;
 import org.jscrapy.core.TaskConfig;
 import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.exception.MySpiderFetalException;
@@ -21,13 +23,13 @@ import static org.testng.Assert.assertEquals;
 /**
  * Created by cxu on 2015/12/19.
  */
-public class DeDupExtTest{
+public class DeDupExtTest {
     private Request rq = new HttpRequest("http://url1", HttpRequestMethod.DELETE, null);
 
-    @DataProvider(name="dp")
+    @DataProvider(name = "dp")
     public DeDup[][] dataProvider() throws IOException, MySpiderFetalException {
         return new DeDup[][]{
-                {initEhcacheDedup()} ,
+                {initEhcacheDedup()},
         };
     }
 
@@ -58,13 +60,32 @@ public class DeDupExtTest{
     }
 
     /**
-     *
      * @return
      */
     private DeDup initEhcacheDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupExtTest.class, "/EhCacheDedupTest.yaml");
         TaskConfig taskConfig = new TaskConfig(path);
         DeDup dp = new EhCacheDedup(taskConfig);
+        return dp;
+    }
+
+    /**
+     * @return
+     */
+    private DeDup initMemoryDedup() throws IOException, MySpiderFetalException {
+        String path = ResourcePathUtils.getResourceFileAbsPath(DeDupExtTest.class, "/MemoryDedupTest.yaml");
+        TaskConfig taskConfig = new TaskConfig(path);
+        DeDup dp = new MemoryDedup(taskConfig);
+        return dp;
+    }
+
+    /**
+     * @return
+     */
+    private DeDup initRedisDedup() throws IOException, MySpiderFetalException {
+        String path = ResourcePathUtils.getResourceFileAbsPath(DeDupExtTest.class, "/RedisDedupTest.yaml");
+        TaskConfig taskConfig = new TaskConfig(path);
+        DeDup dp = new RedisDedup(taskConfig);
         return dp;
     }
 

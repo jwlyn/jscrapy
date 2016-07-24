@@ -1,8 +1,8 @@
-package org.jscrapy.core.cacher.impl;
+package org.jscrapy.core.pagecache.impl;
 
 import com.mongodb.*;
 import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.cacher.Cacher;
+import org.jscrapy.core.pagecache.Cacher;
 import org.jscrapy.core.config.cfgkey.ConfigKeys;
 import org.jscrapy.core.page.Page;
 import org.jscrapy.core.request.Request;

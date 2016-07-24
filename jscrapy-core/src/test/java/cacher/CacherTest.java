@@ -2,9 +2,9 @@ package cacher;
 
 import org.jscrapy.common.log.MyLoggerFactory;
 import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.cacher.Cacher;
-import org.jscrapy.core.cacher.impl.LocalDiskCacher;
-import org.jscrapy.core.cacher.impl.MongoCacher;
+import org.jscrapy.core.pagecache.Cacher;
+import org.jscrapy.core.pagecache.impl.LocalDiskCacher;
+import org.jscrapy.core.pagecache.impl.MongoCacher;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.exception.MySpiderRecoverableException;
 import org.jscrapy.core.page.Page;

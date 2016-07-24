@@ -1,4 +1,4 @@
-package org.jscrapy.core.dedup.impl;
+package org.jscrapy.contrib.dedup;
 
 import org.jscrapy.core.TaskConfig;
 import org.jscrapy.core.config.cfgkey.ConfigKeys;

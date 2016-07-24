@@ -18,9 +18,9 @@ import java.io.File;
  * 基于mapdb的大容量单机去重
  * Created by cxu on 2015/12/8.
  */
-public class DiskDedup  extends DeDup {
+public class MapdbDedup extends DeDup {
 
-    public DiskDedup(TaskConfig taskConfig) throws MySpiderFetalException {
+    public MapdbDedup(TaskConfig taskConfig) throws MySpiderFetalException {
 
         super(taskConfig);
         if(taskConfig.getTaskSharedObject(ConfigKeys._DEDUP_DISK_SET_OBJ)==null){

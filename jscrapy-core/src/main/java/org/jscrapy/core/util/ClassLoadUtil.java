@@ -1,7 +1,7 @@
 package org.jscrapy.core.util;
 
 import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.cacher.Cacher;
+import org.jscrapy.core.pagecache.Cacher;
 import org.jscrapy.core.downloader.Downloader;
 import org.jscrapy.core.exception.MySpiderExceptionCode;
 import org.jscrapy.core.processor.Processor;

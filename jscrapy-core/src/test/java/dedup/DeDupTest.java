@@ -2,11 +2,8 @@ package dedup;
 
 import org.jscrapy.core.TaskConfig;
 import org.jscrapy.core.dedup.DeDup;
-//import com.oxf1.myspider.dedup.impl.EhCacheDedup;
-import org.jscrapy.core.dedup.impl.DiskDedup;
-import org.jscrapy.core.dedup.impl.MemoryDedup;
+import org.jscrapy.core.dedup.impl.MapdbDedup;
 import org.jscrapy.core.dedup.impl.MongoDedup;
-import org.jscrapy.core.dedup.impl.RedisDedup;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.exception.MySpiderRecoverableException;
 import org.jscrapy.core.request.HttpRequestMethod;
@@ -31,10 +28,7 @@ public class DeDupTest{
     @DataProvider(name="dp")
     public DeDup[][] dataProvider() throws IOException, MySpiderFetalException {
         return new DeDup[][]{
-                //{initEhcacheDedup()} ,
-                {initMemoryDedup()},
                 {initMongoDedup()},
-                {initRedisDedup()},
                 {initDiskDedup()},
         };
     }
@@ -69,43 +63,10 @@ public class DeDupTest{
      *
      * @return
      */
-    /*private DeDup initEhcacheDedup() throws IOException, MySpiderFetalException {
-        String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/EhCacheDedupTest.yaml");
-        TaskConfig taskConfig = new TaskConfig(path);
-        DeDup dp = new EhCacheDedup(taskConfig);
-        return dp;
-    }*/
-
-    /**
-     *
-     * @return
-     */
-    private DeDup initMemoryDedup() throws IOException, MySpiderFetalException {
-        String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/MemoryDedupTest.yaml");
-        TaskConfig taskConfig = new TaskConfig(path);
-        DeDup dp = new MemoryDedup(taskConfig);
-        return dp;
-    }
-
-    /**
-     *
-     * @return
-     */
     private DeDup initMongoDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/MongoDedupTest.yaml");
         TaskConfig taskConfig = new TaskConfig(path);
         DeDup dp = new MongoDedup(taskConfig);
-        return dp;
-    }
-
-    /**
-     *
-     * @return
-     */
-    private DeDup initRedisDedup() throws IOException, MySpiderFetalException {
-        String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/RedisDedupTest.yaml");
-        TaskConfig taskConfig = new TaskConfig(path);
-        DeDup dp = new RedisDedup(taskConfig);
         return dp;
     }
 
@@ -118,7 +79,7 @@ public class DeDupTest{
     private DeDup initDiskDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/DiskDedupTest.yaml");
         TaskConfig taskConfig = new TaskConfig(path);
-        DeDup dp = new DiskDedup(taskConfig);
+        DeDup dp = new MapdbDedup(taskConfig);
         return dp;
     }
 }

@@ -1,6 +1,6 @@
 package org.jscrapy.core;
 
-import org.jscrapy.core.cacher.Cacher;
+import org.jscrapy.core.pagecache.Cacher;
 import org.jscrapy.core.component.MyspiderComponent;
 import org.jscrapy.core.data.ProcessResult;
 import org.jscrapy.core.exception.MySpiderException;

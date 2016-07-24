@@ -1,7 +1,7 @@
-package org.jscrapy.core.cacher.impl;
+package org.jscrapy.core.pagecache.impl;
 
 import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.cacher.Cacher;
+import org.jscrapy.core.pagecache.Cacher;
 import org.jscrapy.core.exception.MySpiderExceptionCode;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.exception.MySpiderRecoverableException;

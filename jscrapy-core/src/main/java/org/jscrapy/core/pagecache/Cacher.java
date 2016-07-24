@@ -1,4 +1,4 @@
-package org.jscrapy.core.cacher;
+package org.jscrapy.core.pagecache;
 
 import org.jscrapy.core.TaskConfig;
 import org.jscrapy.core.component.MyspiderComponent;

@@ -14,10 +14,10 @@ public enum  MySpiderExceptionCode {
     LOCAL_PIPLINE_WRITE_FILE_ERROR("写文件失败"),
     YAML_WRITE_FILE_ERROR("写yaml文件失败"),
     YAML_READ_FILE_ERROR("yaml读出错"),
-    DISK_CACHER_DEL_DIR_ERROR("disk cacher 删除文件失败"),
+    DISK_CACHER_DEL_DIR_ERROR("disk pagecache 删除文件失败"),
     DISK_CACHER_CACHE_FILE_ERROR("disk cacher缓存文件失败"),
-    DISK_CACHER_READ_ERROR("disk cacher 读文件错误"),
-    DISK_CACHER_MK_DIR_ERROR("disk cacher 创建目录失败"),
+    DISK_CACHER_READ_ERROR("disk pagecache 读文件错误"),
+    DISK_CACHER_MK_DIR_ERROR("disk pagecache 创建目录失败"),
 
     GROOVY_PARSER_NOT_FOUND("没有找到groovy解析文件"),
 

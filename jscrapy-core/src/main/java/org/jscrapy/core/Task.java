@@ -1,7 +1,7 @@
 package org.jscrapy.core;
 
 import org.jscrapy.common.log.MyLoggerFactory;
-import org.jscrapy.core.cacher.Cacher;
+import org.jscrapy.core.pagecache.Cacher;
 import org.jscrapy.core.component.MyspiderComponent;
 import org.jscrapy.core.status.TaskStatus;
 import org.jscrapy.core.dedup.DeDup;
