@@ -3,8 +3,8 @@
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jscrapy/jscrapy/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 ## 功能
 - 用户友好,一个管控界面解决全部问题
-- 新站点抓取无需重新部署
-- 天生分布式。支持集群动态扩、缩容
+- 动态上线，新站点抓取无需重新发布部署。
+- 天生分布式。支持集群动态扩、缩容、分组
 - 精准解析。解析脚本化，支持Groovy, Javascript, python
 - 支持的去重方式：redis, mongodb, ehcache, 内存
 - 支持的队列： redis, mongodb(可靠抓取), ehcache, 内存
@@ -36,5 +36,7 @@
 
 - webmagic
 - scrapy
+- SeimiCrawler
+- gecco
 
 参考了二者很多设计。
