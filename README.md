@@ -1,4 +1,4 @@
-# myspider
+# Jscrapy
 [![Build Status](https://travis-ci.org/oxf1/myspider.svg?branch=master)](https://travis-ci.org/oxf1/myspider)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/oxf1/myspider/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 ## 功能
@@ -25,6 +25,8 @@
 - 解析太头疼？看看解析工具里的武器。表格，列表只需一条语句。
 - OCR太深奥？我都给你包好了，绝不放过任何一条数据。
 
+## 使用手册TODO
+![工程结构](./docs/jscrapy_project_structure.png)
 
 ## 特别感谢
 ```text
@@ -36,7 +38,3 @@
 - scrapy
 
 参考了二者很多设计。
-
-
-## 使用手册
-TODO
