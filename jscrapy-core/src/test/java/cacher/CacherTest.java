@@ -1,6 +1,6 @@
 package cacher;
 
-import org.jscrapy.core.common.log.MyLoggerFactory;
+import org.jscrapy.common.log.MyLoggerFactory;
 import org.jscrapy.core.TaskConfig;
 import org.jscrapy.core.cacher.Cacher;
 import org.jscrapy.core.cacher.impl.LocalDiskCacher;

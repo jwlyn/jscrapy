@@ -1,13 +1,13 @@
 package dedup;
 
-import com.oxf1.myspider.TaskConfig;
 import org.jscrapy.contrib.dedup.EhCacheDedup;
-import com.oxf1.myspider.dedup.DeDup;
-import com.oxf1.myspider.exception.MySpiderFetalException;
-import com.oxf1.myspider.exception.MySpiderRecoverableException;
-import com.oxf1.myspider.request.HttpRequestMethod;
-import com.oxf1.myspider.request.Request;
-import com.oxf1.myspider.request.impl.HttpRequest;
+import org.jscrapy.core.TaskConfig;
+import org.jscrapy.core.dedup.DeDup;
+import org.jscrapy.core.exception.MySpiderFetalException;
+import org.jscrapy.core.exception.MySpiderRecoverableException;
+import org.jscrapy.core.request.HttpRequestMethod;
+import org.jscrapy.core.request.Request;
+import org.jscrapy.core.request.impl.HttpRequest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import util.ResourcePathUtils;

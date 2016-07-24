@@ -1,14 +1,14 @@
 package scheduler;
 
-import com.oxf1.myspider.TaskConfig;
-import com.oxf1.myspider.exception.MySpiderException;
-import com.oxf1.myspider.exception.MySpiderFetalException;
-import com.oxf1.myspider.exception.MySpiderRecoverableException;
-import com.oxf1.myspider.request.HttpRequestMethod;
-import com.oxf1.myspider.request.Request;
-import com.oxf1.myspider.request.impl.HttpRequest;
-import com.oxf1.myspider.scheduler.Scheduler;
 import org.jscrapy.contrib.scheduler.FileQueueScheduler;
+import org.jscrapy.core.TaskConfig;
+import org.jscrapy.core.exception.MySpiderException;
+import org.jscrapy.core.exception.MySpiderFetalException;
+import org.jscrapy.core.exception.MySpiderRecoverableException;
+import org.jscrapy.core.request.HttpRequestMethod;
+import org.jscrapy.core.request.Request;
+import org.jscrapy.core.request.impl.HttpRequest;
+import org.jscrapy.core.scheduler.Scheduler;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
