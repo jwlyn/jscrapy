@@ -25,11 +25,6 @@
 - 解析太头疼？看看解析工具里的武器。表格，列表只需一条语句。
 - OCR太深奥？我都给你包好了，绝不放过任何一条数据。
 
-## 运行
-以IDEA为例，导入工程。新建一个run Configuration, 选择gradle
-![config debug command](docs/readme/runConfiguration.png)
-然后就可以run或者debug。
-
 
 ## 特别感谢
 ```text
