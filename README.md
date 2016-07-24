@@ -30,7 +30,7 @@
 
 ## 特别感谢
 ```text
-站在巨人的肩膀上  --牛顿
+If I have been able to see further, it was only because I stood on the shoulders of giants.   --Newton
 ```
 本产品的开发借鉴或者复用了很多优秀的开源软件。特别感谢
 
@@ -39,4 +39,4 @@
 - SeimiCrawler
 - gecco
 
-参考了二者很多设计。
+
