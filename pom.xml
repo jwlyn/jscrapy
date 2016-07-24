@@ -51,14 +51,14 @@
         <maven-xml-formatter-plugin.version>2.1.0.20111230154050</maven-xml-formatter-plugin.version>
         <!-- system config -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
     <modules>
-        <module>myspider-common</module>
-        <module>myspider-core</module>
-        <module>myspider-contrib</module>
-        <module>myspider-admin</module>
-        <module>myspider-worker</module>
+        <module>jscrapy-common</module>
+        <module>jscrapy-core</module>
+        <module>jscrapy-contrib</module>
+        <module>jscrapy-admin</module>
+        <module>jscrapy-worker</module>
     </modules>
     <dependencies>
         <dependency>
