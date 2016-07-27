@@ -150,7 +150,7 @@
 
         To specify a reference to a source (or sources) of configuration, use the url
         attribute.  The url attribute must contain a comma-separated list of:
-        * path to Terracotta configuration file (usually named tc-config.xml)
+        * path to Terracotta configuration file (usually named tc-config1.xml)
         * URL to Terracotta configuration file
         * <server host>:<port> of running Terracotta Server instance
 
@@ -171,7 +171,7 @@
         to create the clustered data structures.
 
         Example using a path to Terracotta configuration file:
-        <terracottaConfig url="/app/config/tc-config.xml"/>
+        <terracottaConfig url="/app/config1/tc-config1.xml"/>
 
         Example using a URL to a Terracotta configuration file:
         <terracottaConfig url="http://internal/ehcache/app/tc-config.xml"/>
@@ -180,11 +180,11 @@
         <terracottaConfig url="host1:9510,host2:9510,host3:9510"/>
 
         To embed a Terracotta configuration file within the ehcache configuration, simply
-        place a normal Terracotta XML config within the <terracottaConfig> element.
+        place a normal Terracotta XML config1 within the <terracottaConfig> element.
 
         Example:
         <terracottaConfig>
-            <tc-config>
+            <tc-config1>
                 <servers>
                     <server host="server1" name="s1"/>
                     <server host="server2" name="s2"/>
@@ -192,7 +192,7 @@
                 <clients>
                     <logs>app/logs-%i</logs>
                 </clients>
-            </tc-config>
+            </tc-config1>
         </terracottaConfig>
 
         For more information on the Terracotta configuration, see the Terracotta documentation.

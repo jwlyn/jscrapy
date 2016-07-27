@@ -1,8 +1,7 @@
 package org.jscrapy.core.scheduler.impl;
 
 import com.alibaba.fastjson.JSONException;
-import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.config.cfgkey.ConfigKeys;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.request.impl.HttpRequest;
 import org.jscrapy.core.request.Request;
 import org.jscrapy.core.scheduler.Scheduler;
@@ -22,9 +21,9 @@ public class RedisScheduler  extends Scheduler {
     final static Logger logger = LoggerFactory.getLogger(RedisScheduler.class);
     private JedisPool pool;
 
-    public RedisScheduler(TaskConfig taskConfig) {
-        super(taskConfig);
-        String redisHost = taskConfig.loadString(ConfigKeys.SCHEDULER_REDIS_HOST);
+    public RedisScheduler(JscrapyConfig jscrapyConfig) {
+        super(jscrapyConfig);
+        String redisHost = jscrapyConfig.getRedisSchedulerHost();
         this.pool = new JedisPool(new JedisPoolConfig(), redisHost);
     }
 
@@ -46,12 +45,12 @@ public class RedisScheduler  extends Scheduler {
         try(Jedis jedis = this.pool.getResource()){
             for(int i=0; i<n; i++){
                 String reqJson = jedis.lpop(this.getQueueName());
-                Request request = (Request)Request.build(reqJson, HttpRequest.class);
+                Request request = Request.build(reqJson, HttpRequest.class);
                 req.add(request);
             }
 
         } catch (JSONException e) {
-            log(logger, "error", "json build出错 {}", e);
+
         }
         return req;
     }
@@ -61,17 +60,11 @@ public class RedisScheduler  extends Scheduler {
         //do nothing
         return 0;
     }
-
-    @Override
-    public void close() {
-        this.pool.close();
-    }
-
     /**
      * request队列的名字
      * @return
      */
     private String getQueueName(){
-        return  "myspider_queue_"+this.getTaskConfig().getTaskId();
+        return  "jscrapy_queue_"+this.getJscrapyConfig().getTaskId();
     }
 }

@@ -1,10 +1,10 @@
 package cacher;
 
 import org.jscrapy.common.log.MyLoggerFactory;
-import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.pagecache.Cacher;
-import org.jscrapy.core.pagecache.impl.LocalDiskCacher;
-import org.jscrapy.core.pagecache.impl.MongoCacher;
+import org.jscrapy.core.config.JscrapyConfig;
+import org.jscrapy.core.cacher.Cacher;
+import org.jscrapy.core.cacher.impl.LocalDiskCacher;
+import org.jscrapy.core.cacher.impl.MongoCacher;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.exception.MySpiderRecoverableException;
 import org.jscrapy.core.page.Page;
@@ -48,7 +48,6 @@ public class CacherTest {
             cacher.cachePage(page);
             Page pg = cacher.loadPage(request);
             assertNotNull(pg);
-            cacher.close();
         } catch (MySpiderRecoverableException e) {
 
         }
@@ -59,10 +58,9 @@ public class CacherTest {
      */
     private Cacher initMongoCacher() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/MongoCacherTest.yaml");
-        TaskConfig taskConfig = null;
-        taskConfig = new TaskConfig(path);
-        taskConfig.setTaskLogger(MyLoggerFactory.getModuleLogger(taskConfig.getTaskFp(), taskConfig.getTaskLogDir()));
-        Cacher cacher = new MongoCacher(taskConfig);
+        JscrapyConfig JscrapyConfig = null;
+        JscrapyConfig = new JscrapyConfig();
+        Cacher cacher = new MongoCacher(JscrapyConfig);
         return cacher;
     }
 
@@ -71,10 +69,9 @@ public class CacherTest {
      */
     private Cacher initLocalDiskCacher() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/CacherTest.yaml");
-        TaskConfig taskConfig = null;
-        taskConfig = new TaskConfig(path);
-        taskConfig.setTaskLogger(MyLoggerFactory.getModuleLogger(taskConfig.getTaskFp(), taskConfig.getTaskLogDir()));
-        Cacher cacher = new LocalDiskCacher(taskConfig);
+        JscrapyConfig JscrapyConfig = null;
+        JscrapyConfig = new JscrapyConfig();
+        Cacher cacher = new LocalDiskCacher(JscrapyConfig);
         return cacher;
     }
 }

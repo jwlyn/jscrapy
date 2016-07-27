@@ -1,6 +1,7 @@
 package org.jscrapy.core;
 
 import org.jscrapy.common.datetime.DatetimeUtil;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.status.TaskStatus;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.slf4j.Logger;
@@ -32,21 +33,21 @@ public class TaskManager {
         return TASK_MANAGER;
     }
 
-    public void runTask(TaskConfig taskConfig) throws MySpiderFetalException {
-        String taskId = taskConfig.getTaskId();
+    public void runTask(JscrapyConfig JscrapyConfig) throws MySpiderFetalException {
+        String taskId = JscrapyConfig.getTaskId();
         Task task = tasks.get(taskId);
         if (task != null) {
             logger.warn("task {} 已经存在，不能再次调度启动", task);
         }
         else {
-            task = new Task(taskConfig);
+            task = new Task(JscrapyConfig);
             tasks.put(taskId, task);
             task.run();
         }
     }
 
-    public void cancelTask(TaskConfig taskConfig) throws MySpiderFetalException {
-        String taskId = taskConfig.getTaskId();
+    public void cancelTask(JscrapyConfig JscrapyConfig) throws MySpiderFetalException {
+        String taskId = JscrapyConfig.getTaskId();
         Task task = tasks.get(taskId);
         if (task == null) {
             logger.warn("task {} 不存在，不能取消", task);
@@ -57,8 +58,8 @@ public class TaskManager {
         }
     }
 
-    public void pauseTask(TaskConfig taskConfig) throws MySpiderFetalException {
-        String taskId = taskConfig.getTaskId();
+    public void pauseTask(JscrapyConfig JscrapyConfig) throws MySpiderFetalException {
+        String taskId = JscrapyConfig.getTaskId();
         Task task = tasks.get(taskId);
         if (task == null) {
             logger.warn("task {} 不存在，不能暂停", task);
@@ -69,43 +70,43 @@ public class TaskManager {
         }
     }
 
-    public List<TaskStatus> getTaskStatus() {
-        List<TaskStatus> status = new ArrayList<>();
-        Set<String> taskIds = tasks.keySet();
-        for (String taskId : taskIds) {
-            Task task = tasks.get(taskId);
-            if (task != null) {
-                TaskStatus sts = task.getTaskConfig().getTaskStatusObject();
-                status.add(sts);
-            }
-        }
+//    public List<TaskStatus> getTaskStatus() {
+//        List<TaskStatus> status = new ArrayList<>();
+//        Set<String> taskIds = tasks.keySet();
+//        for (String taskId : taskIds) {
+//            Task task = tasks.get(taskId);
+//            if (task != null) {
+//                TaskStatus sts = task.getJscrapyConfig().getTaskStatusObject();
+//                status.add(sts);
+//            }
+//        }
+//
+//        return status;
+//    }
 
-        return status;
-    }
+//    public TaskStatus getTaskStatus(String taskId) {
+//        TaskStatus status = null;
+//
+//        Task task = tasks.get(taskId);
+//        if (task != null) {
+//            status = task.getJscrapyConfig().getTaskStatusObject();
+//        }
+//
+//        return status;
+//    }
 
-    public TaskStatus getTaskStatus(String taskId) {
-        TaskStatus status = null;
-
-        Task task = tasks.get(taskId);
-        if (task != null) {
-            status = task.getTaskConfig().getTaskStatusObject();
-        }
-
-        return status;
-    }
-
-    /**
-     * 没找到返回null
-     * @param taskId
-     * @return
-     */
-    public String getTaskLogFilePath(String taskId) {
-        String logFilePath = null;
-        Task task = tasks.get(taskId);
-        if (task != null) {
-            logFilePath = task.getTaskConfig().getTaskLogDir() + File.separator + DatetimeUtil.getTime("yyyyMMdd") + ".log";
-        }
-
-        return logFilePath;
-    }
+//    /**
+//     * 没找到返回null
+//     * @param taskId
+//     * @return
+//     */
+//    public String getTaskLogFilePath(String taskId) {
+//        String logFilePath = null;
+//        Task task = tasks.get(taskId);
+//        if (task != null) {
+//            logFilePath = task.getJscrapyConfig().getTaskLogDir() + File.separator + DatetimeUtil.getTime("yyyyMMdd") + ".log";
+//        }
+//
+//        return logFilePath;
+//    }
 }

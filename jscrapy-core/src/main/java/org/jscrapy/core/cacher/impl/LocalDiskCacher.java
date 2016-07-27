@@ -1,7 +1,7 @@
-package org.jscrapy.core.pagecache.impl;
+package org.jscrapy.core.cacher.impl;
 
-import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.pagecache.Cacher;
+import org.jscrapy.core.config.JscrapyConfig;
+import org.jscrapy.core.cacher.Cacher;
 import org.jscrapy.core.exception.MySpiderExceptionCode;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.exception.MySpiderRecoverableException;
@@ -23,16 +23,16 @@ public class LocalDiskCacher extends Cacher {
 
     /**
      * 构造函数
-     * @param taskConfig
+     * @param JscrapyConfig
      */
-    public LocalDiskCacher(TaskConfig taskConfig) throws MySpiderFetalException {
-        super(taskConfig);
+    public LocalDiskCacher(JscrapyConfig JscrapyConfig) throws MySpiderFetalException {
+        super(JscrapyConfig);
         String taskWorkDir = getTaskWorkDir();//组合出这个任务在本地磁盘的目录
 
         try {
             FileUtils.forceMkdir(new File(taskWorkDir));
         } catch (IOException e) {
-            log(logger, "error", "创建目录{}时失败{}", taskWorkDir, e);
+
             MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.DISK_CACHER_MK_DIR_ERROR);
             exp.setErrorMessage(e.getLocalizedMessage());
             throw exp;
@@ -50,16 +50,16 @@ public class LocalDiskCacher extends Cacher {
                 page = new Page(pageContent);
                 page.setRequest(request);
                 page.setIsFromCache(true);
-                log(logger, "info", "缓存命中文件{}", file);
+
             } catch (IOException e) {
-                log(logger, "error", "读文件{}时失败{}", file, e);
+
                 MySpiderRecoverableException exp = new MySpiderRecoverableException(MySpiderExceptionCode.DISK_CACHER_READ_ERROR);
                 exp.setErrorMessage(e.getLocalizedMessage());
                 throw exp;
             }
         }
         else{
-            log(logger, "info", "缓存没有命中文件{}", file);
+            //log(logger, "info", "缓存没有命中文件{}", file);
         }
 
         return page;
@@ -71,24 +71,10 @@ public class LocalDiskCacher extends Cacher {
         try {
             //覆盖方式写
             FileUtils.write(new File(file), page.getRawText(), StandardCharsets.UTF_8, false);
-            log(logger, "info", "缓存文件{}", file);
+            //log(logger, "info", "缓存文件{}", file);
         } catch (IOException e) {
-            log(logger, "error", "缓存文件{}时发生异常{}", file, e);
+            //log(logger, "error", "缓存文件{}时发生异常{}", file, e);
             MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.DISK_CACHER_CACHE_FILE_ERROR);
-            exp.setErrorMessage(e.getLocalizedMessage());
-            throw exp;
-        }
-    }
-
-
-    @Override
-    public void close() throws MySpiderRecoverableException {
-        String taskWorkDir = getTaskWorkDir();
-        try {
-            FileUtils.deleteDirectory(new File(taskWorkDir));
-        } catch (IOException e) {
-            log(logger, "error", "清空目录{}时发生异常{}", taskWorkDir, e);
-            MySpiderRecoverableException exp = new MySpiderRecoverableException(MySpiderExceptionCode.DISK_CACHER_DEL_DIR_ERROR);
             exp.setErrorMessage(e.getLocalizedMessage());
             throw exp;
         }
@@ -112,8 +98,8 @@ public class LocalDiskCacher extends Cacher {
      * @return
      */
     private String getTaskWorkDir() {
-        TaskConfig taskConfig = getTaskConfig();
-        return taskConfig.getTaskWorkDir();
+        JscrapyConfig JscrapyConfig = getJscrapyConfig();
+        return JscrapyConfig.getTaskWorkDir();
     }
 
     /**
@@ -121,8 +107,8 @@ public class LocalDiskCacher extends Cacher {
      * @return
      */
     private String getTaskCacheDir() {
-        TaskConfig taskConfig = getTaskConfig();
-        return taskConfig.getTaskCacheDir();
+        JscrapyConfig JscrapyConfig = getJscrapyConfig();
+        return JscrapyConfig.getTaskCacheDir();
     }
 
 

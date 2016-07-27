@@ -1,6 +1,6 @@
 package downloader;
 
-import org.jscrapy.core.TaskConfig;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.downloader.Downloader;
 import org.jscrapy.core.downloader.impl.HttpDownloader;
 import org.jscrapy.core.exception.MySpiderFetalException;
@@ -22,12 +22,12 @@ public class HttpDownloaderTest {
     @Test
     public void testDownloadCanWork() throws MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(HttpDownloaderTest.class, "/CacherTest.yaml");
-        TaskConfig taskConfig = null;
-        taskConfig = new TaskConfig(path);
+        JscrapyConfig JscrapyConfig = null;
+        JscrapyConfig = new JscrapyConfig(path);
 
         String url = "http://www.oschina.net/";
         Request request = new HttpRequest(url);
-        Downloader dl = new HttpDownloader(taskConfig);
+        Downloader dl = new HttpDownloader(JscrapyConfig);
         Page pg = dl.download(request);
         assertNotNull(pg);
         Html html = new Html(pg);

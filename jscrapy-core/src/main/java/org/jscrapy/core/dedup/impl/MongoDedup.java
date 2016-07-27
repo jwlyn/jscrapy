@@ -1,8 +1,7 @@
 package org.jscrapy.core.dedup.impl;
 
 import com.mongodb.*;
-import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.config.cfgkey.ConfigKeys;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.request.Request;
 
@@ -11,22 +10,22 @@ import org.jscrapy.core.request.Request;
  */
 public class MongoDedup extends DeDup {
     private static final String DB_PRIMARY_KEY = "_id";
-    private static final String DB_CACHE_FIELD_NAME = "page";
-    private Mongo mongo = null;
+    private static final String DB_CACHE_FIELD_NAME = "is_page_exit";
     protected DB db = null;
     protected DBCollection collection = null;
+    private Mongo mongo = null;
 
-    public MongoDedup(TaskConfig taskConfig) {
-        super(taskConfig);
+    public MongoDedup(JscrapyConfig jscrapyConfig) {
+        super(jscrapyConfig);
 
-        String dbHost = taskConfig.loadString(ConfigKeys.DEDUP_MONGO_HOST);
-        int dbPort = taskConfig.loadInt(ConfigKeys.DEDUP_MONGO_PORT);
-        String dbName = taskConfig.loadString(ConfigKeys.RT_EXT_DEDUP_MONGODB_DB_NAME);
-        String tableName = taskConfig.getTaskName();
+        String dbHost = jscrapyConfig.getDedupMongoHost();
+        int dbPort = jscrapyConfig.getDedupMongoPort();
+        String dbName = jscrapyConfig.getDedupMongoDbName();
+        String tableName = jscrapyConfig.getDedupMongoTableName();
+
         this.mongo = new MongoClient(dbHost, dbPort);
         this.db = mongo.getDB(dbName);
         this.collection = db.getCollection(tableName);
-
     }
 
     @Override
@@ -35,17 +34,12 @@ public class MongoDedup extends DeDup {
         BasicDBObject query = new BasicDBObject();
         query.append(DB_PRIMARY_KEY, id);
         BasicDBObject obj = (BasicDBObject) collection.findOne(query);
-        if(obj==null){
+        if (obj == null) {
             DBObject pageDoc = new BasicDBObject();
             pageDoc.put(DB_PRIMARY_KEY, id);
             pageDoc.put(DB_CACHE_FIELD_NAME, 1);
             this.collection.insert(pageDoc);
         }
-        return obj!=null;
-    }
-
-    @Override
-    public void close() {
-        this.collection.drop();
+        return obj != null;
     }
 }

@@ -3,7 +3,7 @@ package dedup;
 import org.jscrapy.contrib.dedup.EhCacheDedup;
 import org.jscrapy.contrib.dedup.MemoryDedup;
 import org.jscrapy.contrib.dedup.RedisDedup;
-import org.jscrapy.core.TaskConfig;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.exception.MySpiderRecoverableException;
@@ -64,8 +64,8 @@ public class DeDupExtTest {
      */
     private DeDup initEhcacheDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupExtTest.class, "/EhCacheDedupTest.yaml");
-        TaskConfig taskConfig = new TaskConfig(path);
-        DeDup dp = new EhCacheDedup(taskConfig);
+        JscrapyConfig JscrapyConfig = new JscrapyConfig(path);
+        DeDup dp = new EhCacheDedup(JscrapyConfig);
         return dp;
     }
 
@@ -74,8 +74,8 @@ public class DeDupExtTest {
      */
     private DeDup initMemoryDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupExtTest.class, "/MemoryDedupTest.yaml");
-        TaskConfig taskConfig = new TaskConfig(path);
-        DeDup dp = new MemoryDedup(taskConfig);
+        JscrapyConfig JscrapyConfig = new JscrapyConfig(path);
+        DeDup dp = new MemoryDedup(JscrapyConfig);
         return dp;
     }
 
@@ -84,8 +84,8 @@ public class DeDupExtTest {
      */
     private DeDup initRedisDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupExtTest.class, "/RedisDedupTest.yaml");
-        TaskConfig taskConfig = new TaskConfig(path);
-        DeDup dp = new RedisDedup(taskConfig);
+        JscrapyConfig JscrapyConfig = new JscrapyConfig(path);
+        DeDup dp = new RedisDedup(JscrapyConfig);
         return dp;
     }
 

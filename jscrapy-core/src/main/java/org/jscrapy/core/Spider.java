@@ -1,19 +1,20 @@
 package org.jscrapy.core;
 
-import org.jscrapy.core.pagecache.Cacher;
-import org.jscrapy.core.component.MyspiderComponent;
+import org.jscrapy.core.cacher.Cacher;
+import org.jscrapy.core.config.ConfigDriver;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.data.ProcessResult;
-import org.jscrapy.core.exception.MySpiderException;
-import org.jscrapy.core.exception.MySpiderRecoverableException;
-import org.jscrapy.core.page.Page;
-import org.jscrapy.core.status.TaskStatus;
 import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.downloader.Downloader;
+import org.jscrapy.core.exception.MySpiderException;
 import org.jscrapy.core.exception.MySpiderFetalException;
+import org.jscrapy.core.exception.MySpiderRecoverableException;
+import org.jscrapy.core.page.Page;
 import org.jscrapy.core.pipline.Pipline;
 import org.jscrapy.core.processor.Processor;
 import org.jscrapy.core.request.Request;
 import org.jscrapy.core.scheduler.Scheduler;
+import org.jscrapy.core.status.TaskStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  * 一个线程要做的事情
  * Created by cxu on 2015/6/20.
  */
-public class Spider extends MyspiderComponent implements Runnable{
+public class Spider extends ConfigDriver implements Runnable {
     final static Logger logger = LoggerFactory.getLogger(Spider.class);
 
     private DeDup dedup;
@@ -35,22 +36,21 @@ public class Spider extends MyspiderComponent implements Runnable{
     private Processor processor;
     private Scheduler scheduler;
 
-    public Spider(TaskConfig taskConfig){
-        super(taskConfig);
+    public Spider(JscrapyConfig JscrapyConfig) {
+        super(JscrapyConfig);
         piplines = new ArrayList<>(5);
-        scheduler = taskConfig.getSchedulerObject();//共用scheduler减少竞争和去重误差
+        //scheduler = JscrapyConfig.getSchedulerObject();//共用scheduler减少竞争和去重误差
     }
 
     @Override
     public void run() {
 
-        while(!Thread.currentThread().isInterrupted() &&
-                getTaskConfig().getTaskStatus().equalsIgnoreCase(TaskStatus.Status.RUN.name())){
+        while (!Thread.currentThread().isInterrupted()) {
 
-            TaskStatus status = getTaskConfig().getTaskStatusObject();
+            //TaskStatus status = getJscrapyConfig().getTaskStatusObject();
             List<Request> requests = null;
             try {
-                requests = scheduler.poll(getTaskConfig().getSchedulerBatchSize());
+                requests = scheduler.poll(1);
             } catch (MySpiderException e) {
                 e.printStackTrace();
                 //TODO exp
@@ -64,18 +64,18 @@ public class Spider extends MyspiderComponent implements Runnable{
                 } catch (MySpiderRecoverableException e) {
                     logger.error("读取缓存页面文件失败{}", e);
                 }
-                if(pg!=null){//缓存命中了
-                    if(pg.isFromCache()){
-                        status.addCacheUrl(1);
-                        status.addPageSizeKb(pg.sizeInKb());
+                if (pg != null) {//缓存命中了
+                    if (pg.isFromCache()) {
+//                        status.addCacheUrl(1);
+//                        status.addPageSizeKb(pg.sizeInKb());
                     }
-                }else {//缓存没有命中，从网络下载
+                } else {//缓存没有命中，从网络下载
                     pg = downloader.download(req);
                     if (pg == null) {
-                        status.addFailedUrl(1);
-                    }else{
-                        status.addNetUrl(1);
-                        status.addPageSizeKb(pg.sizeInKb());
+//                        status.addFailedUrl(1);
+                    } else {
+//                        status.addNetUrl(1);
+//                        status.addPageSizeKb(pg.sizeInKb());
                     }
                 }
                 if (pg == null) {
@@ -98,7 +98,7 @@ public class Spider extends MyspiderComponent implements Runnable{
                 for (Pipline pipline : piplines) {
                     try {
                         pipline.save(result.getData());
-                        status.addDataItemCount(result.getData().size());
+//                        status.addDataItemCount(result.getData().size());
                     } catch (MySpiderFetalException e) {
                         logger.error("保存文件时出错 {}", e);
                         //TODO 数据保存出错统计
@@ -116,7 +116,7 @@ public class Spider extends MyspiderComponent implements Runnable{
             }
 
             if (requests.size() == 0) {//睡眠一段等待命令或者新的url到来
-                int sleepTimeMs = getTaskConfig().getWaitUrlSleepTimeMs();
+                int sleepTimeMs = 1;//getJscrapyConfig().getWaitUrlSleepTimeMs();
                 try {
                     TimeUnit.MILLISECONDS.sleep(sleepTimeMs);
                 } catch (InterruptedException e) {
@@ -127,39 +127,20 @@ public class Spider extends MyspiderComponent implements Runnable{
             }
         }
 
-        String taskStatus = getTaskConfig().getTaskStatus();
-        if(TaskStatus.Status.CANCEL.name().equalsIgnoreCase(taskStatus)){
+        String taskStatus = null;//getJscrapyConfig().getTaskStatus();
+        if (TaskStatus.Status.CANCEL.name().equalsIgnoreCase(taskStatus)) {
             //这种情况下，任务取消，删除：dedup队列，网页缓存，存储的数据，请求队列
-            logger.info("任务{}被取消", getTaskConfig().getTaskFp());
-            try {
-                this.cleanTaskEnv();
-            } catch (MySpiderRecoverableException e) {
-                logger.info("清除任务相关文件失败 {}", e);
-            }
+            logger.info("任务{}被取消", getJscrapyConfig().getTaskFp());
+//            try {
+//                this.cleanTaskEnv();
+//            } catch (MySpiderRecoverableException e) {
+//                logger.info("清除任务相关文件失败 {}", e);
+//            }
+        } else if (TaskStatus.Status.PAUSE.name().equalsIgnoreCase(taskStatus)) {
+            logger.info("任务{}暂停", getJscrapyConfig().getTaskFp());
+        } else if (!TaskStatus.Status.RUN.name().equalsIgnoreCase(taskStatus)) {
+            logger.error("任务{}状态{}不能被识别", getJscrapyConfig().getTaskFp(), taskStatus);
         }
-        else if(TaskStatus.Status.PAUSE.name().equalsIgnoreCase(taskStatus)){
-            logger.info("任务{}暂停", getTaskConfig().getTaskFp());
-        }
-        else if(!TaskStatus.Status.RUN.name().equalsIgnoreCase(taskStatus)){
-            logger.error("任务{}状态{}不能被识别", getTaskConfig().getTaskFp(), taskStatus);
-        }
-    }
-
-    @Override
-    public void close() {
-
-    }
-
-    /**
-     * 情况任务占用的资源和产生的数据
-     */
-    private void cleanTaskEnv() throws MySpiderRecoverableException {
-        dedup.close();
-        cacher.close();
-        for (Pipline p : piplines) {
-            p.close();
-        }
-        scheduler.close();
     }
 
     public void setDedup(DeDup dedup) {

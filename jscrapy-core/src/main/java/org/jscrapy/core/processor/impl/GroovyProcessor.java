@@ -1,31 +1,27 @@
 package org.jscrapy.core.processor.impl;
 
-import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.component.MyspiderComponent;
+import groovy.lang.GroovyObject;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.data.ProcessResult;
 import org.jscrapy.core.page.Page;
 import org.jscrapy.core.processor.Processor;
-import groovy.lang.GroovyObject;
+import org.jscrapy.core.processor.ruletable.ParseRuleTable;
 
 /**
  * Created by cxu on 2014/11/21.
  */
-public class GroovyProcessor extends MyspiderComponent implements Processor  {
+public class GroovyProcessor extends Processor {
+    private ParseRuleTable ruleTable;
 
-    public GroovyProcessor(TaskConfig taskConfig) {
-        super(taskConfig);
+    public GroovyProcessor(JscrapyConfig jscrapyConfig) {
+        super(jscrapyConfig);
     }
 
     @Override
     public ProcessResult process(Page page) {
-        GroovyObject processor = getTaskConfig().getGroovyProcessorObject();
-        ProcessResult result = (ProcessResult)processor.invokeMethod("process", page);
+        GroovyObject processor = ruleTable.getProcessorRule();
+        ProcessResult result = (ProcessResult) processor.invokeMethod("process", page);
         result.setRequest(page.getRequest());
         return result;
-    }
-
-    @Override
-    public void close() {
-
     }
 }

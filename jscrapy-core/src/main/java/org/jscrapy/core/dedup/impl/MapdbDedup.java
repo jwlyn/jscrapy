@@ -1,10 +1,9 @@
 package org.jscrapy.core.dedup.impl;
 
-import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.config.cfgkey.ConfigKeys;
+import org.jscrapy.core.config.JscrapyConfig;
+import org.jscrapy.core.config.SysDefaultConfig;
 import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.exception.MySpiderFetalException;
-import org.jscrapy.core.exception.MySpiderRecoverableException;
 import org.jscrapy.core.request.Request;
 import org.mapdb.BTreeKeySerializer;
 import org.mapdb.BTreeMap;
@@ -20,50 +19,36 @@ import java.io.File;
  */
 public class MapdbDedup extends DeDup {
 
-    public MapdbDedup(TaskConfig taskConfig) throws MySpiderFetalException {
+    BTreeMap<String, Character> existUrl;
 
-        super(taskConfig);
-        if(taskConfig.getTaskSharedObject(ConfigKeys._DEDUP_DISK_SET_OBJ)==null){
-            synchronized (taskConfig){
-                if(taskConfig.getTaskSharedObject(ConfigKeys._DEDUP_DISK_SET_OBJ)==null){
-                    String setFilePath = getDiskSetPath();
-                    taskConfig.put(ConfigKeys.RT_EXT_RT_LOCAL_QUEUE_DIR, setFilePath);
+    public MapdbDedup(JscrapyConfig JscrapyConfig) throws MySpiderFetalException {
 
-                    DB db = DBMaker.fileDB(new File(setFilePath))
-                            //.cacheSize(100000)
-                            .make();
-                    BTreeMap<String, Character> existUrl = db.treeMapCreate("map")
-                            .keySerializer(BTreeKeySerializer.STRING)
-                            .nodeSize(64)
-                            .makeOrGet();
-
-                    taskConfig.addTaskSharedObject(ConfigKeys._DEDUP_DISK_SET_OBJ, existUrl);
-                }
-            }
-        }
+        super(JscrapyConfig);
+        String setFilePath = getDiskSetPath();
+        DB db = DBMaker.fileDB(new File(setFilePath))
+                .make();
+        existUrl = db.treeMapCreate("map")
+                .keySerializer(BTreeKeySerializer.STRING)
+                .nodeSize(64)
+                .makeOrGet();
     }
 
     @Override
     protected boolean isDup(Request request) {
-        BTreeMap<String, Character> existUrl = (BTreeMap<String, Character>)getTaskConfig().getTaskSharedObject(ConfigKeys._DEDUP_DISK_SET_OBJ);
         String id = request.fp();
         Character ret = existUrl.putIfAbsent(id, '1');
-        return ret!=null;
-    }
-
-    @Override
-    public void close() throws MySpiderRecoverableException {
-
+        return ret != null;
     }
 
     /**
      * 获取到mapdb的物理文件存储地址
+     *
      * @return
      */
     private String getDiskSetPath() {
-        TaskConfig taskConfig = getTaskConfig();
-        String spiderWorkDir = taskConfig.getSpiderWorkDir();
-        String setFilePath = spiderWorkDir + taskConfig.getTaskFp() + File.separator + "dedup" + File.separator + "dedup_set.dump";
+        JscrapyConfig JscrapyConfig = getJscrapyConfig();
+        String spiderWorkDir = JscrapyConfig.getSpiderWorkDir();
+        String setFilePath = spiderWorkDir + JscrapyConfig.getTaskFp() + SysDefaultConfig.FILE_PATH_SEPERATOR + "dedup" + SysDefaultConfig.FILE_PATH_SEPERATOR + "dedup_set.dump";
         return setFilePath;
     }
 }

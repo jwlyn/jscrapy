@@ -1,7 +1,7 @@
 package org.jscrapy.core.util;
 
-import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.pagecache.Cacher;
+import org.jscrapy.core.config.JscrapyConfig;
+import org.jscrapy.core.cacher.Cacher;
 import org.jscrapy.core.downloader.Downloader;
 import org.jscrapy.core.exception.MySpiderExceptionCode;
 import org.jscrapy.core.processor.Processor;
@@ -21,7 +21,7 @@ import java.lang.reflect.Constructor;
 public class ClassLoadUtil {
     final static Logger logger = LoggerFactory.getLogger(ClassLoadUtil.class);
 
-    public static Scheduler loadScheduler(String className, TaskConfig arg) throws MySpiderFetalException {
+    public static Scheduler loadScheduler(String className, JscrapyConfig arg) throws MySpiderFetalException {
         Object o = loadClass(className, arg);
         if (o != null) {
             return (Scheduler)o;
@@ -31,7 +31,7 @@ public class ClassLoadUtil {
         }
     }
 
-    public static DeDup loadDedup(String className, TaskConfig arg) throws MySpiderFetalException {
+    public static DeDup loadDedup(String className, JscrapyConfig arg) throws MySpiderFetalException {
         Object o = loadClass(className, arg);
         if (o != null) {
             return (DeDup)o;
@@ -41,7 +41,7 @@ public class ClassLoadUtil {
         }
     }
 
-    public static Downloader loadDownloader(String className, TaskConfig arg) throws MySpiderFetalException {
+    public static Downloader loadDownloader(String className, JscrapyConfig arg) throws MySpiderFetalException {
         Object o = loadClass(className, arg);
         if (o != null) {
             return (Downloader)o;
@@ -51,7 +51,7 @@ public class ClassLoadUtil {
         }
     }
 
-    public static Processor loadProcessor(String className, TaskConfig arg) throws MySpiderFetalException {
+    public static Processor loadProcessor(String className, JscrapyConfig arg) throws MySpiderFetalException {
         Object o = loadClass(className, arg);
         if (o != null) {
             return (Processor)o;
@@ -61,7 +61,7 @@ public class ClassLoadUtil {
         }
     }
 
-    public static Cacher loadCacher(String className, TaskConfig arg) throws MySpiderFetalException {
+    public static Cacher loadCacher(String className, JscrapyConfig arg) throws MySpiderFetalException {
         Object o = loadClass(className, arg);
         if (o != null) {
             return (Cacher)o;
@@ -71,7 +71,7 @@ public class ClassLoadUtil {
         }
     }
 
-    public static Pipline loadPipline(String className, TaskConfig arg) throws MySpiderFetalException {
+    public static Pipline loadPipline(String className, JscrapyConfig arg) throws MySpiderFetalException {
         Object o = loadClass(className, arg);
         if (o != null) {
             return (Pipline)o;
@@ -81,11 +81,11 @@ public class ClassLoadUtil {
         }
     }
 
-    private static Object loadClass(String className, TaskConfig arg) throws MySpiderFetalException {
+    private static Object loadClass(String className, JscrapyConfig arg) throws MySpiderFetalException {
         Object o = null;
         try {
             Class c = Class.forName(className);
-            Constructor constructor = c.getConstructor(new Class[]{TaskConfig.class});
+            Constructor constructor = c.getConstructor(new Class[]{JscrapyConfig.class});
             o = constructor.newInstance(arg);
         } catch (Exception e) {
             logger.error("构造{}时出错{}", className, e);

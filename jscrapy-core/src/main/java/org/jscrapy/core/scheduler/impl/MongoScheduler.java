@@ -4,12 +4,13 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
-import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.config.cfgkey.ConfigKeys;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.request.Request;
 import org.jscrapy.core.scheduler.Scheduler;
-//import gaillard.mongo.Queue;
+
 import java.util.List;
+
+//import gaillard.mongo.Queue;
 
 /**
  * Mongodb 实现的队列
@@ -21,12 +22,12 @@ public class MongoScheduler extends Scheduler {
     //private Queue queue;
     private DBCollection collection = null;
 
-    public MongoScheduler(TaskConfig taskConfig) {
-        super(taskConfig);
-        String dbHost = taskConfig.loadString(ConfigKeys.SCHEDULER_MONGO_HOST);
-        int dbPort = taskConfig.loadInt(ConfigKeys.SCHEDULER_MONGO_PORT);
-        String dbName = taskConfig.loadString(ConfigKeys.RT_EXT_DEDUP_MONGODB_DB_NAME);
-        String tableName = taskConfig.getTaskName();
+    public MongoScheduler(JscrapyConfig jscrapyConfig) {
+        super(jscrapyConfig);
+        String dbHost = jscrapyConfig.getSchedulerMongoHost();
+        int dbPort = jscrapyConfig.getSchedulerMongoPort();
+        String dbName = jscrapyConfig.getSchedulerMongoDbName();
+        String tableName = jscrapyConfig.getSchedulerMongoTableName();
         Mongo mongo = new MongoClient(dbHost, dbPort);
         DB db = mongo.getDB(dbName);
         this.collection = db.getCollection(tableName);
@@ -35,7 +36,7 @@ public class MongoScheduler extends Scheduler {
 
     @Override
     public int push(List<Request> requests) {
-        for(Request req : requests){
+        for (Request req : requests) {
             //TODO
         }
 
@@ -52,8 +53,4 @@ public class MongoScheduler extends Scheduler {
         return 0;
     }
 
-    @Override
-    public void close() {
-
-    }
 }

@@ -5,8 +5,7 @@ import com.leansoft.bigqueue.BigQueueImpl;
 import com.leansoft.bigqueue.IBigQueue;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.config.cfgkey.ConfigKeys;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.exception.MySpiderExceptionCode;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.request.Request;
@@ -29,13 +28,13 @@ public class FileQueueScheduler extends Scheduler {
     private String queueName;
     private IBigQueue bigQueue;
 
-    public FileQueueScheduler(TaskConfig taskConfig) throws MySpiderFetalException {
-        super(taskConfig);
+    public FileQueueScheduler(JscrapyConfig JscrapyConfig) throws MySpiderFetalException {
+        super(JscrapyConfig);
 
-        String spiderWorkDir = taskConfig.getSpiderWorkDir();
-        this.queueFilePath = spiderWorkDir + taskConfig.getTaskFp() + File.separator + "scheduler" + File.separator;
-        this.queueName = taskConfig.getTaskName();
-        taskConfig.put(ConfigKeys.RT_EXT_RT_LOCAL_QUEUE_DIR, queueFilePath);
+        String spiderWorkDir = JscrapyConfig.getSpiderWorkDir();
+        this.queueFilePath = spiderWorkDir + JscrapyConfig.getTaskFp() + File.separator + "scheduler" + File.separator;
+        this.queueName = JscrapyConfig.getTaskName();
+
         try{
             bigQueue = new BigQueueImpl(queueFilePath, queueName);
         }catch(IOException e){
@@ -86,17 +85,5 @@ public class FileQueueScheduler extends Scheduler {
     @Override
     public int remove(List<Request> requests) {
         return requests.size();//什么也不干
-    }
-
-    @Override
-    public void close() {
-        if(bigQueue!=null){
-            bigQueue.flush();
-            try {
-                bigQueue.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

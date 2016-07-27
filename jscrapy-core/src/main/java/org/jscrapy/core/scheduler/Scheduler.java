@@ -1,7 +1,7 @@
 package org.jscrapy.core.scheduler;
 
-import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.component.MyspiderComponent;
+import org.jscrapy.core.config.ConfigDriver;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.exception.MySpiderException;
 import org.jscrapy.core.request.Request;
 
@@ -10,10 +10,10 @@ import java.util.List;
 /**
  * Created by cxu on 2014/11/21.
  */
-public abstract class Scheduler extends MyspiderComponent {
+public abstract class Scheduler extends ConfigDriver {
 
-    public Scheduler(TaskConfig taskConfig) {
-        super(taskConfig);
+    public Scheduler(JscrapyConfig jscrapyConfig) {
+        super(jscrapyConfig);
     }
 
     /**

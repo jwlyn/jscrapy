@@ -1,20 +1,20 @@
 package org.jscrapy.core.dedup;
 
-import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.component.MyspiderComponent;
+import org.jscrapy.core.config.ConfigDriver;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.request.Request;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Request去重
+ * URL去重
  * Created by cxu on 2015/6/22.
  */
-public abstract class DeDup extends MyspiderComponent {
+public abstract class DeDup extends ConfigDriver {
 
-    public DeDup(TaskConfig taskConfig) {
-        super(taskConfig);
+    public DeDup(JscrapyConfig JscrapyConfig) {
+        super(JscrapyConfig);
     }
 
     /**

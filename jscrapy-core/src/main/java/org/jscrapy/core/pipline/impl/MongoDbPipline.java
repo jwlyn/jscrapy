@@ -1,6 +1,6 @@
 package org.jscrapy.core.pipline.impl;
 
-import org.jscrapy.core.TaskConfig;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.data.DataItem;
 import org.jscrapy.core.pipline.Pipline;
 
@@ -11,9 +11,9 @@ import java.util.List;
  */
 public class MongoDbPipline extends Pipline {
 
-    public MongoDbPipline(TaskConfig taskConfig)
+    public MongoDbPipline(JscrapyConfig JscrapyConfig)
     {
-        super(taskConfig);
+        super(JscrapyConfig);
     }
 
     @Override
@@ -21,9 +21,4 @@ public class MongoDbPipline extends Pipline {
 
     }
 
-
-    @Override
-    public void close() {
-
-    }
 }

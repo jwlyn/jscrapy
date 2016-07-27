@@ -5,8 +5,8 @@ import org.jscrapy.common.http.FetchResponse;
 import org.jscrapy.common.http.HttpMethod;
 import org.jscrapy.common.http.fetcher.HttpFetcher;
 import org.jscrapy.common.http.fetcher.impl.JoddHttpFetcher;
-import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.component.MyspiderComponent;
+import org.jscrapy.core.config.ConfigDriver;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.downloader.Downloader;
 import org.jscrapy.core.page.Page;
 import org.jscrapy.core.request.Request;
@@ -19,11 +19,11 @@ import java.net.URISyntaxException;
 /**
  * Created by cxu on 2014/11/21.
  */
-public class HttpDownloader extends MyspiderComponent implements Downloader {
+public class HttpDownloader extends ConfigDriver implements Downloader {
     private HttpFetcher fetcher;
 
-    public HttpDownloader(TaskConfig taskConfig) {
-        super(taskConfig);
+    public HttpDownloader(JscrapyConfig JscrapyConfig) {
+        super(JscrapyConfig);
         fetcher = new JoddHttpFetcher();//TODO 配置化
     }
 
@@ -43,15 +43,10 @@ public class HttpDownloader extends MyspiderComponent implements Downloader {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-        }catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;//TODO 这里换成异常好点
-    }
-
-    @Override
-    public void close() {
-
     }
 
     /**

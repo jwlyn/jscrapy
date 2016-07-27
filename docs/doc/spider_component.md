@@ -8,5 +8,7 @@
 | Pipeline    | 存储数据到一个或者多个地方。        |      |
 | UrlConsumer | 把URL从队列中取出。           |      |
 | UrlProducer | 把新产生的URL放入到队列里。       |      |
+| Cacher      | 网页缓存                  |      |
+| Deduper     | URL去重                 |      |
 |             |                       |      |
 

@@ -1,9 +1,8 @@
-package org.jscrapy.core.pagecache.impl;
+package org.jscrapy.core.cacher.impl;
 
 import com.mongodb.*;
-import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.pagecache.Cacher;
-import org.jscrapy.core.config.cfgkey.ConfigKeys;
+import org.jscrapy.core.cacher.Cacher;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.page.Page;
 import org.jscrapy.core.request.Request;
 import org.slf4j.Logger;
@@ -12,21 +11,20 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by cxu on 2015/7/12.
  */
-public class MongoCacher  extends Cacher {
+public class MongoCacher extends Cacher {
     final static Logger logger = LoggerFactory.getLogger(MongoCacher.class);
-
-    private Mongo mongo = null;
-    protected DB db = null;
-    protected DBCollection collection = null;
     private static final String DB_PRIMARY_KEY = "id";
     private static final String DB_CACHE_FIELD_NAME = "page";
+    protected DB db = null;
+    protected DBCollection collection = null;
+    private Mongo mongo = null;
 
-    public MongoCacher(TaskConfig taskConfig) {
-        super(taskConfig);
-        String dbHost = taskConfig.loadString(ConfigKeys.CACHER_MONGODB_HOST);
-        int dbPort = taskConfig.loadInt(ConfigKeys.CACHER_MONGODB_PORT);
-        String dbName = taskConfig.loadString(ConfigKeys.RT_EXT_CACHER_MONGODB_DB_NAME);
-        String tableName = taskConfig.getTaskName();
+    public MongoCacher(JscrapyConfig jscrapyConfig) {
+        super(jscrapyConfig);
+        String dbHost = jscrapyConfig.getMongoCacheHost();
+        int dbPort = jscrapyConfig.getMongoCachePort();
+        String dbName = jscrapyConfig.getMongoCacheDbName();
+        String tableName = jscrapyConfig.getMongoCacheTableName();
         this.mongo = new MongoClient(dbHost, dbPort);
         this.db = mongo.getDB(dbName);
         this.collection = db.getCollection(tableName);
@@ -37,7 +35,7 @@ public class MongoCacher  extends Cacher {
         BasicDBObject query = new BasicDBObject();
         query.append(DB_PRIMARY_KEY, request.fp());
         BasicDBObject obj = (BasicDBObject) collection.findOne(query);
-        if(obj!=null){
+        if (obj != null) {
             Page pg = new Page(obj.getString(DB_CACHE_FIELD_NAME));
             pg.setIsFromCache(true);
             return pg;
@@ -52,10 +50,5 @@ public class MongoCacher  extends Cacher {
         pageDoc.put(DB_PRIMARY_KEY, page.getRequest().fp());
         pageDoc.put(DB_CACHE_FIELD_NAME, page.getRawText());
         this.collection.insert(pageDoc);
-    }
-
-    @Override
-    public void close() {
-        this.collection.drop();
     }
 }

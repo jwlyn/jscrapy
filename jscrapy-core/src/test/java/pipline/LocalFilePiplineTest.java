@@ -1,7 +1,7 @@
 package pipline;
 
-import org.jscrapy.core.TaskConfig;
-import org.jscrapy.core.config.cfgkey.ConfigKeys;
+import org.jscrapy.core.config.JscrapyConfig;
+import org.jscrapy.core.config.ConfigKeys;
 import org.jscrapy.core.data.DataItem;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.exception.MySpiderRecoverableException;
@@ -24,24 +24,24 @@ import static org.testng.Assert.assertEquals;
  * Created by cxu on 2015/6/21.
  */
 public class LocalFilePiplineTest {
-    private TaskConfig taskConfig;
+    private JscrapyConfig JscrapyConfig;
 
     @BeforeClass
     public void setup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(LocalFilePiplineTest.class, "/LocalFilePiplineTest.yaml");
-        this.taskConfig = new TaskConfig(path);
+        this.JscrapyConfig = new JscrapyConfig(path);
     }
 
     @AfterClass
     public void tearDown() throws IOException {
         /*删除文件*/
-        String tempDir = taskConfig.getSpiderWorkDir() + taskConfig.getTaskFp();
+        String tempDir = JscrapyConfig.getSpiderWorkDir() + JscrapyConfig.getTaskFp();
         FileUtils.forceDeleteOnExit(new File(tempDir));
     }
 
     @Test
     public void testSingleThread() throws IOException, InterruptedException, MySpiderRecoverableException, MySpiderFetalException {
-        Pipline pipline = new LocalFilePipline(this.taskConfig);
+        Pipline pipline = new LocalFilePipline(this.JscrapyConfig);
         DataItem dt = new DataItem();
         dt.put("a", "123")
                 .put("b", "456");
@@ -55,7 +55,7 @@ public class LocalFilePiplineTest {
         Thread.sleep(1000);
 
         try {
-            String dataSavePath = taskConfig.loadString(ConfigKeys.RT_EXT_RT_LOCAL_FILE_PIPLINE_DATA_FILE);
+            String dataSavePath = JscrapyConfig.loadString(ConfigKeys.RT_EXT_RT_LOCAL_FILE_PIPLINE_DATA_FILE);
             List<String> lines = FileUtils.readLines(new File(dataSavePath));
             assertEquals(100, lines.size());
         }finally {

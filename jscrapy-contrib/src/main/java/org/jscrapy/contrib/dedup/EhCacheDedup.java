@@ -3,7 +3,7 @@ package org.jscrapy.contrib.dedup;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
-import org.jscrapy.core.TaskConfig;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.request.Request;
 
@@ -15,11 +15,11 @@ public class EhCacheDedup extends DeDup {
     Cache ehCache;
 
 
-    public EhCacheDedup(TaskConfig taskid) {
+    public EhCacheDedup(JscrapyConfig taskid) {
         super(taskid);
         cacheManager = CacheManager.create();
-        cacheManager.addCacheIfAbsent(getTaskConfig().getTaskFp());
-        ehCache = cacheManager.getCache(getTaskConfig().getTaskFp());
+        cacheManager.addCacheIfAbsent(getJscrapyConfig().getTaskFp());
+        ehCache = cacheManager.getCache(getJscrapyConfig().getTaskFp());
     }
 
     @Override
@@ -31,10 +31,5 @@ public class EhCacheDedup extends DeDup {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public void close() {
-        ehCache.removeAll();
     }
 }

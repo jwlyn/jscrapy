@@ -1,7 +1,7 @@
 package scheduler;
 
 import org.jscrapy.contrib.scheduler.FileQueueScheduler;
-import org.jscrapy.core.TaskConfig;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.exception.MySpiderException;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.exception.MySpiderRecoverableException;
@@ -24,14 +24,14 @@ import static org.testng.Assert.assertEquals;
  * Created by cxu on 2015/6/22.
  */
 public class LocalSchedulerTest {
-    private TaskConfig taskConfig;
+    private JscrapyConfig JscrapyConfig;
     private Scheduler sched;
 
     @BeforeClass
     public void setup() throws MySpiderFetalException, IOException {
         String path = ResourcePathUtils.getResourceFileAbsPath(LocalSchedulerTest.class, "/LocalSchedulerTest.yaml");
-        taskConfig = new TaskConfig(path);
-        sched = new FileQueueScheduler(this.taskConfig);
+        JscrapyConfig = new JscrapyConfig(path);
+        sched = new FileQueueScheduler(this.JscrapyConfig);
     }
 
     @AfterClass

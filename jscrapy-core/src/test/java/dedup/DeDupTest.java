@@ -1,6 +1,6 @@
 package dedup;
 
-import org.jscrapy.core.TaskConfig;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.dedup.impl.MapdbDedup;
 import org.jscrapy.core.dedup.impl.MongoDedup;
@@ -56,7 +56,6 @@ public class DeDupTest{
         assertEquals(2, req.size());
         assertEquals(0, dedup.deDup(req).size());
 
-        dedup.close();//清空现场，否则下一次运行会出错
     }
 
     /**
@@ -65,8 +64,8 @@ public class DeDupTest{
      */
     private DeDup initMongoDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/MongoDedupTest.yaml");
-        TaskConfig taskConfig = new TaskConfig(path);
-        DeDup dp = new MongoDedup(taskConfig);
+        JscrapyConfig JscrapyConfig = new JscrapyConfig(path);
+        DeDup dp = new MongoDedup(JscrapyConfig);
         return dp;
     }
 
@@ -78,8 +77,8 @@ public class DeDupTest{
      */
     private DeDup initDiskDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/DiskDedupTest.yaml");
-        TaskConfig taskConfig = new TaskConfig(path);
-        DeDup dp = new MapdbDedup(taskConfig);
+        JscrapyConfig JscrapyConfig = new JscrapyConfig(path);
+        DeDup dp = new MapdbDedup(JscrapyConfig);
         return dp;
     }
 }

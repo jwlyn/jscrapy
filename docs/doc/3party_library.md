@@ -1,15 +1,15 @@
 ## URL管理组件
-|           |   单机 | 集群   | 内存   | 磁盘   | URL优先级    | 不丢数据/错误恢复 |
-| --------- | ---: | :--- | ---- | ---- | --------- | --------- |
-| mapDb     |    Y |      | Y    | Y    | FIFO/LIFO |           |
-| h2        |    Y |      |      | Y    | 数字优先级     | Y         |
-| bigQueue  |    Y |      |      | Y    | FIFO      | Y         |
-| mongoDb   |    Y | Y    |      | Y    | 数字优先级     | Y         |
-| kafka     |    Y | Y    |      | Y    | FIFO      | Y         |
-| mysql/pg  |    Y | Y    |      | Y    | 数字优先级     | Y         |
-| redis     |    Y | Y    | Y    |      | FIFO      |           |
-| JDK queue |    Y |      | Y    |      | FIFO/LIFO |           |
-|           |      |      |      |      |           |           |
+|           |   单机 | 集群   | 内存   | 磁盘   | URL优先级    | 不丢数据/错误恢复 | 缺点                   |
+| --------- | ---: | :--- | ---- | ---- | --------- | --------- | -------------------- |
+| mapDb     |    Y |      | Y    | Y    | FIFO/LIFO |           |                      |
+| h2        |    Y |      |      | Y    | 数字优先级     | Y         |                      |
+| bigQueue  |    Y |      |      | Y    | FIFO      | Y         |                      |
+| mongoDb   |    Y | Y    |      | Y    | 数字优先级     | Y         | findAndModify每次只能取一条 |
+| kafka     |    Y | Y    |      | Y    | FIFO      | Y         |                      |
+| pg        |    Y | Y    |      | Y    | 数字优先级     | Y         |                      |
+| redis     |    Y | Y    | Y    |      | FIFO      |           | redis崩溃时所有任务不能恢复     |
+| JDK queue |    Y |      | Y    |      | FIFO/LIFO |           | 程序退出，不能断点继续          |
+|           |      |      |      |      |           |           |                      |
 
 ### 核心URL管理组件
 
