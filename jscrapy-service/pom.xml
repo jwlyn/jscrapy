@@ -83,9 +83,9 @@
                     <execution>
                         <id>1</id>
                         <configuration>
-                            <finalName>myspider-slave-${project.version}</finalName>
+                            <finalName>jscrapy-service-${project.version}</finalName>
                             <classifier>exec</classifier>
-                            <mainClass>org.jscrapy.worker.Application</mainClass>
+                            <mainClass>org.jscrapy.service.Application</mainClass>
                             <layout>WAR</layout>
                         </configuration>
                         <goals>

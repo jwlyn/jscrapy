@@ -30,3 +30,5 @@ gradlew
 gradlew.bat
 *.bat
 null
+site/
+*.log

@@ -1,4 +1,4 @@
-package org.jscrapy.worker;
+package org.jscrapy.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

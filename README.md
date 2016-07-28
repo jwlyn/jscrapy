@@ -27,9 +27,7 @@
 - OCR太深奥？我都给你包好了，绝不放过任何一条数据。
 
 ## 使用手册TODO
-![工程结构](./docs/doc/img/system_tire.png)
 
-![核心处理流程](./docs/doc/img/core_process_stream.png)
 
 ## 特别感谢
 
