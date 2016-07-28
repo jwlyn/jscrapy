@@ -27,14 +27,15 @@
 - OCR太深奥？我都给你包好了，绝不放过任何一条数据。
 
 ## 使用手册TODO
-![工程结构](./docs/doc/img/jscrapy_project_structure.png)
+![工程结构](./docs/doc/img/system_tire.png)
 
 ![核心处理流程](./docs/doc/img/core_process_stream.png)
 
 ## 特别感谢
 
 ```text
-If I have been able to see further, it was only because I stood on the shoulders of giants.   --Newton
+If I have been able to see further, it was only because I stood on the shoulders of giants.  
+                                                                          --Newton
 ```
 本产品的开发借鉴或者复用了很多优秀的开源软件。特别感谢
 
