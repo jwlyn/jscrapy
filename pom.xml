@@ -58,7 +58,7 @@
         <module>jscrapy-core</module>
         <module>jscrapy-contrib</module>
         <module>jscrapy-admin</module>
-        <module>jscrapy-worker</module>
+        <module>jscrapy-service</module>
     </modules>
     <dependencies>
         <dependency>
