@@ -1,11 +1,13 @@
-package org.jscrapy.core.config;
+package org.jscrapy.core;
+
+import org.jscrapy.core.config.JscrapyConfig;
 
 /**
  * Created by cxu on 2016/7/26.
  */
 public class ConfigDriver {
 
-    private JscrapyConfig JscrapyConfig;
+    private org.jscrapy.core.config.JscrapyConfig JscrapyConfig;
 
     public ConfigDriver(JscrapyConfig JscrapyConfig) {
         this.JscrapyConfig = JscrapyConfig;
