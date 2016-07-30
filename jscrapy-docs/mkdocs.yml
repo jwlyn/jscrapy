@@ -11,8 +11,10 @@ pages:
 
 - Developer's Guid:
   - Project arch: dev_guid/project_arch.md
+  - Cluster deploy: dev_guid/cluster_deploy_arch.md
+  - Single deploy: dev_guid/single_deploy_arch.md
 
-- About: about.md
+- About: about/about.md
 
 use_directory_urls: true
 #theme: readthedocs
