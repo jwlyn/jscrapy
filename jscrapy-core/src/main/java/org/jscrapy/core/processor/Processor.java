@@ -1,6 +1,6 @@
 package org.jscrapy.core.processor;
 
-import org.jscrapy.core.config.ConfigDriver;
+import org.jscrapy.core.ConfigDriver;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.data.ProcessResult;
 import org.jscrapy.core.page.Page;

@@ -5,7 +5,7 @@ import org.jscrapy.common.http.FetchResponse;
 import org.jscrapy.common.http.HttpMethod;
 import org.jscrapy.common.http.fetcher.HttpFetcher;
 import org.jscrapy.common.http.fetcher.impl.JoddHttpFetcher;
-import org.jscrapy.core.config.ConfigDriver;
+import org.jscrapy.core.ConfigDriver;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.downloader.Downloader;
 import org.jscrapy.core.page.Page;

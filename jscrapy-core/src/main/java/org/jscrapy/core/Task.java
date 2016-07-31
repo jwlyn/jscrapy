@@ -1,17 +1,7 @@
 package org.jscrapy.core;
 
-import org.jscrapy.common.log.MyLoggerFactory;
-import org.jscrapy.core.cacher.Cacher;
-import org.jscrapy.core.config.ConfigDriver;
 import org.jscrapy.core.config.JscrapyConfig;
-import org.jscrapy.core.dedup.DeDup;
-import org.jscrapy.core.downloader.Downloader;
 import org.jscrapy.core.exception.MySpiderFetalException;
-import org.jscrapy.core.pipline.Pipline;
-import org.jscrapy.core.processor.Processor;
-import org.jscrapy.core.scheduler.Scheduler;
-import org.jscrapy.core.status.TaskStatus;
-import org.jscrapy.core.util.ClassLoadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

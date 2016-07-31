@@ -1,6 +1,6 @@
 package org.jscrapy.core.pipline;
 
-import org.jscrapy.core.config.ConfigDriver;
+import org.jscrapy.core.ConfigDriver;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.data.DataItem;
 import org.jscrapy.core.exception.MySpiderFetalException;

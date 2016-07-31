@@ -1,7 +1,6 @@
 package org.jscrapy.core;
 
 import org.jscrapy.core.cacher.Cacher;
-import org.jscrapy.core.config.ConfigDriver;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.data.ProcessResult;
 import org.jscrapy.core.dedup.DeDup;
