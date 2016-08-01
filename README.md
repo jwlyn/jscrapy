@@ -25,7 +25,7 @@
 - 提供多种变幻莫测的代理策略：当然你只需要管控界面上动动鼠标。
 - 解析太头疼？看看解析工具里的武器。表格，列表只需一条语句。
 - OCR太深奥？我都给你包好了，绝不放过任何一条数据。
-
+- 自适应线程调节，让“弱网站”全自动化
 ## 使用手册TODO
 
 
@@ -33,7 +33,8 @@
 
 ```text
 If I have been able to see further, it was only because I stood on the shoulders of giants.  
-                                                                          --Newton
+
+                                                                                   --Newton
 ```
 本产品的开发借鉴或者复用了很多优秀的开源软件。特别感谢
 
