@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.jscrapy.core.dal.h2.UrlQueueMapper">
+    <select id="selectUrlByStatus" resultType="UrlQueueDo">
+        SELECT * FROM #{table_name} WHERE url_status = #{url_status}
+    </select>
+
+    <update id="createTable">
+        create table #{table_name}
+        (
+
+        )
+    </update>
+</mapper>

@@ -1,4 +1,4 @@
-package org.jscrapy.core.scheduler.impl;
+package org.jscrapy.contrib.scheduler;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
