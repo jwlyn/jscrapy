@@ -64,7 +64,7 @@ public class DeDupTest{
      */
     private DeDup initMongoDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/MongoDedupTest.yaml");
-        JscrapyConfig JscrapyConfig = new JscrapyConfig(path);
+        JscrapyConfig JscrapyConfig = new JscrapyConfig();
         DeDup dp = new MongoDedup(JscrapyConfig);
         return dp;
     }
@@ -77,7 +77,7 @@ public class DeDupTest{
      */
     private DeDup initDiskDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/DiskDedupTest.yaml");
-        JscrapyConfig JscrapyConfig = new JscrapyConfig(path);
+        JscrapyConfig JscrapyConfig = new JscrapyConfig();
         DeDup dp = new MapdbDedup(JscrapyConfig);
         return dp;
     }

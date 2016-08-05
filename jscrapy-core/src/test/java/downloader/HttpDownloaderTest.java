@@ -23,7 +23,7 @@ public class HttpDownloaderTest {
     public void testDownloadCanWork() throws MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(HttpDownloaderTest.class, "/CacherTest.yaml");
         JscrapyConfig JscrapyConfig = null;
-        JscrapyConfig = new JscrapyConfig(path);
+        JscrapyConfig = new JscrapyConfig();
 
         String url = "http://www.oschina.net/";
         Request request = new HttpRequest(url);

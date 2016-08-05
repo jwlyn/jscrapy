@@ -56,7 +56,7 @@ public class DeDupExtTest {
         assertEquals(2, req.size());
         assertEquals(0, dedup.deDup(req).size());
 
-        dedup.close();//清空现场，否则下一次运行会出错
+
     }
 
     /**
@@ -64,7 +64,7 @@ public class DeDupExtTest {
      */
     private DeDup initEhcacheDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupExtTest.class, "/EhCacheDedupTest.yaml");
-        JscrapyConfig JscrapyConfig = new JscrapyConfig(path);
+        JscrapyConfig JscrapyConfig = new JscrapyConfig();
         DeDup dp = new EhCacheDedup(JscrapyConfig);
         return dp;
     }
@@ -74,7 +74,7 @@ public class DeDupExtTest {
      */
     private DeDup initMemoryDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupExtTest.class, "/MemoryDedupTest.yaml");
-        JscrapyConfig JscrapyConfig = new JscrapyConfig(path);
+        JscrapyConfig JscrapyConfig = new JscrapyConfig();
         DeDup dp = new MemoryDedup(JscrapyConfig);
         return dp;
     }
@@ -84,7 +84,7 @@ public class DeDupExtTest {
      */
     private DeDup initRedisDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupExtTest.class, "/RedisDedupTest.yaml");
-        JscrapyConfig JscrapyConfig = new JscrapyConfig(path);
+        JscrapyConfig JscrapyConfig = new JscrapyConfig();
         DeDup dp = new RedisDedup(JscrapyConfig);
         return dp;
     }

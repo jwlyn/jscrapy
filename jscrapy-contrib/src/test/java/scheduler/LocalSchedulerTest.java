@@ -30,14 +30,14 @@ public class LocalSchedulerTest {
     @BeforeClass
     public void setup() throws MySpiderFetalException, IOException {
         String path = ResourcePathUtils.getResourceFileAbsPath(LocalSchedulerTest.class, "/LocalSchedulerTest.yaml");
-        JscrapyConfig = new JscrapyConfig(path);
+        JscrapyConfig = new JscrapyConfig();
         sched = new FileQueueScheduler(this.JscrapyConfig);
     }
 
     @AfterClass
     public void tearDown() throws IOException, MySpiderRecoverableException {
 
-        this.sched.close();
+
     }
 
     @Test

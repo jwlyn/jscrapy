@@ -3,15 +3,68 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.jscrapy.core.dal.h2.UrlQueueMapper">
-    <select id="selectUrlByStatus" resultType="UrlQueueDo">
-        SELECT * FROM #{table_name} WHERE url_status = #{url_status}
+<mapper namespace="org.jscrapy.core.dal.h2.H2UrlQueueMapper">
+
+    <update id="createNewQueue" parameterType="java.lang.String">
+        CREATE TABLE IF NOT EXISTS ${queue_name}
+        (
+            id IDENTITY PRIMARY KEY, -- 唯一键
+            sched_id INT, -- 调度的唯一性标识，每次都不一样即可,可以取当前任务启动时间戳
+            url TEXT,  -- url
+            url_status CHAR(5), -- 种子状态[NEW:新进入, OUT:出队列, ERR:出错]
+            retry_times TINYINT,  -- 重试次数
+            url_type CHAR(10), -- 种子类型[SEED:种子(Seed), LIST:列表(List), DETAIL: 详情页(Detail)]
+            site_id INT,  -- 站点ID
+            gmt_created TIMESTAMP, -- url插入时间
+            gmt_access TIMESTAMP, -- 被访问时间
+            error_code CHAR(20), -- 错误编码
+            error_msg  TEXT  -- 错误详细信息
+        );
+    </update>
+
+    <update id="dropQueue" parameterType="java.lang.String">
+        DROP TABLE IF EXISTS  ${queue_name}
+    </update>
+
+    <insert id="batchInsert" parameterType="org.jscrapy.core.dal.h2.UrlQueueDo">
+        INSERT INTO ${queue_name} (url, url_status, retry_times, url_type, site_id, gmt_created, gmt_access)
+        VALUES
+        <foreach collection="urls" index="index" item="url" separator=",">
+            (
+            #{url.url,jdbcType=VARCHAR},
+            #{url.urlStatus,jdbcType=VARCHAR},
+            #{url.retryTimes,jdbcType=BIGINT},
+            #{url.urlType,jdbcType=VARCHAR},
+            #{url.siteId,jdbcType=INTEGER},
+            CURRENT_TIMESTAMP(),
+            CURRENT_TIMESTAMP(),
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectUrlByStatus" parameterType="map" resultType="org.jscrapy.core.dal.h2.UrlQueueDo">
+        SELECT * FROM ${queue_name} WHERE url_status = #{url_status} LIMIT #{limit}
     </select>
 
-    <update id="createTable">
-        create table #{table_name}
-        (
-
-        )
+    <update id="batchUpdate" parameterType="org.jscrapy.core.dal.h2.UrlQueueDo">
+        INSERT INTO ${queue_name} (id, url, gmt_access)
+        VALUES
+        <foreach collection="urls" index="index" item="url" separator=",">
+            (
+                #{url.id, jdbcType=BIGINT},
+                #{url.url, jdbcType=VARCHAR},
+                CURRENT_TIMESTAMP()
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE url=VALUES(url);
     </update>
+
+    <delete id="batchDelete" parameterType="org.jscrapy.core.dal.h2.UrlQueueDo">
+        DELETE FROM ${queue_name}
+        WHERE id IN
+        <foreach close=")" collection="urls" index="index" item="urlQueueDo" open="(" separator=",">
+            #{urlQueueDo.id,jdbcType=BIGINT}
+        </foreach>
+    </delete>
+
 </mapper>

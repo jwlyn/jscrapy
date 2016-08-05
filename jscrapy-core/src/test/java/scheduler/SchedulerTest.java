@@ -46,7 +46,7 @@ public class SchedulerTest {
 
     private Scheduler initRedisScheduler() throws MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(SchedulerTest.class, "/RedisSchedulerTest.yaml");
-        JscrapyConfig JscrapyConfig = new JscrapyConfig(path);
+        JscrapyConfig JscrapyConfig = new JscrapyConfig();
         Scheduler sched = new RedisScheduler(JscrapyConfig);
         return sched;
     }
