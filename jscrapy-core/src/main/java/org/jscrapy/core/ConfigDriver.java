@@ -7,7 +7,7 @@ import org.jscrapy.core.config.JscrapyConfig;
  */
 public class ConfigDriver {
 
-    private org.jscrapy.core.config.JscrapyConfig JscrapyConfig;
+    private JscrapyConfig JscrapyConfig;
 
     public ConfigDriver(JscrapyConfig JscrapyConfig) {
         this.JscrapyConfig = JscrapyConfig;

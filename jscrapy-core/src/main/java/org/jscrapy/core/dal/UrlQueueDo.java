@@ -1,13 +1,10 @@
-package org.jscrapy.core.dal.h2;
-
-import jdk.nashorn.internal.objects.annotations.Setter;
+package org.jscrapy.core.dal;
 
 import java.util.Date;
 
 /**
- * Created by cxu on 2016/8/1.
+ * Created by cxu on 2016/8/10.
  */
-
 public class UrlQueueDo {
     private long id;
     private String url;

@@ -1,7 +1,6 @@
 package org.jscrapy.core.dal;
 
 import org.apache.ibatis.annotations.Param;
-import org.jscrapy.core.dal.h2.UrlQueueDo;
 
 import java.util.List;
 

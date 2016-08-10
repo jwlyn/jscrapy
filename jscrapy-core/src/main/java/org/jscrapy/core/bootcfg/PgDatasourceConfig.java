@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
@@ -24,6 +27,8 @@ public class PgDatasourceConfig {
     private String username;
     @Value("${spring.postgresql.datasource.password}")
     private String password;
+    @Value("${spring.postgresql.datasource.mapperpath}")
+    private String mapperPath;
 
     @Bean(name = "pgDataSource")
     public DataSource pgDataSource() {
@@ -41,6 +46,11 @@ public class PgDatasourceConfig {
     public SqlSessionFactory pgSqlSessionFactory(@Qualifier("pgDataSource") DataSource h2DataSource) throws Exception {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(h2DataSource);
+
+        ResourcePatternResolver resourceLoader = new PathMatchingResourcePatternResolver();
+        Resource[] rs = resourceLoader.getResources(mapperPath);
+        sessionFactory.setMapperLocations(rs);
+
         SqlSessionFactory ft = sessionFactory.getObject();
         return ft;
     }

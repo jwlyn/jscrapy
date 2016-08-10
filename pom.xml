@@ -35,6 +35,7 @@
         <hibernate-validator.version>5.2.2.Final</hibernate-validator.version>
         <mybatis-spring-boot-starter.version>1.1.1</mybatis-spring-boot-starter.version>
         <spring-boot.version>1.3.3.RELEASE</spring-boot.version>
+        <postgresql.version>9.4.1208</postgresql.version>
         <!-- runtime -->
         <h2.version>1.4.192</h2.version>
         <!-- provided scope -->
