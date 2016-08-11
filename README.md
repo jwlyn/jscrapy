@@ -1,6 +1,7 @@
 # Jscrapy
 [![Build Status](https://travis-ci.org/jscrapy/jscrapy.svg?branch=master)](https://travis-ci.org/jscrapy/jscrapy)
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jscrapy/jscrapy/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Build Status](https://drone.io/github.com/jscrapy/jscrapy/status.png)](https://drone.io/github.com/jscrapy/jscrapy/latest)
+
 ## 功能
 - 用户友好,一个管控界面解决全部问题
 - 动态上线，新站点抓取无需重新发布部署。
@@ -42,5 +43,4 @@ If I have been able to see further, it was only because I stood on the shoulders
 - scrapy
 - SeimiCrawler
 - gecco
-
-
+- G-Crawler

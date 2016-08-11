@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jscrapy</groupId>
     <artifactId>jscrapy</artifactId>
@@ -54,6 +55,8 @@
         <jetty-maven-plugin.version>9.1.0.v20131115</jetty-maven-plugin.version>
         <maven-java-formatter-plugin.version>0.3.1</maven-java-formatter-plugin.version>
         <maven-xml-formatter-plugin.version>2.1.0.20111230154050</maven-xml-formatter-plugin.version>
+        <maven-source-plugin.version>2.4</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
         <!-- system config1 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -65,6 +68,33 @@
         <module>jscrapy-admin</module>
         <module>jscrapy-service</module>
     </modules>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <issueManagement>
+        <url>https://github.com/jscrapy/jscrapy/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+    <developers>
+        <developer>
+            <id>owner</id>
+            <name>Jon</name>
+            <email>xuchaoo@gmail.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <connection>
+            scm:git:https://github.com/jscrapy/jscrapy.git
+        </connection>
+        <developerConnection>
+            scm:git:https://github.com/jscrapy/jscrapy.git
+        </developerConnection>
+        <url>https://github.com/jscrapy/jscrapy.git</url>
+    </scm>
     <dependencies>
         <dependency>
             <groupId>org.testng</groupId>
@@ -104,18 +134,72 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.source}</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <failOnError>false</failOnError>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <tagBase>https://github.com/jscrapy/jscrapy/tree/</tagBase>
+                    <!-- 多模块需要设置 -->
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <tagNameFormat>v-@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-resources-plugin</artifactId>-->
-                <!--<version>2.7</version>-->
-                <!--<configuration>-->
-                    <!--<encoding>UTF-8</encoding>-->
-                    <!--<goal>copy-resources</goal>-->
-                <!--</configuration>-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-resources-plugin</artifactId>-->
+            <!--<version>2.7</version>-->
+            <!--<configuration>-->
+            <!--<encoding>UTF-8</encoding>-->
+            <!--<goal>copy-resources</goal>-->
+            <!--</configuration>-->
             <!--</plugin>-->
         </plugins>
     </build>
@@ -127,4 +211,30 @@
             <url>https://raw.github.com/bulldog2011/bulldog-repo/master/repo/releases/</url>
         </repository>
     </repositories>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>central-snapshot</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>central-release</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+    <!-- move this to $MAVEN_HOME/conf/settings.xml -->
+    <!--<settings>-->
+    <!--<servers>-->
+    <!--<server>-->
+    <!--<id>central-snapshot</id>-->
+    <!--<username>your-jira-id</username>-->
+    <!--<password>your-jira-pwd</password>-->
+    <!--</server>-->
+    <!--<server>-->
+    <!--<id>central-release</id>-->
+    <!--<username>your-jira-id</username>-->
+    <!--<password>your-jira-pwd</password>-->
+    <!--</server>-->
+    <!--</servers>-->
+    <!--</settings>-->
 </project>
