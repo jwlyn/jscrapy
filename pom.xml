@@ -126,7 +126,7 @@
 
     <build>
         <filters>
-            <filter>${user.dir}/build.properties</filter>
+            <filter>${user.dir}/env/env-${env}.properties</filter>
         </filters>
         <plugins>
             <plugin>
@@ -237,4 +237,27 @@
     <!--</server>-->
     <!--</servers>-->
     <!--</settings>-->
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <env>test</env>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <env>prod</env>
+            </properties>
+        </profile>
+    </profiles>
 </project>
