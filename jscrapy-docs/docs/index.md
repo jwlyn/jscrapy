@@ -25,8 +25,3 @@ jscrapy/
     |----jscrapy-docs/     # 文档目录
 ```
 
-## Document
-- [quick start](../site/)
-- [how to use](../site/use)
-- [system arch](../site/arch)
-- [system detail](../site/detail)
