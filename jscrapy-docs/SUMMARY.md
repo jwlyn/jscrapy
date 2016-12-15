@@ -16,8 +16,10 @@
 -----
 * [开发手册](docs/dev_guid/project_arch.md)
     * [架构](docs/dev_guid/project_arch.md)
+    * [功能边界](docs/dev_guid/feature_arch.md)
 	* [集群部署](docs/dev_guid/cluster_deploy_arch.md)
 	* [单点部署](docs/dev_guid/single_deploy_arch.md)
+	* [无损抓取队列结构](docs/dev_guid/rdbms_queue_table.md)
 
 -----
 * [杂项](docs/masstec/springboot-mybatis_use.md)
