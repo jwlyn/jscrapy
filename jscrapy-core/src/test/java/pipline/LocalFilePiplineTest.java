@@ -1,13 +1,15 @@
 package pipline;
 
+import org.apache.commons.io.FileUtils;
 import org.jscrapy.core.config.JscrapyConfig;
-import org.jscrapy.core.config.ConfigKeys;
 import org.jscrapy.core.data.DataItem;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.exception.MySpiderRecoverableException;
 import org.jscrapy.core.pipline.Pipline;
 import org.jscrapy.core.pipline.impl.LocalFilePipline;
-import org.apache.commons.io.FileUtils;
+import org.jscrapy.core.util.Yaml2BeanUtil;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -18,30 +20,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
-
 /**
  * Created by cxu on 2015/6/21.
  */
 public class LocalFilePiplineTest {
-    private JscrapyConfig JscrapyConfig;
+    private JscrapyConfig jscrapyConfig;
 
     @BeforeClass
     public void setup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(LocalFilePiplineTest.class, "/LocalFilePiplineTest.yaml");
-        this.JscrapyConfig = new JscrapyConfig();
+        Resource resource = new ClassPathResource("LocalFilePiplineTest.yaml");
+        jscrapyConfig = (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, resource);
     }
 
     @AfterClass
     public void tearDown() throws IOException {
         /*删除文件*/
-        String tempDir = JscrapyConfig.getSpiderWorkDir() + JscrapyConfig.getTaskFp();
+        String tempDir = jscrapyConfig.getSpiderWorkDir() + jscrapyConfig.getTaskFp();
         FileUtils.forceDeleteOnExit(new File(tempDir));
     }
 
     @Test
     public void testSingleThread() throws IOException, InterruptedException, MySpiderRecoverableException, MySpiderFetalException {
-        Pipline pipline = new LocalFilePipline(this.JscrapyConfig);
+        Pipline pipline = new LocalFilePipline(this.jscrapyConfig);
         DataItem dt = new DataItem();
         dt.put("a", "123")
                 .put("b", "456");

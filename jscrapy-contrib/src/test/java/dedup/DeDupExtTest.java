@@ -10,10 +10,12 @@ import org.jscrapy.core.exception.MySpiderRecoverableException;
 import org.jscrapy.core.request.HttpRequestMethod;
 import org.jscrapy.core.request.Request;
 import org.jscrapy.core.request.impl.HttpRequest;
+import org.jscrapy.core.util.Yaml2BeanUtil;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import util.ResourcePathUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,8 +76,8 @@ public class DeDupExtTest {
      */
     private DeDup initMemoryDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupExtTest.class, "/MemoryDedupTest.yaml");
-        JscrapyConfig JscrapyConfig = new JscrapyConfig();
-        DeDup dp = new MemoryDedup(JscrapyConfig);
+        JscrapyConfig jscrapyConfig = (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, new File(path));
+        DeDup dp = new MemoryDedup(jscrapyConfig);
         return dp;
     }
 
@@ -84,8 +86,8 @@ public class DeDupExtTest {
      */
     private DeDup initRedisDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupExtTest.class, "/RedisDedupTest.yaml");
-        JscrapyConfig JscrapyConfig = new JscrapyConfig();
-        DeDup dp = new RedisDedup(JscrapyConfig);
+        JscrapyConfig jscrapyConfig = (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, new File(path));
+        DeDup dp = new RedisDedup(jscrapyConfig);
         return dp;
     }
 

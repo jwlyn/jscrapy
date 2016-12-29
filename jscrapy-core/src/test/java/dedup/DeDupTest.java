@@ -9,10 +9,12 @@ import org.jscrapy.core.exception.MySpiderRecoverableException;
 import org.jscrapy.core.request.HttpRequestMethod;
 import org.jscrapy.core.request.Request;
 import org.jscrapy.core.request.impl.HttpRequest;
+import org.jscrapy.core.util.Yaml2BeanUtil;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import util.ResourcePathUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,8 +66,8 @@ public class DeDupTest{
      */
     private DeDup initMongoDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/MongoDedupTest.yaml");
-        JscrapyConfig JscrapyConfig = new JscrapyConfig();
-        DeDup dp = new MongoDedup(JscrapyConfig);
+        JscrapyConfig jscrapyConfig = (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, new File(path));
+        DeDup dp = new MongoDedup(jscrapyConfig);
         return dp;
     }
 
@@ -77,7 +79,7 @@ public class DeDupTest{
      */
     private DeDup initDiskDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/DiskDedupTest.yaml");
-        JscrapyConfig JscrapyConfig = new JscrapyConfig();
+        JscrapyConfig JscrapyConfig = (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, new File(path));
         DeDup dp = new MapdbDedup(JscrapyConfig);
         return dp;
     }

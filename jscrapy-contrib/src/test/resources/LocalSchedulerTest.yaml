@@ -1,2 +1,4 @@
-task.id: task_id
-task.name: task_name
+taskBaseConfig:
+  taskId: task.id
+  taskName: task.name
+  virtualId: TASK.VIRTUAL.ID

@@ -57,6 +57,10 @@ public class TaskBaseConfig {
         this.waitOnQueueEmptyMs = waitOnQueueEmptyMs;
     }
 
+    public void setVirtualId(String virtualId) {
+        this.virtualId = virtualId;
+    }
+
     public String getVirtualId() {
         if (StringUtils.isBlank(virtualId)) {
             virtualId = SysDefaultConfig.VIRTUAL_ID;

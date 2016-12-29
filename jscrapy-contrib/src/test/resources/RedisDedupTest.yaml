@@ -1,3 +1,5 @@
-task.id: task.id
-task.name: task.name
-dedup.redis.host: ${redis.dedup.host}
+taskBaseConfig:
+  taskId: task.id
+  taskName: task.name
+  virtualId: TASK.VIRTUAL.ID
+  dedup.redis.host: ${redis.dedup.host}

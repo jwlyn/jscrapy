@@ -1,21 +1,22 @@
 package cacher;
 
-import org.jscrapy.common.log.MyLoggerFactory;
-import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.cacher.Cacher;
 import org.jscrapy.core.cacher.impl.LocalDiskCacher;
 import org.jscrapy.core.cacher.impl.MongoCacher;
+import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.exception.MySpiderRecoverableException;
 import org.jscrapy.core.page.Page;
 import org.jscrapy.core.request.HttpRequestMethod;
 import org.jscrapy.core.request.Request;
 import org.jscrapy.core.request.impl.HttpRequest;
+import org.jscrapy.core.util.Yaml2BeanUtil;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import util.ResourcePathUtils;
 
+import java.io.File;
 import java.io.IOException;
 
 import static org.testng.Assert.assertNotNull;
@@ -29,13 +30,13 @@ public class CacherTest {
 
     @BeforeClass
     public void setup() {
-        request = new HttpRequest("http://oxf1.com/test", HttpRequestMethod.DELETE, null);
+        request = new HttpRequest("http://jscrapy.org/test", HttpRequestMethod.DELETE, null);
         page = new Page("this is html content, hahaha!");
         page.setRequest(request);
     }
 
     @DataProvider(name = "dp")
-    public Cacher[][] dataProvider() throws IOException, MySpiderFetalException {
+    public Object[][] dataProvider() throws IOException, MySpiderFetalException {
         return new Cacher[][]{
                 {initLocalDiskCacher()},
                 {initMongoCacher()}
@@ -58,9 +59,8 @@ public class CacherTest {
      */
     private Cacher initMongoCacher() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/MongoCacherTest.yaml");
-        JscrapyConfig JscrapyConfig = null;
-        JscrapyConfig = new JscrapyConfig();
-        Cacher cacher = new MongoCacher(JscrapyConfig);
+        JscrapyConfig jscrapyConfig= (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, new File(path));
+        Cacher cacher = new MongoCacher(jscrapyConfig);
         return cacher;
     }
 
@@ -69,9 +69,8 @@ public class CacherTest {
      */
     private Cacher initLocalDiskCacher() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/CacherTest.yaml");
-        JscrapyConfig JscrapyConfig = null;
-        JscrapyConfig = new JscrapyConfig();
-        Cacher cacher = new LocalDiskCacher(JscrapyConfig);
+        JscrapyConfig jscrapyConfig = (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, new File(path));
+        Cacher cacher = new LocalDiskCacher(jscrapyConfig);
         return cacher;
     }
 }

@@ -7,8 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by cxu on 2015/6/21.
@@ -18,7 +16,14 @@ public class JscrapyConfig {
 
     private TaskBaseConfig taskBaseConfig;//基本任务配置
     private TaskComponentConfig taskComponentConfig;//基本组件配置
-    private Map<String, String> moduleConfig = new HashMap<String, String>();
+
+    public void setTaskBaseConfig(TaskBaseConfig taskBaseConfig) {
+        this.taskBaseConfig = taskBaseConfig;
+    }
+
+    public void setTaskComponentConfig(TaskComponentConfig taskComponentConfig) {
+        this.taskComponentConfig = taskComponentConfig;
+    }
 
 //    /**
 //     * 从yaml文件load一个任务
@@ -116,6 +121,7 @@ public class JscrapyConfig {
     public String getRedisDedupHost() {
         return getString(ConfigKeys.DEDUP_REDIS_HOST);
     }
+
     /////////////////////////////////////////////////////////////////////////////
     public String getMongoCacheHost() {
         return getString(ConfigKeys.CACHER_MONGODB_HOST);
@@ -134,6 +140,7 @@ public class JscrapyConfig {
     }
 
     /////////////////////////////////////////////////////////////////////////////
+
     /**
      *
      */
@@ -160,8 +167,8 @@ public class JscrapyConfig {
      * @return
      */
     private String getString(String key) {
-        String value = moduleConfig.get(key);
-        return value;
+        //TODO
+        return "";
     }
 
     /**

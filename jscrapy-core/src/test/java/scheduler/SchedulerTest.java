@@ -7,11 +7,15 @@ import org.jscrapy.core.request.HttpRequestMethod;
 import org.jscrapy.core.request.Request;
 import org.jscrapy.core.request.impl.HttpRequest;
 import org.jscrapy.core.scheduler.Scheduler;
+import org.jscrapy.core.scheduler.impl.DiskScheduler;
 import org.jscrapy.core.scheduler.impl.RedisScheduler;
+import org.jscrapy.core.util.Yaml2BeanUtil;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import util.ResourcePathUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +28,7 @@ import static org.testng.AssertJUnit.assertNotNull;
 public class SchedulerTest {
 
     @DataProvider(name = "dp")
-    public Object[][] dataProvider() throws MySpiderFetalException {
+    public Object[][] dataProvider() throws MySpiderFetalException, FileNotFoundException {
         return new Scheduler[][]{
                 {initRedisScheduler()},
         };
@@ -44,17 +48,17 @@ public class SchedulerTest {
         assertEquals(100, request.size());
     }
 
-    private Scheduler initRedisScheduler() throws MySpiderFetalException {
+    private Scheduler initRedisScheduler() throws MySpiderFetalException, FileNotFoundException {
         String path = ResourcePathUtils.getResourceFileAbsPath(SchedulerTest.class, "/RedisSchedulerTest.yaml");
-        JscrapyConfig JscrapyConfig = new JscrapyConfig();
-        Scheduler sched = new RedisScheduler(JscrapyConfig);
+        JscrapyConfig jscrapyConfig = (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, new File(path));
+        Scheduler sched = new RedisScheduler(jscrapyConfig);
         return sched;
     }
 
-//    private Scheduler initDiskScheduler() throws MySpiderFetalException {
-//        String path = ResourcePathUtils.getResourceFileAbsPath(SchedulerTest.class, "/DiskSchedulerTest.yaml");
-//        JscrapyConfig JscrapyConfig = new JscrapyConfig(path);
-//        Scheduler sched = new XXScheduler(JscrapyConfig);
-//        return sched;
-//    }
+    private Scheduler initDiskScheduler() throws MySpiderFetalException, FileNotFoundException {
+        String path = ResourcePathUtils.getResourceFileAbsPath(SchedulerTest.class, "/DiskSchedulerTest.yaml");
+        JscrapyConfig jscrapyConfig = (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, new File(path));
+        Scheduler sched = new DiskScheduler(jscrapyConfig);
+        return sched;
+    }
 }
