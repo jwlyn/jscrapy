@@ -1,0 +1,3 @@
+[submodule "jscrapy-docs"]
+	path = jscrapy-docs
+	url = git@github.com:jscrapy/jscrapy-docs.git

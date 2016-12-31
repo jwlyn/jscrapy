@@ -1,0 +1,21 @@
+site_name: Jscrapy Docs
+pages:
+- Home: index.md
+- Quick start:
+  - Install: quick_start/install.md
+  - Config: quick_start/config.md
+  - Write your first task: quick_start/1st_task.md
+
+- User manual:
+  - Jscrapy at a galance: user_manual/index.md
+
+- Developer's Guid:
+  - Project arch: dev_guid/project_arch.md
+  - Cluster deploy: dev_guid/cluster_deploy_arch.md
+  - Single deploy: dev_guid/single_deploy_arch.md
+
+- About: about/about.md
+
+use_directory_urls: true
+#theme: readthedocs
+theme: united
