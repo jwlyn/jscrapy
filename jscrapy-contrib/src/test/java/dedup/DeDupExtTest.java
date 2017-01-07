@@ -1,6 +1,5 @@
 package dedup;
 
-import org.jscrapy.contrib.dedup.EhCacheDedup;
 import org.jscrapy.contrib.dedup.MemoryDedup;
 import org.jscrapy.contrib.dedup.RedisDedup;
 import org.jscrapy.core.config.JscrapyConfig;
@@ -31,7 +30,8 @@ public class DeDupExtTest {
     @DataProvider(name = "dp")
     public DeDup[][] dataProvider() throws IOException, MySpiderFetalException {
         return new DeDup[][]{
-                {initEhcacheDedup()},
+                {initMemoryDedup()},
+                {initRedisDedup()},
         };
     }
 
@@ -59,16 +59,6 @@ public class DeDupExtTest {
         assertEquals(0, dedup.deDup(req).size());
 
 
-    }
-
-    /**
-     * @return
-     */
-    private DeDup initEhcacheDedup() throws IOException, MySpiderFetalException {
-        String path = ResourcePathUtils.getResourceFileAbsPath(DeDupExtTest.class, "/EhCacheDedupTest.yaml");
-        JscrapyConfig JscrapyConfig = new JscrapyConfig();
-        DeDup dp = new EhCacheDedup(JscrapyConfig);
-        return dp;
     }
 
     /**

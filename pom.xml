@@ -126,7 +126,7 @@
 
     <build>
         <filters>
-            <filter>${user.dir}/env/env-${env}.properties</filter>
+            <filter>${user.dir}/conf/env-${env}.properties</filter>
         </filters>
         <plugins>
             <plugin>

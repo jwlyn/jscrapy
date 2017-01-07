@@ -25,13 +25,13 @@ public class HttpDownloaderTest {
         JscrapyConfig JscrapyConfig = null;
         JscrapyConfig = new JscrapyConfig();
 
-        String url = "http://www.oschina.net/";
+        String url = "http://www.baidu.com";
         Request request = new HttpRequest(url);
         Downloader dl = new HttpDownloader(JscrapyConfig);
         Page pg = dl.download(request);
         assertNotNull(pg);
         Html html = new Html(pg);
         String title = html.$("title").xpath("//title/text()").get();
-        assertEquals("开源中国 - 找到您想要的开源项目，分享和交流", title);
+        assertEquals("百度一下，你就知道", title);
     }
 }
