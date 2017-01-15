@@ -1,0 +1,9 @@
+# postgresql 队列配置
+spring:
+  postgresql:
+    queue:
+      datasource:
+        url: jdbc:postgresql://localhost:5432/jscrapy_queue
+        username: postgres
+        password:
+        mapperpath: classpath*:mapper/*.xml

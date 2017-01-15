@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.jscrapy.core.dal.cache.PageCacheMapper">
+    <resultMap id="BaseResultMap" type="org.jscrapy.core.dal.cache.PageCacheDo">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="page_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="gmt_access" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="etag" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="page_content" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </constructor>
+    </resultMap>
+    <update id="createCacherTable" parameterType="java.lang.String">
+        CREATE TABLE IF NOT EXISTS ${table_name}
+        (
+        id BIGSERIAL PRIMARY KEY, -- 唯一键
+        page_id VARCHAR(64) , -- 调度的唯一性标识，每次都不一样即可,可以取当前任务启动时间戳
+        gmt_created TIMESTAMP, -- 插入时间
+        gmt_access TIMESTAMP, -- 被访问时间
+        etag VARCHAR(64), -- etag
+        page_content TEXT,  -- html
+        );
+    </update>
+
+    <insert id="batchInsert" parameterType="org.jscrapy.core.dal.cache.PageCacheDo">
+        INSERT INTO ${table_name} (page_id, gmt_created, gmt_access, etag, page_content)
+        VALUES
+        <foreach collection="pages" index="index" item="page" separator=",">
+            (
+            #{page.pageId, jdbcType=VARCHAR},
+            NOW(),
+            NOW(),
+            #{page.etag,jdbcType=VARCHAR},
+            #{page.pageContent,jdbcType=VARCHAR},
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insert" parameterType="map">
+        INSERT INTO ${table_name} (page_id, gmt_created, gmt_access, etag, page_content)
+        VALUES
+            (
+            #{page.pageId, jdbcType=VARCHAR},
+            NOW(),
+            NOW(),
+            #{page.etag,jdbcType=VARCHAR},
+            #{page.pageContent,jdbcType=VARCHAR},
+            )
+    </insert>
+
+    <select id="find" parameterType="map" resultMap="BaseResultMap">
+        SELECT * FROM ${table_name} WHERE page_id = #{page_id}
+    </select>
+
+</mapper>

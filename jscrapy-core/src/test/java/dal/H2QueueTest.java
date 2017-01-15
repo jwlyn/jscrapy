@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = H2QueueTest.class)
-@SpringBootApplication(scanBasePackages = {"org.jscrapy.core.bootcfg"})
+@SpringBootApplication(scanBasePackages = {"org.jscrapy.core"})
 @TestPropertySource("classpath:db.properties")
 public class H2QueueTest extends QueueTest {
 

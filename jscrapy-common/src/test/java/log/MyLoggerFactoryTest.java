@@ -1,10 +1,9 @@
 package log;
 
-import org.jscrapy.common.JscrapyConfig;
-import org.jscrapy.common.datetime.DatetimeUtil;
-import org.jscrapy.common.log.MyLoggerFactory;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.jscrapy.common.datetime.DatetimeUtil;
+import org.jscrapy.common.log.MyLoggerFactory;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -38,7 +37,7 @@ public class MyLoggerFactoryTest {
 
     private String getLogPath() {
         String workDir = System.getProperty("user.home");
-        String path = workDir + File.separator + "." + JscrapyConfig.APP_NAME + File.separator + "logs" + File.separator;
+        String path = workDir + File.separator + ".jscrapy" + File.separator + "logs" + File.separator;
         return path;
     }
 }

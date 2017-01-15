@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -17,38 +16,34 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 /**
- * Created by cxu on 2016/8/4.
+ * Created by cxu on 2016/8/5.
  */
 @Configuration
-@MapperScan(basePackages = {"org.jscrapy.core.dal.h2"}, sqlSessionFactoryRef = "h2SqlSessionFactory")
-public class H2DatasourceConfig {
-
-    @Value("${spring.h2.datasource.url}")
+@MapperScan(basePackageClasses =org.jscrapy.core.dal.pg.PgUrlQueueMapper.class, sqlSessionFactoryRef = "pgSqlSessionFactory")
+public class PgQueueDatasourceConfig {
+    @Value("${spring.postgresql.queue.datasource.url}")
     private String url;
-    @Value("${spring.h2.datasource.username}")
+    @Value("${spring.postgresql.queue.datasource.username}")
     private String username;
-    @Value("${spring.h2.datasource.password}")
+    @Value("${spring.postgresql.queue.datasource.password}")
     private String password;
-    @Value("${spring.h2.datasource.mapperpath}")
+    @Value("${spring.postgresql.queue.datasource.mapperpath}")
     private String mapperPath;
 
-    @Bean(name = "h2DataSource")
-    @Primary
-    public DataSource h2DataSource() {
+    @Bean(name = "pgDataSource")
+    public DataSource pgDataSource() {
         DataSource ds = DataSourceBuilder.create().url(url).username(username).password(password).build();
         return ds;
     }
 
-    @Bean(name = "h2TransactionManager")
-    @Primary
-    public DataSourceTransactionManager h2TransactionManager() {
-        DataSourceTransactionManager txm = new DataSourceTransactionManager(h2DataSource());
+    @Bean(name = "pgTransactionManager")
+    public DataSourceTransactionManager pgTransactionManager() {
+        DataSourceTransactionManager txm = new DataSourceTransactionManager(pgDataSource());
         return txm;
     }
 
-    @Bean(name = "h2SqlSessionFactory")
-    @Primary
-    public SqlSessionFactory h2SqlSessionFactory(@Qualifier("h2DataSource") DataSource h2DataSource) throws Exception {
+    @Bean(name = "pgSqlSessionFactory")
+    public SqlSessionFactory pgSqlSessionFactory(@Qualifier("pgDataSource") DataSource h2DataSource) throws Exception {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(h2DataSource);
 

@@ -7,7 +7,6 @@ import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.downloader.Downloader;
 import org.jscrapy.core.exception.MySpiderException;
 import org.jscrapy.core.exception.MySpiderFetalException;
-import org.jscrapy.core.exception.MySpiderRecoverableException;
 import org.jscrapy.core.page.Page;
 import org.jscrapy.core.pipline.Pipline;
 import org.jscrapy.core.processor.Processor;
@@ -60,7 +59,7 @@ public class Spider extends ConfigDriver implements Runnable {
                 Page pg = null;
                 try {
                     pg = cacher.loadPage(req);
-                } catch (MySpiderRecoverableException e) {
+                } catch (Throwable e) {
                     logger.error("读取缓存页面文件失败{}", e);
                 }
                 if (pg != null) {//缓存命中了

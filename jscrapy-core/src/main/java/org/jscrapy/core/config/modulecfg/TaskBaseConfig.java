@@ -77,11 +77,11 @@ public class TaskBaseConfig {
         StringBuffer buf = new StringBuffer(50);
         buf.append(SysDefaultConfig.HOST)
                 .append("@")
+                .append(getVirtualId())//使用jvm进程Id可以在一台机器上模拟分布式
+                .append("@")
                 .append(getTaskName())
                 .append("@")
-                .append(getTaskId())
-                .append("@")
-                .append(getVirtualId());//使用jvm进程Id可以在一台机器上模拟分布式
+                .append(getTaskId());
 
         return buf.toString();
     }

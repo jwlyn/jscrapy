@@ -5,15 +5,19 @@ import org.jscrapy.core.cacher.impl.LocalDiskCacher;
 import org.jscrapy.core.cacher.impl.MongoCacher;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.exception.MySpiderFetalException;
-import org.jscrapy.core.exception.MySpiderRecoverableException;
 import org.jscrapy.core.page.Page;
 import org.jscrapy.core.request.HttpRequestMethod;
 import org.jscrapy.core.request.Request;
 import org.jscrapy.core.request.impl.HttpRequest;
 import org.jscrapy.core.util.Yaml2BeanUtil;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import util.ResourcePathUtils;
 
 import java.io.File;
@@ -24,34 +28,40 @@ import static org.testng.Assert.assertNotNull;
 /**
  * Created by cxu on 2015/9/19.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = CacherTest.class)
+@SpringBootApplication(scanBasePackages = {"org.jscrapy.core"})
+@TestPropertySource("classpath:db.properties")
 public class CacherTest {
-    private Page page;
-    private Request request;
+    @Autowired
+    private LocalDiskCacher localDiskCacher;
+
+    private static Page page;
+    private static Request request;
 
     @BeforeClass
-    public void setup() {
+    public static void setup() {
         request = new HttpRequest("http://jscrapy.org/test", HttpRequestMethod.DELETE, null);
         page = new Page("this is html content, hahaha!");
         page.setRequest(request);
     }
 
-    @DataProvider(name = "dp")
-    public Object[][] dataProvider() throws IOException, MySpiderFetalException {
-        return new Cacher[][]{
-                {initLocalDiskCacher()},
-                {initMongoCacher()}
-        };
+    @Test
+    public void testSave() throws IOException, MySpiderFetalException {
+        Cacher[] cachers = new Cacher[]{initLocalDiskCacher()};
+        for (Cacher c : cachers) {
+            doTest(c);
+        }
     }
 
-    @Test(dataProvider = "dp")
-    public void test(Cacher cacher) throws  MySpiderFetalException {
-        try {
-            cacher.cachePage(page);
-            Page pg = cacher.loadPage(request);
-            assertNotNull(pg);
-        } catch (MySpiderRecoverableException e) {
-
-        }
+    /**
+     * @param cacher
+     * @throws MySpiderFetalException
+     */
+    private void doTest(Cacher cacher) throws MySpiderFetalException {
+        cacher.cachePage(page);
+        Page pg = cacher.loadPage(request);
+        assertNotNull(pg);
     }
 
     /**
@@ -59,7 +69,7 @@ public class CacherTest {
      */
     private Cacher initMongoCacher() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/MongoCacherTest.yaml");
-        JscrapyConfig jscrapyConfig= (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, new File(path));
+        JscrapyConfig jscrapyConfig = (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, new File(path));
         Cacher cacher = new MongoCacher(jscrapyConfig);
         return cacher;
     }
@@ -67,10 +77,10 @@ public class CacherTest {
     /**
      * @return
      */
-    private Cacher initLocalDiskCacher() throws IOException, MySpiderFetalException {
+    private Cacher initLocalDiskCacher() throws IOException {
         String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/CacherTest.yaml");
         JscrapyConfig jscrapyConfig = (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, new File(path));
-        Cacher cacher = new LocalDiskCacher(jscrapyConfig);
-        return cacher;
+        localDiskCacher.setJscrapyConfig(jscrapyConfig);
+        return localDiskCacher;
     }
 }
