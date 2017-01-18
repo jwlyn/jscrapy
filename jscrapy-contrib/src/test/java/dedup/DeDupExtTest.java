@@ -1,7 +1,8 @@
 package dedup;
 
-import org.jscrapy.contrib.dedup.MemoryDedup;
 import org.jscrapy.contrib.dedup.RedisDedup;
+import org.jscrapy.contrib.modulecfg.RedisDedupConfig;
+import org.jscrapy.core.config.ComponentName;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.exception.MySpiderFetalException;
@@ -12,6 +13,9 @@ import org.jscrapy.core.request.impl.HttpRequest;
 import org.jscrapy.core.util.Yaml2BeanUtil;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 import util.ResourcePathUtils;
 
 import java.io.File;
@@ -30,11 +34,9 @@ public class DeDupExtTest {
     @DataProvider(name = "dp")
     public DeDup[][] dataProvider() throws IOException, MySpiderFetalException {
         return new DeDup[][]{
-                {initMemoryDedup()},
                 {initRedisDedup()},
         };
     }
-
 
     @Test(dataProvider = "dp")
     public void test(DeDup dedup) throws MySpiderRecoverableException {
@@ -58,17 +60,7 @@ public class DeDupExtTest {
         assertEquals(2, req.size());
         assertEquals(0, dedup.deDup(req).size());
 
-
-    }
-
-    /**
-     * @return
-     */
-    private DeDup initMemoryDedup() throws IOException, MySpiderFetalException {
-        String path = ResourcePathUtils.getResourceFileAbsPath(DeDupExtTest.class, "/MemoryDedupTest.yaml");
-        JscrapyConfig jscrapyConfig = (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, new File(path));
-        DeDup dp = new MemoryDedup(jscrapyConfig);
-        return dp;
+        teardown(dedup);
     }
 
     /**
@@ -77,8 +69,21 @@ public class DeDupExtTest {
     private DeDup initRedisDedup() throws IOException, MySpiderFetalException {
         String path = ResourcePathUtils.getResourceFileAbsPath(DeDupExtTest.class, "/RedisDedupTest.yaml");
         JscrapyConfig jscrapyConfig = (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, new File(path));
-        DeDup dp = new RedisDedup(jscrapyConfig);
+        DeDup dp = new RedisDedup();
+        dp.setJscrapyConfig(jscrapyConfig);
         return dp;
     }
 
+    /**
+     *
+     */
+    public void teardown(DeDup dedup) {
+        String dedepSetName = "jscrapy_dedup_set_" + dedup.getJscrapyConfig().getTaskFp();
+
+        RedisDedupConfig dedupConfig = (RedisDedupConfig)dedup.getJscrapyConfig().get(ComponentName.DEDUP_REDIS);
+        String redisHost = dedupConfig.getHost();
+        JedisPool pool = new JedisPool(new JedisPoolConfig(), redisHost);
+        Jedis jedis = pool.getResource();
+        jedis.del(dedepSetName);
+    }
 }

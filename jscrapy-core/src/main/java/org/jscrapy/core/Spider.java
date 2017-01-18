@@ -35,7 +35,7 @@ public class Spider extends ConfigDriver implements Runnable {
     private Scheduler scheduler;
 
     public Spider(JscrapyConfig JscrapyConfig) {
-        super(JscrapyConfig);
+        setJscrapyConfig(JscrapyConfig);
         piplines = new ArrayList<>(5);
         //scheduler = JscrapyConfig.getSchedulerObject();//共用scheduler减少竞争和去重误差
     }

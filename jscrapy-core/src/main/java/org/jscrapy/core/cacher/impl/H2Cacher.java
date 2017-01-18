@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
  * Created by cxu on 2015/7/12.
  */
 @Component
-public class LocalDiskCacher extends Cacher {
-    final static Logger logger = LoggerFactory.getLogger(LocalDiskCacher.class);
+public class H2Cacher extends Cacher {
+    final static Logger logger = LoggerFactory.getLogger(H2Cacher.class);
     @Autowired
     private PageCacheMapper pageCacheMapper;
 
@@ -25,12 +25,12 @@ public class LocalDiskCacher extends Cacher {
      *
      * @param jscrapyConfig
      */
-    public LocalDiskCacher(JscrapyConfig jscrapyConfig)  {
-        super(jscrapyConfig);
+    public H2Cacher(JscrapyConfig jscrapyConfig)  {
+        setJscrapyConfig(jscrapyConfig);
         initCache();
     }
 
-    public LocalDiskCacher() {
+    public H2Cacher() {
 
     }
 

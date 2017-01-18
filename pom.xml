@@ -30,7 +30,7 @@
         <snakyaml.version>1.16</snakyaml.version>
         <fastjson.version>1.2.7</fastjson.version>
         <jodd.version>3.6.7</jodd.version>
-        <mapdb.version>2.0-beta12</mapdb.version>
+        <mapdb.version>3.0.3</mapdb.version>
         <jedis.version>2.7.2</jedis.version>
         <jodatime.version>2.8.2</jodatime.version>
         <hibernate-validator.version>5.2.2.Final</hibernate-validator.version>
@@ -128,6 +128,18 @@
         <filters>
             <filter>${user.dir}/env/env-${env}.properties</filter>
         </filters>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

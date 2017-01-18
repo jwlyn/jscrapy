@@ -23,7 +23,7 @@ public class HttpDownloader extends ConfigDriver implements Downloader {
     private HttpFetcher fetcher;
 
     public HttpDownloader(JscrapyConfig JscrapyConfig) {
-        super(JscrapyConfig);
+        setJscrapyConfig(JscrapyConfig);
         fetcher = new JoddHttpFetcher();//TODO 配置化
     }
 

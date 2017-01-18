@@ -13,7 +13,11 @@ import java.util.List;
 public abstract class Scheduler extends ConfigDriver {
 
     public Scheduler(JscrapyConfig jscrapyConfig) {
-        super(jscrapyConfig);
+        setJscrapyConfig(jscrapyConfig);
+    }
+
+    public Scheduler() {
+
     }
 
     /**

@@ -1,7 +1,6 @@
 package org.jscrapy.core.dedup;
 
 import org.jscrapy.core.ConfigDriver;
-import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.request.Request;
 
 import java.util.ArrayList;
@@ -12,10 +11,6 @@ import java.util.List;
  * Created by cxu on 2015/6/22.
  */
 public abstract class DeDup extends ConfigDriver {
-
-    public DeDup(JscrapyConfig JscrapyConfig) {
-        super(JscrapyConfig);
-    }
 
     /**
      * 测试是否是重复的

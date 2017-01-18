@@ -1,6 +1,8 @@
 package org.jscrapy.contrib.dedup;
 
+import org.jscrapy.core.config.ComponentName;
 import org.jscrapy.core.config.JscrapyConfig;
+import org.jscrapy.contrib.modulecfg.RedisDedupConfig;
 import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.request.Request;
 import redis.clients.jedis.Jedis;
@@ -13,12 +15,17 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 public class RedisDedup extends DeDup {
 
-    private static final String DEDUP_SET_PREFIX = "myspider_dedup_set_";
+    private static final String DEDUP_SET_PREFIX = "jscrapy_dedup_set_";
     private JedisPool pool;
 
-    public RedisDedup(JscrapyConfig jscrapyConfig) {
-        super(jscrapyConfig);
-        String redisHost = jscrapyConfig.getRedisSchedulerHost();
+    public RedisDedup() {
+
+    }
+
+    public void setJscrapyConfig(JscrapyConfig jscrapyConfig) {
+        super.setJscrapyConfig(jscrapyConfig);
+        RedisDedupConfig redisDedepConfig = (RedisDedupConfig) jscrapyConfig.get(ComponentName.DEDUP_REDIS);
+        String redisHost = redisDedepConfig.getHost();
         this.pool = new JedisPool(new JedisPoolConfig(), redisHost);
     }
 
@@ -44,9 +51,8 @@ public class RedisDedup extends DeDup {
      * @return
      */
     private String getDedupSetKey() {
-        String dedupSetKey = DEDUP_SET_PREFIX + getJscrapyConfig().getTaskId();
+        String dedupSetKey = DEDUP_SET_PREFIX + getJscrapyConfig().getTaskFp();
 
         return dedupSetKey;
     }
-
 }

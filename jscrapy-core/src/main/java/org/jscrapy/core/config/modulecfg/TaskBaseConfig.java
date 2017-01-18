@@ -9,6 +9,7 @@ import org.jscrapy.core.config.SysDefaultConfig;
  */
 public class TaskBaseConfig {
 
+    private String taskWorkDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
     private String taskId;//任务id,元数据里的唯一标示
     private String taskName;//任务名称
     private int urlFetchFromQueueSize;//任务每次从集中队列里取出多少个URL
@@ -16,6 +17,14 @@ public class TaskBaseConfig {
     private int waitOnQueueEmptyMs;//当队列空的时候睡眠等待多少毫秒
 
     private String virtualId;//虚拟的ID，用于集群分组，伪分布式
+
+    public String getTaskWorkDir() {
+        return taskWorkDir;
+    }
+
+    public void setTaskWorkDir(String taskWorkDir) {
+        this.taskWorkDir = taskWorkDir;
+    }
 
     public String getTaskId() {
         return taskId;

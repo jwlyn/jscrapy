@@ -1,5 +1,0 @@
-taskBaseConfig:
-  taskId: task.id
-  taskName: task.name
-  virtualId: TASK.VIRTUAL.ID
-  scheduler.redis.host: ${redis.scheduler.host}

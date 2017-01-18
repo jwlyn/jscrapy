@@ -20,7 +20,7 @@ public class MongoCacher extends Cacher {
     private Mongo mongo = null;
 
     public MongoCacher(JscrapyConfig jscrapyConfig) {
-        super(jscrapyConfig);
+        setJscrapyConfig(jscrapyConfig);
         String dbHost = jscrapyConfig.getMongoCacheHost();
         int dbPort = jscrapyConfig.getMongoCachePort();
         String dbName = jscrapyConfig.getMongoCacheDbName();

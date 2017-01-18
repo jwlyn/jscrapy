@@ -1,12 +1,13 @@
 package org.jscrapy.core.config;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jscrapy.core.config.modulecfg.TaskBaseConfig;
 import org.jscrapy.core.config.modulecfg.TaskComponentConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by cxu on 2015/6/21.
@@ -14,15 +15,35 @@ import java.io.File;
 public class JscrapyConfig {
     final static Logger logger = LoggerFactory.getLogger(JscrapyConfig.class);
 
+    public TaskBaseConfig getTaskBaseConfig() {
+        return taskBaseConfig;
+    }
+
     private TaskBaseConfig taskBaseConfig;//基本任务配置
-    private TaskComponentConfig taskComponentConfig;//基本组件配置
+    private Map<ComponentName, TaskComponentConfig> taskComponentConfigs;//基本组件配置
+
+    public JscrapyConfig() {
+        taskComponentConfigs = new HashMap<>();
+    }
 
     public void setTaskBaseConfig(TaskBaseConfig taskBaseConfig) {
         this.taskBaseConfig = taskBaseConfig;
     }
 
-    public void setTaskComponentConfig(TaskComponentConfig taskComponentConfig) {
-        this.taskComponentConfig = taskComponentConfig;
+    public void setTaskComponentConfig(ComponentName key, TaskComponentConfig taskComponentConfig) {
+        taskComponentConfigs.put(key, taskComponentConfig);
+    }
+
+    public Map<ComponentName, TaskComponentConfig> getTaskComponentConfigs() {
+        return taskComponentConfigs;
+    }
+
+    public void setTaskComponentConfigs(Map<ComponentName, TaskComponentConfig> taskComponentConfigs) {
+        this.taskComponentConfigs = taskComponentConfigs;
+    }
+
+    public TaskComponentConfig get(ComponentName componentName) {
+        return taskComponentConfigs.get(componentName);
     }
 
 //    /**
@@ -80,49 +101,6 @@ public class JscrapyConfig {
         return taskBaseConfig.getTaskFp();
     }
 
-    /**
-     * @return
-     */
-    public String getDedupMongoHost() {
-        return getString(ConfigKeys.DEDUP_MONGO_HOST);
-    }
-
-    /**
-     * @return
-     */
-    public int getDedupMongoPort() {
-        return getInt(ConfigKeys.DEDUP_MONGO_PORT);
-    }
-
-    /**
-     * @return
-     */
-    public String getDedupMongoDbName() {
-        return getAppName() + "_dedup";
-    }
-
-    /**
-     * 用于去重的数据库名字
-     *
-     * @return
-     */
-    public String getDedupMongoTableName() {
-        return getTaskName();
-    }
-    /////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * @return
-     */
-    public String getRedisSchedulerHost() {
-        return getString(ConfigKeys.SCHEDULER_REDIS_HOST);
-    }
-
-    public String getRedisDedupHost() {
-        return getString(ConfigKeys.DEDUP_REDIS_HOST);
-    }
-
-    /////////////////////////////////////////////////////////////////////////////
     public String getMongoCacheHost() {
         return getString(ConfigKeys.CACHER_MONGODB_HOST);
     }
@@ -194,33 +172,17 @@ public class JscrapyConfig {
 //        }
 //    }
 
-//    /**
-//     * 每个任务分别记录日志的路径
-//     *
-//     * @return
-//     */
-//    public String getTaskLogDir() {
-//        return loadString(ConfigKeys.RT_EXT_RT_TASK_LOG_DIR);
-//    }
-
     /**
      * 工作目录，放配置，缓存等的目录位置
      *
      * @return
      */
-    public String getSpiderWorkDir() {
-        String workDir = getString(ConfigKeys.TASK_WORK_DIR);
-        if (StringUtils.isBlank(workDir)) {
-            workDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
-        }
-        if (!workDir.endsWith(File.separator)) {
-            workDir = workDir + File.separator;
-        }
-        return workDir;
+    public static String getSpiderWorkDir() {
+        return SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
     }
 
     public String getTaskWorkDir() {
-        String taskWorkDir = getString(ConfigKeys.RT_EXT_RT_LOCAL_TASK_WORK_DIR);
+        String taskWorkDir = getSpiderWorkDir() + getTaskFp() + File.separator;
         return taskWorkDir;
     }
 

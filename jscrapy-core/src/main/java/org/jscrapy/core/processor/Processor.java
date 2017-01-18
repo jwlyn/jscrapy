@@ -10,7 +10,7 @@ import org.jscrapy.core.page.Page;
  */
 public abstract class Processor extends ConfigDriver {
     public Processor(JscrapyConfig jscrapyConfig) {
-        super(jscrapyConfig);
+        setJscrapyConfig(jscrapyConfig);
     }
 
     public abstract ProcessResult process(Page page);

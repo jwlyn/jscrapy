@@ -13,15 +13,11 @@ public class ConfigDriver {
 
     }
 
-    public ConfigDriver(JscrapyConfig JscrapyConfig) {
-        this.JscrapyConfig = JscrapyConfig;
-    }
-
     public JscrapyConfig getJscrapyConfig() {
         return JscrapyConfig;
     }
 
-    public void setJscrapyConfig(org.jscrapy.core.config.JscrapyConfig jscrapyConfig) {
+    public void setJscrapyConfig(JscrapyConfig jscrapyConfig) {
         JscrapyConfig = jscrapyConfig;
     }
 }

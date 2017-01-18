@@ -1,7 +1,9 @@
 package org.jscrapy.core.dedup.impl;
 
 import com.mongodb.*;
+import org.jscrapy.core.config.ComponentName;
 import org.jscrapy.core.config.JscrapyConfig;
+import org.jscrapy.core.config.modulecfg.MongoDedepConfig;
 import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.request.Request;
 
@@ -16,12 +18,24 @@ public class MongoDedup extends DeDup {
     private Mongo mongo = null;
 
     public MongoDedup(JscrapyConfig jscrapyConfig) {
-        super(jscrapyConfig);
+        setJscrapyConfig(jscrapyConfig);
+    }
 
-        String dbHost = jscrapyConfig.getDedupMongoHost();
-        int dbPort = jscrapyConfig.getDedupMongoPort();
-        String dbName = jscrapyConfig.getDedupMongoDbName();
-        String tableName = jscrapyConfig.getDedupMongoTableName();
+    public MongoDedup() {
+
+    }
+
+    /**
+     *
+     * @param jscrapyConfig
+     */
+    public void setJscrapyConfig(JscrapyConfig jscrapyConfig) {
+        super.setJscrapyConfig(jscrapyConfig);
+        MongoDedepConfig mongoDedupConfig = (MongoDedepConfig)jscrapyConfig.get(ComponentName.DEDUP_MONGO);
+        String dbHost = mongoDedupConfig.getHost();
+        int dbPort = mongoDedupConfig.getPort();
+        String dbName = mongoDedupConfig.getDbName();
+        String tableName = jscrapyConfig.getTaskFp();
 
         this.mongo = new MongoClient(dbHost, dbPort);
         this.db = mongo.getDB(dbName);

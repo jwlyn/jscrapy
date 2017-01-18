@@ -17,7 +17,7 @@ public class Task extends ConfigDriver {
     private ExecutorService threads;
 
     public Task(JscrapyConfig jscrapyConfig) {
-        super(jscrapyConfig);
+        setJscrapyConfig(jscrapyConfig);
         int threadCount = jscrapyConfig.getThreadCount();
         threads = Executors.newFixedThreadPool(threadCount);
     }

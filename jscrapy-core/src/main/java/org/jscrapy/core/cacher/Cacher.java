@@ -1,7 +1,6 @@
 package org.jscrapy.core.cacher;
 
 import org.jscrapy.core.ConfigDriver;
-import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.page.Page;
 import org.jscrapy.core.request.Request;
@@ -11,10 +10,6 @@ import org.jscrapy.core.request.Request;
  * Created by cxu on 2015/7/12.
  */
 public abstract class Cacher extends ConfigDriver {
-    public Cacher(JscrapyConfig jscrapyConfig) {
-        super(jscrapyConfig);
-    }
-
     public Cacher() {
 
     }

@@ -1,7 +1,7 @@
 package cacher;
 
 import org.jscrapy.core.cacher.Cacher;
-import org.jscrapy.core.cacher.impl.LocalDiskCacher;
+import org.jscrapy.core.cacher.impl.H2Cacher;
 import org.jscrapy.core.cacher.impl.MongoCacher;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.exception.MySpiderFetalException;
@@ -34,7 +34,7 @@ import static org.testng.Assert.assertNotNull;
 @TestPropertySource("classpath:db.properties")
 public class CacherTest {
     @Autowired
-    private LocalDiskCacher localDiskCacher;
+    private H2Cacher h2Cacher;
 
     private static Page page;
     private static Request request;
@@ -48,7 +48,7 @@ public class CacherTest {
 
     @Test
     public void testSave() throws IOException, MySpiderFetalException {
-        Cacher[] cachers = new Cacher[]{initLocalDiskCacher()};
+        Cacher[] cachers = new Cacher[]{initH2Cacher(), initMongoCacher()};
         for (Cacher c : cachers) {
             doTest(c);
         }
@@ -77,10 +77,10 @@ public class CacherTest {
     /**
      * @return
      */
-    private Cacher initLocalDiskCacher() throws IOException {
-        String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/CacherTest.yaml");
+    private Cacher initH2Cacher() throws IOException {
+        String path = ResourcePathUtils.getResourceFileAbsPath(CacherTest.class, "/H2CacherTest.yaml");
         JscrapyConfig jscrapyConfig = (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, new File(path));
-        localDiskCacher.setJscrapyConfig(jscrapyConfig);
-        return localDiskCacher;
+        h2Cacher.setJscrapyConfig(jscrapyConfig);
+        return h2Cacher;
     }
 }
