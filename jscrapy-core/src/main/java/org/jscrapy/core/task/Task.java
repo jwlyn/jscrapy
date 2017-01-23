@@ -1,5 +1,6 @@
-package org.jscrapy.core;
+package org.jscrapy.core.task;
 
+import org.jscrapy.core.ConfigDriver;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.slf4j.Logger;

@@ -1,3 +1,0 @@
-taskBaseConfig:
-  taskId: task.id
-  taskName: task.name

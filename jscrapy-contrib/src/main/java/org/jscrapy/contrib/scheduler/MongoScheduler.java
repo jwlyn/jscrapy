@@ -4,11 +4,8 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
+import org.jscrapy.core.ConfigDriver;
 import org.jscrapy.core.config.JscrapyConfig;
-import org.jscrapy.core.request.Request;
-import org.jscrapy.core.scheduler.Scheduler;
-
-import java.util.List;
 
 //import gaillard.mongo.Queue;
 
@@ -17,13 +14,13 @@ import java.util.List;
  * https://github.com/gaillard/mongo-queue-java
  * Created by cxu on 2014/11/21.
  */
-public class MongoScheduler extends Scheduler {
+public class MongoScheduler extends ConfigDriver {
 
     //private Queue queue;
     private DBCollection collection = null;
 
     public MongoScheduler(JscrapyConfig jscrapyConfig) {
-        super(jscrapyConfig);
+        setJscrapyConfig(jscrapyConfig);
         String dbHost = jscrapyConfig.getSchedulerMongoHost();
         int dbPort = jscrapyConfig.getSchedulerMongoPort();
         String dbName = jscrapyConfig.getSchedulerMongoDbName();
@@ -34,23 +31,6 @@ public class MongoScheduler extends Scheduler {
         //this.queue = new Queue(this.collection);
     }
 
-    @Override
-    public int push(List<Request> requests) {
-        for (Request req : requests) {
-            //TODO
-        }
 
-        return requests.size();
-    }
-
-    @Override
-    public List<Request> poll(int n) {
-        return null;
-    }
-
-    @Override
-    public int remove(List<Request> requests) {
-        return 0;
-    }
 
 }

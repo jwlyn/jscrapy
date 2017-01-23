@@ -84,14 +84,21 @@ public class TaskBaseConfig {
      */
     public String getTaskFp() {
         StringBuffer buf = new StringBuffer(50);
-        buf.append(SysDefaultConfig.HOST)
-                .append("@")
+        buf.append(formatIp(SysDefaultConfig.HOST))
+                .append("_")
                 .append(getVirtualId())//使用jvm进程Id可以在一台机器上模拟分布式
-                .append("@")
+                .append("_")
                 .append(getTaskName())
-                .append("@")
+                .append("_")
                 .append(getTaskId());
 
         return buf.toString();
+    }
+
+    /**
+     * 将ip中的特殊符号替换成下划线
+     */
+    private String formatIp(String ip) {
+        return ip.replaceAll(".", "_");
     }
 }

@@ -33,6 +33,8 @@ public abstract class Request implements Serializable{
      */
     public abstract String getUrl();
 
+    public abstract void setUrl(String url);
+
     /**
      * 获取url的请求方法：GET|POST|DELETE|TRACE|HEAD..
      * @return

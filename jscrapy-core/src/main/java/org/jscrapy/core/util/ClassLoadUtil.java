@@ -8,7 +8,6 @@ import org.jscrapy.core.processor.Processor;
 import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.pipline.Pipline;
-import org.jscrapy.core.scheduler.Scheduler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
@@ -21,15 +20,7 @@ import java.lang.reflect.Constructor;
 public class ClassLoadUtil {
     final static Logger logger = LoggerFactory.getLogger(ClassLoadUtil.class);
 
-    public static Scheduler loadScheduler(String className, JscrapyConfig arg) throws MySpiderFetalException {
-        Object o = loadClass(className, arg);
-        if (o != null) {
-            return (Scheduler)o;
-        }
-        else{
-            return null;
-        }
-    }
+
 
     public static DeDup loadDedup(String className, JscrapyConfig arg) throws MySpiderFetalException {
         Object o = loadClass(className, arg);

@@ -1,4 +1,4 @@
 taskBaseConfig:
-  taskId: task.id
+  taskId: task_id
   taskName: cacherTest
-  virtualId: TASK.VIRTUAL.ID
+  virtualId: TASK_VIRTUAL_ID

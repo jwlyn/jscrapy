@@ -11,7 +11,7 @@ public class UrlQueueDo {
     private String urlStatus;
     private int retryTimes;
     private String urlType;
-    private int siteId;
+    private String siteId;
     private Date gmtCreated;
     private Date gmtAccess;
     private String errorCode;
@@ -57,11 +57,11 @@ public class UrlQueueDo {
         this.urlType = urlType;
     }
 
-    public int getSiteId() {
+    public String getSiteId() {
         return siteId;
     }
 
-    public void setSiteId(int siteId) {
+    public void setSiteId(String siteId) {
         this.siteId = siteId;
     }
 
