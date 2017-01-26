@@ -6,7 +6,7 @@ import org.jscrapy.core.ConfigDriver;
 import org.jscrapy.core.config.ComponentName;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.request.Request;
-import org.jscrapy.core.request.impl.HttpRequest;
+import org.jscrapy.core.request.HttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
@@ -48,7 +48,7 @@ public class RedisScheduler extends ConfigDriver {
         try (Jedis jedis = this.pool.getResource()) {
             for (int i = 0; i < n; i++) {
                 String reqJson = jedis.lpop(this.getQueueName());
-                Request request = Request.build(reqJson, HttpRequest.class);
+                HttpRequest request = HttpRequest.build(reqJson);
                 req.add(request);
             }
 

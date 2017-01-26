@@ -9,7 +9,7 @@ import org.jscrapy.core.ConfigDriver;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.downloader.Downloader;
 import org.jscrapy.core.page.Page;
-import org.jscrapy.core.request.Request;
+import org.jscrapy.core.request.HttpRequest;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -28,7 +28,7 @@ public class HttpDownloader extends ConfigDriver implements Downloader {
     }
 
     @Override
-    public Page download(Request request) {
+    public Page download(HttpRequest request) {
         FetchRequest req = new FetchRequest();
         req.setUrl(request.getUrl());
         req.setHttpMethod(HttpMethod.valueOf(request.getHttpMethod().name()));
@@ -53,7 +53,7 @@ public class HttpDownloader extends ConfigDriver implements Downloader {
      * @param response
      * @return
      */
-    private Page getPage(Request request, FetchResponse response) throws UnsupportedEncodingException {
+    private Page getPage(HttpRequest request, FetchResponse response) throws UnsupportedEncodingException {
         Page page = new Page();
         String utf8Content = new String(response.getContent(), response.getCharset());
         page.setRawText(utf8Content);

@@ -1,7 +1,7 @@
 package org.jscrapy.core.page;
 
-import org.jscrapy.core.request.Request;
 import org.apache.commons.lang3.StringUtils;
+import org.jscrapy.core.request.HttpRequest;
 
 /**
  * Created by cxu on 2014/11/21.
@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 public class Page {
 
     private boolean isFromCache;
-    private Request request;
+    private HttpRequest request;
     private String rawText;
 
     public boolean isFromCache() {
@@ -36,11 +36,11 @@ public class Page {
         this.rawText = rawText;
     }
 
-    public Request getRequest(){
+    public HttpRequest getRequest(){
         return this.request;
     }
 
-    public void setRequest(Request request) {
+    public void setRequest(HttpRequest request) {
         this.request = request;
     }
 

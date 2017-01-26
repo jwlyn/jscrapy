@@ -39,7 +39,7 @@ public class H2QueueDatasourceConfig {
         return ds;
     }
 
-    @Bean(name = "h2TransactionManager")
+    @Bean(name = "h2QueueTransactionManager")
     @Primary
     public DataSourceTransactionManager h2TransactionManager() {
         DataSourceTransactionManager txm = new DataSourceTransactionManager(h2DataSource());

@@ -84,7 +84,8 @@ public class TaskBaseConfig {
      */
     public String getTaskFp() {
         StringBuffer buf = new StringBuffer(50);
-        buf.append(formatIp(SysDefaultConfig.HOST))
+        buf.append("_")
+                .append(formatIp(SysDefaultConfig.HOST))
                 .append("_")
                 .append(getVirtualId())//使用jvm进程Id可以在一台机器上模拟分布式
                 .append("_")
@@ -99,6 +100,6 @@ public class TaskBaseConfig {
      * 将ip中的特殊符号替换成下划线
      */
     private String formatIp(String ip) {
-        return ip.replaceAll(".", "_");
+        return StringUtils.replace(ip, ".", "_");
     }
 }

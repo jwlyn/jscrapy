@@ -1,11 +1,13 @@
-package urlproducer;
+package urlconsumer;
 
 import dedup.DeDupTest;
+import org.jscrapy.core.comsumer.UrlConsumer;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.dal.h2.H2UrlQueueDo;
 import org.jscrapy.core.producer.UrlProducer;
-import org.jscrapy.core.request.RequestContext;
 import org.jscrapy.core.request.HttpRequest;
+import org.jscrapy.core.request.RequestContext;
+import org.jscrapy.core.request.UrlStatus;
 import org.jscrapy.core.util.Yaml2BeanUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,18 +24,20 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.fail;
+import static org.testng.Assert.*;
 
 /**
- * Created by cxu on 2017/1/21.
+ * Created by cxu on 2017/1/25.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = UrlProducerTest.class)
+@SpringApplicationConfiguration(classes = UrlConsumerTest.class)
 @SpringBootApplication(scanBasePackages = {"org.jscrapy.core"})
 @TestPropertySource("classpath:db.properties")
-public class UrlProducerTest {
+public class UrlConsumerTest {
+    @Autowired
+    @Qualifier("h2UrlConsumer")
+    private UrlConsumer urlConsumer;
+
     @Autowired
     @Qualifier("h2UrlProducer")
     private UrlProducer urlProducer;
@@ -41,22 +45,30 @@ public class UrlProducerTest {
     @Test
     public void test() {
         JscrapyConfig jscrapyConfig = getConfig();
+        assertNotNull(urlProducer);
+        urlProducer.setJscrapyConfig(jscrapyConfig);
 
-        UrlProducer[] producers = dataProvider();
-        for (UrlProducer urlProducer : producers) {
-            //插入1个，看个数增加1个
-            assertNotNull(urlProducer);
-            urlProducer.setJscrapyConfig(jscrapyConfig);
-            List<RequestContext> requestContexts = rendUrl();
-            int insertCount = urlProducer.push(requestContexts);
+        List<RequestContext> requestContexts = rendUrl();
+        int insertCount = urlProducer.push(requestContexts);
+        assertEquals(1, insertCount);
 
-            assertEquals(1, insertCount);
+        UrlConsumer[] consumers = dataProvider();
+        for (UrlConsumer consumer : consumers) {
+            consumer.setJscrapyConfig(jscrapyConfig);
+            List<RequestContext> dequeueRequestContexts = urlConsumer.poll(1);
+            for (RequestContext requestContext : dequeueRequestContexts) {
+                UrlStatus status = requestContext.getUrlStatus();
+                assertEquals(status, UrlStatus.NEW);
+                assertEquals(requestContext.getRetryTimes(), 0);
+            }
+
+            urlConsumer.delete(dequeueRequestContexts);
         }
     }
 
-    private UrlProducer[] dataProvider() {
-        return new UrlProducer[]{
-                urlProducer,
+    public UrlConsumer[] dataProvider() {
+        return new UrlConsumer[]{
+                urlConsumer,
         };
     }
 
@@ -68,6 +80,7 @@ public class UrlProducerTest {
         List<RequestContext> requestContexts = new ArrayList<>();
         RequestContext req = new RequestContext(new HttpRequest("http://jscrapy.org"), new H2UrlQueueDo());
         req.setRetryTimes(1);
+        req.setUrlStatus(UrlStatus.NEW);
         requestContexts.add(req);
         return requestContexts;
     }
@@ -83,5 +96,4 @@ public class UrlProducerTest {
         }
         return jscrapyConfig;
     }
-
 }

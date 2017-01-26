@@ -1,10 +1,9 @@
 package org.jscrapy.core.data;
 
-import org.jscrapy.common.datetime.DatetimeUtil;
-import org.jscrapy.core.request.HttpRequestMethod;
-import org.jscrapy.core.request.Request;
-import org.jscrapy.core.request.impl.HttpRequest;
 import org.apache.commons.lang3.StringUtils;
+import org.jscrapy.common.datetime.DatetimeUtil;
+import org.jscrapy.core.request.HttpRequest;
+import org.jscrapy.core.request.HttpRequestMethod;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -17,10 +16,10 @@ public class ProcessResult {
     private static final String FIELD_URL = "_from_url";
     private static final String SCHEDULER_VERSION = "_scheduler_version";
 
-    private Request request;
+    private HttpRequest request;
     private String schedulerVersion;
     private List<DataItem> data;
-    private List<Request> links;
+    private List<HttpRequest> links;
 
     public ProcessResult() {
         data = new LinkedList<>();
@@ -50,7 +49,7 @@ public class ProcessResult {
 
     public ProcessResult addLinks(String link) {
         if (StringUtils.isNotBlank(link)) {
-            Request req = new HttpRequest(link, HttpRequestMethod.GET, null);
+            HttpRequest req = new HttpRequest(link, HttpRequestMethod.GET, null);
             links.add(req);
         }
 
@@ -60,21 +59,21 @@ public class ProcessResult {
     public ProcessResult addLinks(List<String> links) {
         if (links != null) {
             for (String s : links) {
-                Request req = new HttpRequest(s, HttpRequestMethod.GET, null);
+                HttpRequest req = new HttpRequest(s, HttpRequestMethod.GET, null);
                 this.links.add(req);
             }
         }
         return this;
     }
 
-    public ProcessResult addRequest(Request link) {
+    public ProcessResult addRequest(HttpRequest link) {
         if (link != null) {
             links.add(link);
         }
         return this;
     }
 
-    public ProcessResult addRequest(List<Request> links) {
+    public ProcessResult addRequest(List<HttpRequest> links) {
         if (links != null && links.size() > 0) {
             this.links.addAll(links);
         }
@@ -85,7 +84,7 @@ public class ProcessResult {
         return data;
     }
 
-    public List<Request> getLinks() {
+    public List<HttpRequest> getLinks() {
         return links;
     }
 
@@ -93,7 +92,7 @@ public class ProcessResult {
         return DatetimeUtil.getTime("yyyy-MM-dd HH:mm:ss");
     }
 
-    public void setRequest(Request request) {
+    public void setRequest(HttpRequest request) {
         this.request = request;
     }
 

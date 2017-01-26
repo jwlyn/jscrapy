@@ -1,10 +1,11 @@
-package org.jscrapy.core.request.impl;
+package org.jscrapy.core.request;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
-import org.jscrapy.core.request.HttpRequestMethod;
-import org.jscrapy.core.request.Request;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +39,7 @@ public class HttpRequest extends Request{
         this.httpMethod = HttpRequestMethod.GET;
     }
 
-    private HttpRequest(){}
+    public HttpRequest(){}
 
     @Override
     public String getUrl() {
@@ -102,4 +103,17 @@ public class HttpRequest extends Request{
         this.parameters = params;
     }
 
+    /**
+     * 从队列里的json字符串来创建一个HttpRequest
+     * @param jsonString
+     * @return
+     */
+    public static HttpRequest build(String jsonString) throws JSONException {
+        if(StringUtils.isNotBlank(jsonString)) {
+            HttpRequest req = (HttpRequest) JSON.parseObject(jsonString, HttpRequest.class);
+            return req;
+        }
+
+        return null;
+    }
 }

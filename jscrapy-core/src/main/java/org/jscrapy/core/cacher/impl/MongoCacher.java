@@ -4,7 +4,7 @@ import com.mongodb.*;
 import org.jscrapy.core.cacher.Cacher;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.page.Page;
-import org.jscrapy.core.request.Request;
+import org.jscrapy.core.request.HttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +31,7 @@ public class MongoCacher extends Cacher {
     }
 
     @Override
-    public Page loadPage(Request request) {
+    public Page loadPage(HttpRequest request) {
         BasicDBObject query = new BasicDBObject();
         query.append(DB_PRIMARY_KEY, request.fp());
         BasicDBObject obj = (BasicDBObject) collection.findOne(query);

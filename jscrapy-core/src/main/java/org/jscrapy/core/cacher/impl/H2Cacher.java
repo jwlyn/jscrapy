@@ -5,7 +5,7 @@ import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.dal.cache.PageCacheDo;
 import org.jscrapy.core.dal.cache.PageCacheMapper;
 import org.jscrapy.core.page.Page;
-import org.jscrapy.core.request.Request;
+import org.jscrapy.core.request.HttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class H2Cacher extends Cacher {
     }
 
     @Override
-    public Page loadPage(Request request) {
+    public Page loadPage(HttpRequest request) {
         String taskName = getJscrapyConfig().getTaskName();
         String pageId = request.fp();
         PageCacheDo pageCacheDo = pageCacheMapper.find(taskName, pageId);

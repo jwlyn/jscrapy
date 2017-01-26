@@ -6,6 +6,6 @@ taskBaseConfig:
 
 taskComponentConfigs:
   DEDUP_MONGO: !!org.jscrapy.core.config.modulecfg.MongoDedepConfig
-    dbName: myspider_cacher
+    dbName: jscrapy_mongo_cacher
     host: ${mongo.cacher.host}
     port: ${mongo.cacher.port}

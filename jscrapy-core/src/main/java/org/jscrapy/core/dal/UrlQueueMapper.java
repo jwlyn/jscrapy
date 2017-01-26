@@ -1,6 +1,7 @@
 package org.jscrapy.core.dal;
 
 import org.apache.ibatis.annotations.Param;
+import org.jscrapy.core.request.UrlStatus;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public interface UrlQueueMapper {
      * @return
      */
     public List<UrlQueueDo> selectUrlByStatus(@Param("queue_name") String tableName,
-                                              @Param("url_status") String urlStatus,
+                                              @Param("url_status") UrlStatus urlStatus,
                                               @Param("limit") int limit);
 
     /**
@@ -40,6 +41,13 @@ public interface UrlQueueMapper {
      */
     public int batchUpdate(@Param("queue_name") String queueName,
                            @Param("urls") List<UrlQueueDo> urls);
+
+    /**
+     * 批量更新队列
+     */
+    public int batchUpdateUrlStatus(@Param("queue_name") String queueName,
+                                    @Param("url_status") UrlStatus urlStatus,
+                                    @Param("urls") List<UrlQueueDo> urls);
 
     /**
      * 批量删除

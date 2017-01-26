@@ -54,9 +54,9 @@ public class H2UrlProducer extends UrlProducer {
         for (RequestContext requestContext : requests) {
             UrlQueueDo urlQueueDo = new H2UrlQueueDo();
             Long id = requestContext.getId();
-            if (id != null) {
+            if (id == null) {
                 urlQueueDo.setUrl(requestContext.getFullUrl());
-                urlQueueDo.setUrlStatus(UrlStatus.NEW.name());
+                urlQueueDo.setUrlStatus(UrlStatus.NEW);
                 urlQueueDo.setRetryTimes(0);
                 urlQueueDo.setUrlType(requestContext.getUrlType());
                 urlQueueDo.setSiteId(requestContext.getSiteId());

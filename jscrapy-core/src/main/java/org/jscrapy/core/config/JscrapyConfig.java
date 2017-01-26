@@ -177,18 +177,13 @@ public class JscrapyConfig {
      *
      * @return
      */
-    public static String getSpiderWorkDir() {
+    public static String getJscrapyWorkDir() {
         return SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
     }
 
     public String getTaskWorkDir() {
-        String taskWorkDir = getSpiderWorkDir() + getTaskFp() + File.separator;
+        String taskWorkDir = getJscrapyWorkDir() + getTaskFp() + File.separator;
         return taskWorkDir;
-    }
-
-    public String getTaskCacheDir() {
-        String taskCacheDir = getString(ConfigKeys.RT_EXT_RT_LOCAL_TASK_CACHER_DIR);
-        return taskCacheDir;
     }
 
 //    /**

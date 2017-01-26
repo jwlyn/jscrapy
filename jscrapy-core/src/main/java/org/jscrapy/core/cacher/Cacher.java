@@ -3,7 +3,7 @@ package org.jscrapy.core.cacher;
 import org.jscrapy.core.ConfigDriver;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.page.Page;
-import org.jscrapy.core.request.Request;
+import org.jscrapy.core.request.HttpRequest;
 
 /**
  * 从缓存中读取网页
@@ -18,7 +18,7 @@ public abstract class Cacher extends ConfigDriver {
      * @param request
      * @return 命中则返回，否则null
      */
-    public abstract Page loadPage(Request request);
+    public abstract Page loadPage(HttpRequest request);
 
     public abstract void cachePage(Page page) throws MySpiderFetalException;
 

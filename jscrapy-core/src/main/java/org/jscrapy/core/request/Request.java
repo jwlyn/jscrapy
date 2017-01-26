@@ -1,9 +1,5 @@
 package org.jscrapy.core.request;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONException;
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.Serializable;
 import java.util.Map;
 
@@ -12,20 +8,6 @@ import java.util.Map;
  * Created by cxu on 2014/11/21.
  */
 public abstract class Request implements Serializable{
-
-    /**
-     * 从队列里的json字符串来创建一个HttpRequest
-     * @param jsonString
-     * @return
-     */
-    public static Request build(String jsonString, Class clazz) throws JSONException {
-        if(StringUtils.isNotBlank(jsonString)) {
-            Request req = (Request)JSON.parseObject(jsonString, clazz);
-            return req;
-        }
-
-        return null;
-    }
 
     /**
      * 请求地址

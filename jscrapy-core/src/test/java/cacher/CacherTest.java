@@ -6,9 +6,8 @@ import org.jscrapy.core.cacher.impl.MongoCacher;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.page.Page;
+import org.jscrapy.core.request.HttpRequest;
 import org.jscrapy.core.request.HttpRequestMethod;
-import org.jscrapy.core.request.Request;
-import org.jscrapy.core.request.impl.HttpRequest;
 import org.jscrapy.core.util.Yaml2BeanUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,7 +36,7 @@ public class CacherTest {
     private H2Cacher h2Cacher;
 
     private static Page page;
-    private static Request request;
+    private static HttpRequest request;
 
     @BeforeClass
     public static void setup() {
@@ -48,7 +47,7 @@ public class CacherTest {
 
     @Test
     public void testSave() throws IOException, MySpiderFetalException {
-        Cacher[] cachers = new Cacher[]{initH2Cacher(), initMongoCacher()};
+        Cacher[] cachers = new Cacher[]{initH2Cacher()};
         for (Cacher c : cachers) {
             doTest(c);
         }

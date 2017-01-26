@@ -9,13 +9,20 @@ import java.util.Map;
  * Created by cxu on 2017/1/19.
  */
 public class RequestContext {
-    private Request request;
+    private HttpRequest request;
     private UrlQueueDo urlQueueDo;
 
     public RequestContext() {
+        request = new HttpRequest();
+        urlQueueDo = new UrlQueueDo();
     }
 
-    public RequestContext(Request request, UrlQueueDo urlQueueDo) {
+    public RequestContext(UrlQueueDo urlQueueDo) {
+        this.urlQueueDo = urlQueueDo;
+        request = HttpRequest.build(urlQueueDo.getUrl());
+    }
+
+    public RequestContext(HttpRequest request, UrlQueueDo urlQueueDo) {
         this.request = request;
         this.urlQueueDo = urlQueueDo;
     }
@@ -47,11 +54,9 @@ public class RequestContext {
         request.setUrl(url);
     }
 
-    public String getUrlStatus() {
-        return urlQueueDo.getUrlStatus();
-    }
 
-    public long getId() {
+
+    public Long getId() {
         return urlQueueDo.getId();
     }
 
@@ -59,23 +64,27 @@ public class RequestContext {
         urlQueueDo.setId(id);
     }
 
-    public void setUrlStatus(String urlStatus) {
+    public void setUrlStatus(UrlStatus urlStatus) {
         urlQueueDo.setUrlStatus(urlStatus);
+    }
+
+    public UrlStatus getUrlStatus() {
+        return urlQueueDo.getUrlStatus();
     }
 
     public int getRetryTimes() {
         return urlQueueDo.getRetryTimes();
     }
 
-    public void setRetryTimes(int retryTimes) {
+    public void setRetryTimes(Integer retryTimes) {
         urlQueueDo.setRetryTimes(retryTimes);
     }
 
-    public String getUrlType() {
+    public UrlType getUrlType() {
         return urlQueueDo.getUrlType();
     }
 
-    public void setUrlType(String urlType) {
+    public void setUrlType(UrlType urlType) {
         urlQueueDo.setUrlType(urlType);
     }
 
@@ -117,5 +126,15 @@ public class RequestContext {
 
     public void setErrorMsg(String errorMsg) {
         urlQueueDo.setErrorMsg(errorMsg);
+    }
+
+    public HttpRequest toHttpRequest() {
+        //TODO
+        return null;
+    }
+
+    public UrlQueueDo toUrlQueueDo() {
+        //TODO
+        return null;
     }
 }

@@ -3,6 +3,7 @@ package dal;
 import org.jscrapy.core.dal.UrlQueueDo;
 import org.jscrapy.core.dal.UrlQueueMapper;
 import org.jscrapy.core.dal.h2.H2UrlQueueDo;
+import org.jscrapy.core.request.UrlStatus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +36,7 @@ public abstract class QueueTest {
             H2UrlQueueDo dt = new H2UrlQueueDo();
             dt.setUrl("http://url" + i + ".com");
             dt.setRetryTimes(1);
-            dt.setUrlStatus("NEW");
+            dt.setUrlStatus(UrlStatus.NEW);
             urls.add(dt);
         }
         getQueueMapper().batchInsert(QUEUE_NAME, urls);
@@ -44,7 +45,7 @@ public abstract class QueueTest {
     @Test
     public void testUpdate() {
         int itemSelected = 1;
-        List<UrlQueueDo> item = getQueueMapper().selectUrlByStatus(QUEUE_NAME, "NEW", itemSelected);
+        List<UrlQueueDo> item = getQueueMapper().selectUrlByStatus(QUEUE_NAME, UrlStatus.NEW, itemSelected);
         assertEquals(itemSelected, item.size());
 
         String urlNewValue = "com.jscrapy.www";
@@ -52,7 +53,7 @@ public abstract class QueueTest {
         getQueueMapper().batchUpdate(QUEUE_NAME, item);
 
         boolean result = false;
-        item = getQueueMapper().selectUrlByStatus(QUEUE_NAME, "NEW", Integer.MAX_VALUE);
+        item = getQueueMapper().selectUrlByStatus(QUEUE_NAME, UrlStatus.NEW, Integer.MAX_VALUE);
         for (UrlQueueDo itm : item) {
             if (urlNewValue.equalsIgnoreCase(itm.getUrl())) {
                 result = true;
@@ -65,14 +66,14 @@ public abstract class QueueTest {
 
     @Test
     public void testSelect() {
-        List<UrlQueueDo> all = getQueueMapper().selectUrlByStatus(QUEUE_NAME, "NEW", Integer.MAX_VALUE);
+        List<UrlQueueDo> all = getQueueMapper().selectUrlByStatus(QUEUE_NAME, UrlStatus.NEW, Integer.MAX_VALUE);
         assertNotEquals(0, all.size());
     }
 
     @After
     public void tearDown() {
 
-        List<UrlQueueDo> all = getQueueMapper().selectUrlByStatus(QUEUE_NAME, "NEW", Integer.MAX_VALUE);
+        List<UrlQueueDo> all = getQueueMapper().selectUrlByStatus(QUEUE_NAME, UrlStatus.NEW, Integer.MAX_VALUE);
         assertEquals(QUEUE_SIZE, all.size());
 
         getQueueMapper().dropQueue(QUEUE_NAME);

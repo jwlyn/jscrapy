@@ -1,6 +1,7 @@
 package org.jscrapy.core.dedup;
 
 import org.jscrapy.core.ConfigDriver;
+import org.jscrapy.core.request.HttpRequest;
 import org.jscrapy.core.request.Request;
 
 import java.util.ArrayList;
@@ -24,9 +25,9 @@ public abstract class DeDup extends ConfigDriver {
      * @param request
      * @return
      */
-    public List<Request> deDup(List<Request> request){
-        List<Request> req = new ArrayList<Request>(request.size());
-        for(Request url : request){
+    public List<HttpRequest> deDup(List<HttpRequest> request){
+        List<HttpRequest> req = new ArrayList<>(request.size());
+        for(HttpRequest url : request){
             if(!this.isDup(url)){
                 req.add(url);
             }

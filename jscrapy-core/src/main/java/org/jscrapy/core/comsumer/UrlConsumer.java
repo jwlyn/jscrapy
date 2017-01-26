@@ -1,14 +1,14 @@
 package org.jscrapy.core.comsumer;
 
-import org.jscrapy.core.exception.MySpiderException;
-import org.jscrapy.core.request.Request;
+import org.jscrapy.core.ConfigDriver;
+import org.jscrapy.core.request.RequestContext;
 
 import java.util.List;
 
 /**
  * Created by cxu on 2016/7/27.
  */
-public abstract class UrlConsumer {
+public abstract class UrlConsumer extends ConfigDriver{
 
     /**
      * 从集中队列中拿出Request
@@ -16,7 +16,7 @@ public abstract class UrlConsumer {
      * @param n 每次拿出多少个Request
      * @return
      */
-    public abstract List<Request> poll(int n);
+    public abstract List<RequestContext> poll(int n);
 
     /**
      * 从队列中删除Request
@@ -24,5 +24,5 @@ public abstract class UrlConsumer {
      * @param requests
      * @return
      */
-    public abstract int delete(List<Request> requests);
+    public abstract int delete(List<RequestContext> requests);
 }

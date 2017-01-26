@@ -36,7 +36,7 @@ public class LocalFilePiplineTest {
     @AfterClass
     public void tearDown() throws IOException {
         /*删除文件*/
-        String tempDir = jscrapyConfig.getSpiderWorkDir() + jscrapyConfig.getTaskFp();
+        String tempDir = jscrapyConfig.getJscrapyWorkDir() + jscrapyConfig.getTaskFp();
         FileUtils.forceDeleteOnExit(new File(tempDir));
     }
 

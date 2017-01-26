@@ -6,8 +6,7 @@ import org.jscrapy.core.downloader.impl.HttpDownloader;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.page.Page;
 import org.jscrapy.core.parser.Html;
-import org.jscrapy.core.request.Request;
-import org.jscrapy.core.request.impl.HttpRequest;
+import org.jscrapy.core.request.HttpRequest;
 import org.testng.annotations.Test;
 import util.ResourcePathUtils;
 
@@ -26,7 +25,7 @@ public class HttpDownloaderTest {
         JscrapyConfig = new JscrapyConfig();
 
         String url = "http://www.oschina.net";
-        Request request = new HttpRequest(url);
+        HttpRequest request = new HttpRequest(url);
         Downloader dl = new HttpDownloader(JscrapyConfig);
         Page pg = dl.download(request);
         assertNotNull(pg);

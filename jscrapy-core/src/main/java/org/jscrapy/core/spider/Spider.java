@@ -11,7 +11,7 @@ import org.jscrapy.core.page.Page;
 import org.jscrapy.core.pipline.Pipline;
 import org.jscrapy.core.processor.Processor;
 import org.jscrapy.core.producer.UrlProducer;
-import org.jscrapy.core.request.Request;
+import org.jscrapy.core.request.HttpRequest;
 import org.jscrapy.core.status.TaskStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,12 +46,12 @@ public class Spider extends ConfigDriver implements Runnable {
         while (!Thread.currentThread().isInterrupted()) {
 
             //TaskStatus status = getJscrapyConfig().getTaskStatusObject();
-            List<Request> requests = null;
+            List<HttpRequest> requests = null;
 
                 //requests = scheduler.poll(1);
 
 
-            for (Request req : requests) {//处理每一个请求
+            for (HttpRequest req : requests) {//处理每一个请求
                 Page pg = null;
                 try {
                     pg = cacher.loadPage(req);
@@ -78,7 +78,7 @@ public class Spider extends ConfigDriver implements Runnable {
                 }
                 ProcessResult result = processor.process(pg);
                 //处理链接
-                List<Request> newLinks = result.getLinks();
+                List<HttpRequest> newLinks = result.getLinks();
                 newLinks = dedup.deDup(newLinks);
 
                     urlProducer.push(null);
