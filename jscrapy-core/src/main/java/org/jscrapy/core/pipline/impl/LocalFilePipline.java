@@ -31,9 +31,9 @@ public class LocalFilePipline extends Pipline {
     public LocalFilePipline(JscrapyConfig jscrapyConfig) throws MySpiderFetalException {
 
         super(jscrapyConfig);
-        String spiderWorkDir = jscrapyConfig.getJscrapyWorkDir();
+        String taskWorkDir = jscrapyConfig.getTaskWorkDir();
 
-        this.dataFilePath = spiderWorkDir + jscrapyConfig.getTaskFp() + SysDefaultConfig.FILE_PATH_SEPERATOR + "pipline" + SysDefaultConfig.FILE_PATH_SEPERATOR + jscrapyConfig.getTaskName() + ".json";//完整的目录+文件名字。解析之后的数据保存的位置
+        this.dataFilePath = taskWorkDir + "pipline" + SysDefaultConfig.FILE_PATH_SEPERATOR + jscrapyConfig.getTaskName() + ".json";//完整的目录+文件名字。解析之后的数据保存的位置
         String baseDir = FilenameUtils.getFullPath(dataFilePath);
         try {
             FileUtils.forceMkdir(new File(baseDir));
@@ -64,5 +64,4 @@ public class LocalFilePipline extends Pipline {
             }
         }
     }
-
 }

@@ -18,7 +18,7 @@
         CREATE TABLE IF NOT EXISTS ${table_name}
         (
         id BIGSERIAL PRIMARY KEY, -- 唯一键
-        page_id VARCHAR(64) , -- 调度的唯一性标识，每次都不一样即可,可以取当前任务启动时间戳
+        page_id VARCHAR(64) , -- request.fp()
         gmt_created TIMESTAMP, -- 插入时间
         gmt_access TIMESTAMP, -- 被访问时间
         etag VARCHAR(64), -- etag

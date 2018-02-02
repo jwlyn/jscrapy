@@ -1,4 +1,4 @@
-package org.jscrapy.contrib.fetcher;
+package org.jscrapy.ext.fetcher;
 
 import org.jscrapy.common.http.*;
 import org.jscrapy.common.http.fetcher.HttpFetcher;

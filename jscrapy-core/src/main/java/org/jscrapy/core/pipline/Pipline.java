@@ -16,6 +16,10 @@ public abstract class Pipline extends ConfigDriver {
         setJscrapyConfig(JscrapyConfig);
     }
 
+    public Pipline() {
+
+    }
+
     /**
      * 保存解析之后的数据
      *

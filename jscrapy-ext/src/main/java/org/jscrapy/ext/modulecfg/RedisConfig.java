@@ -1,4 +1,4 @@
-package org.jscrapy.contrib.modulecfg;
+package org.jscrapy.ext.modulecfg;
 
 import org.jscrapy.core.config.modulecfg.TaskComponentConfig;
 

@@ -1,7 +1,7 @@
 package dedup;
 
-import org.jscrapy.contrib.dedup.RedisDedup;
-import org.jscrapy.contrib.modulecfg.RedisDedupConfig;
+import org.jscrapy.ext.dedup.RedisDedup;
+import org.jscrapy.ext.modulecfg.RedisDedupConfig;
 import org.jscrapy.core.config.ComponentName;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.dedup.DeDup;

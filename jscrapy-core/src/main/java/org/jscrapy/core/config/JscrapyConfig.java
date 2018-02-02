@@ -5,7 +5,6 @@ import org.jscrapy.core.config.modulecfg.TaskComponentConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -182,7 +181,7 @@ public class JscrapyConfig {
     }
 
     public String getTaskWorkDir() {
-        String taskWorkDir = getJscrapyWorkDir() + getTaskFp() + File.separator;
+        String taskWorkDir = getJscrapyWorkDir() + getTaskFp() + SysDefaultConfig.FILE_PATH_SEPERATOR;
         return taskWorkDir;
     }
 

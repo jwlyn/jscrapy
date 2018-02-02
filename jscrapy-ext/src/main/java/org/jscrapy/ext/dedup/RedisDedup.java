@@ -1,8 +1,8 @@
-package org.jscrapy.contrib.dedup;
+package org.jscrapy.ext.dedup;
 
 import org.jscrapy.core.config.ComponentName;
 import org.jscrapy.core.config.JscrapyConfig;
-import org.jscrapy.contrib.modulecfg.RedisDedupConfig;
+import org.jscrapy.ext.modulecfg.RedisDedupConfig;
 import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.request.Request;
 import redis.clients.jedis.Jedis;

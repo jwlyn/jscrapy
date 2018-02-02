@@ -1,4 +1,4 @@
-package org.jscrapy.contrib.fetcher;
+package org.jscrapy.ext.fetcher;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;

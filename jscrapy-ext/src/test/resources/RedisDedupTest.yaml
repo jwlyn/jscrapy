@@ -1,10 +1,10 @@
 !!org.jscrapy.core.config.JscrapyConfig
 taskBaseConfig:
-  taskId: test-id-redis-sched
+  taskId: test-id
   taskName: test-task_name
   virtualId: TASK.VIRTUAL.ID
 
 taskComponentConfigs:
-  DEDUP_REDIS: !!org.jscrapy.contrib.modulecfg.RedisSchedulerConfig
-    host: ${redis.scheduler.host}
+  DEDUP_REDIS: !!org.jscrapy.ext.modulecfg.RedisDedupConfig
+    host: ${redis.dedup.host}
     port: ${redis.port}

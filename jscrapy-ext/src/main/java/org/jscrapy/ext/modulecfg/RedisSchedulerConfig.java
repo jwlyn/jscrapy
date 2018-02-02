@@ -1,4 +1,4 @@
-package org.jscrapy.contrib.modulecfg;
+package org.jscrapy.ext.modulecfg;
 
 /**
  * Created by cxu on 2017/1/18.

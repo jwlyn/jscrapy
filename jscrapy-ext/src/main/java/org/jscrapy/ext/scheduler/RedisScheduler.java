@@ -1,7 +1,7 @@
-package org.jscrapy.contrib.scheduler;
+package org.jscrapy.ext.scheduler;
 
 import com.alibaba.fastjson.JSONException;
-import org.jscrapy.contrib.modulecfg.RedisSchedulerConfig;
+import org.jscrapy.ext.modulecfg.RedisSchedulerConfig;
 import org.jscrapy.core.ConfigDriver;
 import org.jscrapy.core.config.ComponentName;
 import org.jscrapy.core.config.JscrapyConfig;
