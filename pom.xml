@@ -15,6 +15,7 @@
         <commons-configuration>1.6</commons-configuration>
         <commons-logging.version>1.1.3</commons-logging.version>
         <commons-collections.version>4.1</commons-collections.version>
+        <commons-dbcp.version>2.2.0</commons-dbcp.version>
         <log4j.version>1.2.17</log4j.version>
         <slf4j-api.version>1.7.12</slf4j-api.version>
         <jcl-over-slf4j.version>1.7.12</jcl-over-slf4j.version>
@@ -29,13 +30,18 @@
         <mongoqueue.version>1.0.0</mongoqueue.version>
         <snakyaml.version>1.16</snakyaml.version>
         <fastjson.version>1.2.7</fastjson.version>
-        <jodd.version>3.6.7</jodd.version>
+        <jodd.version>4.1.4</jodd.version>
+        <okhttp.version>3.9.1</okhttp.version>
         <mapdb.version>3.0.3</mapdb.version>
         <jedis.version>2.7.2</jedis.version>
         <jodatime.version>2.8.2</jodatime.version>
+        <mybatis.version>3.4.4</mybatis.version>
+        <mybatis-spring.version>1.3.1</mybatis-spring.version>
         <hibernate-validator.version>5.2.2.Final</hibernate-validator.version>
         <mybatis-spring-boot-starter.version>1.1.1</mybatis-spring-boot-starter.version>
         <spring-boot.version>1.3.3.RELEASE</spring-boot.version>
+        <spring-framework.version>5.0.3.RELEASE</spring-framework.version>
+        <spring-framework-test.version>5.0.3.RELEASE</spring-framework-test.version>
         <postgresql.version>9.4.1208</postgresql.version>
         <!-- runtime -->
         <h2.version>1.4.192</h2.version>
@@ -43,7 +49,7 @@
         <javaee-web-api.version>7.0</javaee-web-api.version>
         <servlet-api.version>2.5</servlet-api.version>
         <!-- test scope -->
-        <junit.version>4.11</junit.version>
+        <junit.version>4.12</junit.version>
         <testng.version>6.10</testng.version>
         <!-- maven plugin version -->
         <spring-boot-plugin.version>1.3.0.RELEASE</spring-boot-plugin.version>
@@ -100,7 +106,15 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
+            <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -116,12 +130,12 @@
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <version>${spring-boot.version}</version>
-            <optional>true</optional>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-configuration-processor</artifactId>-->
+            <!--<version>${spring-boot.version}</version>-->
+            <!--<optional>true</optional>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
@@ -204,15 +218,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-resources-plugin</artifactId>-->
-            <!--<version>2.7</version>-->
-            <!--<configuration>-->
-            <!--<encoding>UTF-8</encoding>-->
-            <!--<goal>copy-resources</goal>-->
-            <!--</configuration>-->
-            <!--</plugin>-->
+
         </plugins>
     </build>
 

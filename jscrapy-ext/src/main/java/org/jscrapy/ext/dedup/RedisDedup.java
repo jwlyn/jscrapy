@@ -1,10 +1,9 @@
 package org.jscrapy.ext.dedup;
 
-import org.jscrapy.core.config.ComponentName;
 import org.jscrapy.core.config.JscrapyConfig;
-import org.jscrapy.ext.modulecfg.RedisDedupConfig;
 import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.request.Request;
+import org.jscrapy.ext.modulecfg.RedisDedupConfig;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -24,7 +23,7 @@ public class RedisDedup extends DeDup {
 
     public void setJscrapyConfig(JscrapyConfig jscrapyConfig) {
         super.setJscrapyConfig(jscrapyConfig);
-        RedisDedupConfig redisDedepConfig = (RedisDedupConfig) jscrapyConfig.get(ComponentName.DEDUP_REDIS);
+        RedisDedupConfig redisDedepConfig = null;//(RedisDedupConfig) jscrapyConfig.get(ComponentName.DEDUP_REDIS);
         String redisHost = redisDedepConfig.getHost();
         this.pool = new JedisPool(new JedisPoolConfig(), redisHost);
     }
@@ -37,9 +36,9 @@ public class RedisDedup extends DeDup {
     protected boolean isDup(Request request) {
 
         try (Jedis jedis = pool.getResource()) {
-            boolean isDuplicate = jedis.sismember(getDedupSetKey(), request.fp());
+            boolean isDuplicate = jedis.sismember(getDedupSetKey(), request.uniqId());
             if (!isDuplicate) {
-                jedis.sadd(getDedupSetKey(), request.fp());
+                jedis.sadd(getDedupSetKey(), request.uniqId());
             }
             return isDuplicate;
         }

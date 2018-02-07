@@ -12,9 +12,6 @@ import org.jscrapy.core.request.HttpRequest;
 import org.jscrapy.core.util.Yaml2BeanUtil;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 import util.ResourcePathUtils;
 
 import java.io.File;
@@ -77,12 +74,12 @@ public class DeDupExtTest {
      *
      */
     public void teardown(DeDup dedup) {
-        String dedepSetName = "jscrapy_dedup_set_" + dedup.getJscrapyConfig().getTaskFp();
-
-        RedisDedupConfig dedupConfig = (RedisDedupConfig)dedup.getJscrapyConfig().get(ComponentName.DEDUP_REDIS);
-        String redisHost = dedupConfig.getHost();
-        JedisPool pool = new JedisPool(new JedisPoolConfig(), redisHost);
-        Jedis jedis = pool.getResource();
-        jedis.del(dedepSetName);
+//        String dedepSetName = "jscrapy_dedup_set_" + dedup.getJscrapyConfig().getTaskFp();
+//
+//        RedisDedupConfig dedupConfig = (RedisDedupConfig)dedup.getJscrapyConfig().get(ComponentName.DEDUP_REDIS);
+//        String redisHost = dedupConfig.getHost();
+//        JedisPool pool = new JedisPool(new JedisPoolConfig(), redisHost);
+//        Jedis jedis = pool.getResource();
+//        jedis.del(dedepSetName);
     }
 }

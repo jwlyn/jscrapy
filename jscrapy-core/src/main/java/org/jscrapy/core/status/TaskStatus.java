@@ -10,60 +10,60 @@ public class TaskStatus {
         RUN, PAUSE, CANCEL
     }
 
-    private AtomicLong cacheUrl = new AtomicLong(0);
-    private AtomicLong netUrl = new AtomicLong(0);
-    private AtomicLong failedUrl = new AtomicLong(0);
-    private AtomicLong pageSizeKb = new AtomicLong(0);
-    private AtomicLong dataItemCount = new AtomicLong(0);
+    private AtomicLong cacheHitUrlCnt = new AtomicLong(0); //缓存命中的个数
+    private AtomicLong netUrlCnt = new AtomicLong(0);//网络抓取的个数
+    private AtomicLong failedUrlCnt = new AtomicLong(0);//失败抓取的次数
+    private AtomicLong pageSizeKb = new AtomicLong(0);//页面大小
+    private AtomicLong dataItemCnt = new AtomicLong(0);//解析出的数据条数
 
-    public AtomicLong getCacheUrl() {
-        return cacheUrl;
+    public AtomicLong getCacheHitUrlCnt() {
+        return cacheHitUrlCnt;
     }
 
-    public void addCacheUrl(long n) {
-        cacheUrl.addAndGet(n);
+    public void setCacheHitUrlCnt(AtomicLong cacheHitUrlCnt) {
+        this.cacheHitUrlCnt = cacheHitUrlCnt;
     }
 
-    public Long getNetUrl() {
-        return netUrl.longValue();
+    public AtomicLong getNetUrlCnt() {
+        return netUrlCnt;
     }
 
-    public void addNetUrl(long n) {
-        netUrl.addAndGet(n);
+    public void setNetUrlCnt(AtomicLong netUrlCnt) {
+        this.netUrlCnt = netUrlCnt;
     }
 
-    public Long getFailedUrl() {
-        return failedUrl.longValue();
+    public AtomicLong getFailedUrlCnt() {
+        return failedUrlCnt;
     }
 
-    public void addFailedUrl(long n) {
-        this.failedUrl.addAndGet(n);
+    public void setFailedUrlCnt(AtomicLong failedUrlCnt) {
+        this.failedUrlCnt = failedUrlCnt;
     }
 
-    public Long getPageSizeKb() {
-        return pageSizeKb.longValue();
+    public AtomicLong getPageSizeKb() {
+        return pageSizeKb;
     }
 
-    public void addPageSizeKb(long n) {
-        this.pageSizeKb.addAndGet(n);
+    public void setPageSizeKb(AtomicLong pageSizeKb) {
+        this.pageSizeKb = pageSizeKb;
     }
 
-    public Long getDataItemCount() {
-        return dataItemCount.longValue();
+    public AtomicLong getDataItemCnt() {
+        return dataItemCnt;
     }
 
-    public void addDataItemCount(long n) {
-        this.dataItemCount.addAndGet(n);
+    public void setDataItemCnt(AtomicLong dataItemCnt) {
+        this.dataItemCnt = dataItemCnt;
     }
 
     @Override
     public String toString() {
         return "TaskStatus{" +
-                "cacheUrl=" + cacheUrl +
-                ", netUrl=" + netUrl +
-                ", failedUrl=" + failedUrl +
+                "cacheHitUrlCnt=" + cacheHitUrlCnt +
+                ", netUrlCnt=" + netUrlCnt +
+                ", failedUrlCnt=" + failedUrlCnt +
                 ", pageSizeKb=" + pageSizeKb +
-                ", dataItemCount=" + dataItemCount +
+                ", dataItemCnt=" + dataItemCnt +
                 '}';
     }
 }

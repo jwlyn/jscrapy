@@ -1,7 +1,6 @@
-package org.jscrapy.core.dedup.impl;
+package org.jscrapy.ext.dedup;
 
 import com.mongodb.*;
-import org.jscrapy.core.config.ComponentName;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.config.modulecfg.MongoDedepConfig;
 import org.jscrapy.core.dedup.DeDup;
@@ -31,7 +30,7 @@ public class MongoDedup extends DeDup {
      */
     public void setJscrapyConfig(JscrapyConfig jscrapyConfig) {
         super.setJscrapyConfig(jscrapyConfig);
-        MongoDedepConfig mongoDedupConfig = (MongoDedepConfig)jscrapyConfig.get(ComponentName.DEDUP_MONGO);
+        MongoDedepConfig mongoDedupConfig = null;//(MongoDedepConfig)jscrapyConfig.get(ComponentName.DEDUP_MONGO);
         String dbHost = mongoDedupConfig.getHost();
         int dbPort = mongoDedupConfig.getPort();
         String dbName = mongoDedupConfig.getDbName();
@@ -44,7 +43,7 @@ public class MongoDedup extends DeDup {
 
     @Override
     protected boolean isDup(Request request) {
-        String id = request.fp();
+        String id = request.uniqId();
         BasicDBObject query = new BasicDBObject();
         query.append(DB_PRIMARY_KEY, id);
         BasicDBObject obj = (BasicDBObject) collection.findOne(query);

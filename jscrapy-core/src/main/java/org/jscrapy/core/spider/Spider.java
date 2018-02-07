@@ -1,6 +1,6 @@
 package org.jscrapy.core.spider;
 
-import org.jscrapy.core.ConfigDriver;
+import org.jscrapy.core.JscrapyComponent;
 import org.jscrapy.core.cacher.Cacher;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.data.ProcessResult;
@@ -8,7 +8,7 @@ import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.downloader.Downloader;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.page.Page;
-import org.jscrapy.core.pipline.Pipline;
+import org.jscrapy.core.pipline.PipList;
 import org.jscrapy.core.processor.Processor;
 import org.jscrapy.core.producer.UrlProducer;
 import org.jscrapy.core.request.HttpRequest;
@@ -16,7 +16,6 @@ import org.jscrapy.core.status.TaskStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -24,20 +23,18 @@ import java.util.concurrent.TimeUnit;
  * 一个线程要做的事情
  * Created by cxu on 2015/6/20.
  */
-public class Spider extends ConfigDriver implements Runnable {
+public class Spider extends JscrapyComponent implements Runnable {
     final static Logger logger = LoggerFactory.getLogger(Spider.class);
 
     private DeDup dedup;
     private Cacher cacher;
     private Downloader downloader;
-    private List<Pipline> piplines;
+    private PipList piplines;
     private Processor processor;
     private UrlProducer urlProducer;
 
     public Spider(JscrapyConfig JscrapyConfig) {
         setJscrapyConfig(JscrapyConfig);
-        piplines = new ArrayList<>(5);
-        //scheduler = JscrapyConfig.getSchedulerObject();//共用scheduler减少竞争和去重误差
     }
 
     @Override
@@ -85,14 +82,11 @@ public class Spider extends ConfigDriver implements Runnable {
 
 
                 //存储数据
-                for (Pipline pipline : piplines) {
-                    try {
-                        pipline.save(result.getData());
-//                        status.addDataItemCount(result.getData().size());
-                    } catch (MySpiderFetalException e) {
-                        logger.error("保存文件时出错 {}", e);
-                        //TODO 数据保存出错统计
-                    }
+                try{
+                    piplines.save(result.getData());
+                }catch (MySpiderFetalException e) {
+                    logger.error("保存文件时出错 {}", e);
+                    //TODO 数据保存出错统计
                 }
 
                 if (!pg.isFromCache()) {//sleep
@@ -141,8 +135,8 @@ public class Spider extends ConfigDriver implements Runnable {
         this.downloader = downloader;
     }
 
-    public void addPipline(Pipline pipline) {
-        this.piplines.add(pipline);
+    public void setPiplines(PipList piplines) {
+        this.piplines = piplines;
     }
 
     public void setProcessor(Processor processor) {

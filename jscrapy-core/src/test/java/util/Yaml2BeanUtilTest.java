@@ -2,9 +2,7 @@ package util;
 
 import org.apache.commons.io.FileUtils;
 import org.jscrapy.core.config.JscrapyConfig;
-import org.jscrapy.core.config.modulecfg.TaskBaseConfig;
 import org.jscrapy.core.util.Yaml2BeanUtil;
-import org.junit.Ignore;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.testng.annotations.Test;
@@ -13,7 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 import static org.testng.AssertJUnit.assertNotNull;
 
 /**
@@ -48,13 +46,5 @@ public class Yaml2BeanUtilTest {
         assertEquals(config.getTaskId(), "task.id");
     }
 
-    @Test
-    @Ignore("测试使用")
-    public void et() {
-        JscrapyConfig cfg = new JscrapyConfig();
-        TaskBaseConfig bcfg = new TaskBaseConfig();
-        bcfg.setTaskId("111");
-        bcfg.setTaskName("ruck");
-        cfg.setTaskBaseConfig(bcfg);
-    }
+
 }

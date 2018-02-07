@@ -35,6 +35,6 @@ public abstract class Request implements Serializable{
      * 对象的一个md5标识，用于去重
      * @return
      */
-    public abstract String fp();
+    public abstract String uniqId();
 
 }

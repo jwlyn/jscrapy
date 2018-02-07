@@ -1,14 +1,15 @@
-package org.jscrapy.core.pipline;
+package org.jscrapy.core.pipline.impl;
 
 import org.jscrapy.core.data.DataItem;
 import org.jscrapy.core.exception.MySpiderFetalException;
+import org.jscrapy.core.pipline.Pipline;
 
 import java.util.List;
 
 /**
- * Created by cxu on 2017/2/9.
+ * Created by cxu on 2018/2/5.
  */
-public class PipList extends Pipline{
+public class H2Pipline extends Pipline {
     @Override
     public void save(List<DataItem> dataItems) throws MySpiderFetalException {
 

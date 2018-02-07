@@ -1,6 +1,6 @@
 package org.jscrapy.core.task;
 
-import org.jscrapy.core.ConfigDriver;
+import org.jscrapy.core.JscrapyComponent;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.slf4j.Logger;
@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
  * 对线程池的抽象
  * Created by cxu on 2015/6/20.
  */
-public class Task extends ConfigDriver {
+public class Task extends JscrapyComponent {
     final static Logger logger = LoggerFactory.getLogger(Task.class);
     private ExecutorService threads;
 
@@ -69,11 +69,7 @@ public class Task extends ConfigDriver {
 //        getJscrapyConfig().setTaskStatus(TaskStatus.Status.PAUSE);
 //        threads.shutdown();
     }
-
-    public JscrapyConfig getJscrapyConfig() {
-        return getJscrapyConfig();
-    }
-
+    
     @Override
     public String toString() {
         JscrapyConfig cfg = getJscrapyConfig();

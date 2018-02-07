@@ -6,8 +6,8 @@ import org.jscrapy.core.data.DataItem;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.exception.MySpiderRecoverableException;
 import org.jscrapy.core.pipline.Pipline;
-import org.jscrapy.core.pipline.impl.LocalFilePipline;
 import org.jscrapy.core.util.Yaml2BeanUtil;
+import org.jscrapy.ext.pipline.LocalFilePipline;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.testng.annotations.AfterClass;
@@ -36,7 +36,7 @@ public class LocalFilePiplineTest {
     @AfterClass
     public void tearDown() throws IOException {
         /*删除文件*/
-        String tempDir = jscrapyConfig.getJscrapyWorkDir() + jscrapyConfig.getTaskFp();
+        String tempDir = jscrapyConfig.getTaskWorkDir();
         FileUtils.forceDeleteOnExit(new File(tempDir));
     }
 

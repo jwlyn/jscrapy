@@ -1,17 +1,12 @@
 package org.jscrapy.core.comsumer.impl;
 
 import org.jscrapy.core.comsumer.UrlConsumer;
-import org.jscrapy.core.config.ComponentName;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.config.modulecfg.H2QueueConfig;
 import org.jscrapy.core.dal.UrlQueueDo;
 import org.jscrapy.core.dal.UrlQueueMapper;
 import org.jscrapy.core.request.RequestContext;
 import org.jscrapy.core.request.UrlStatus;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +15,8 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created by cxu on 2016/7/30.
  */
-@Component("h2UrlConsumer")
 public class H2UrlConsumer extends UrlConsumer {
-    @Autowired
-    @Qualifier("h2UrlQueueMapper")
+
     private UrlQueueMapper urlQueueMapper;
 
     /**
@@ -35,7 +28,7 @@ public class H2UrlConsumer extends UrlConsumer {
     @Override
     public List<RequestContext> poll(int n) {
         List<RequestContext> requestContexts = null;
-        H2QueueConfig h2ComponentConfig = (H2QueueConfig)getJscrapyConfig().get(ComponentName.QUEUE_H2);
+        H2QueueConfig h2ComponentConfig = null;//(H2QueueConfig)getJscrapyConfig().get(ComponentName.QUEUE_H2);
         ReentrantLock taskQueueLock = h2ComponentConfig.getH2QueueLock();
         try {
             taskQueueLock.lock(); //lock
@@ -73,7 +66,6 @@ public class H2UrlConsumer extends UrlConsumer {
      * @param n
      * @return
      */
-    @Transactional("h2QueueTransactionManager")
     private List<UrlQueueDo> selectUrl(int n) {
         String queueName = getJscrapyConfig().getTaskFp();
         List<UrlQueueDo> urls = urlQueueMapper.selectUrlByStatus(queueName,

@@ -7,8 +7,6 @@ import org.jscrapy.core.dal.h2.H2UrlQueueMapper;
 import org.jscrapy.core.producer.UrlProducer;
 import org.jscrapy.core.request.RequestContext;
 import org.jscrapy.core.request.UrlStatus;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +14,9 @@ import java.util.List;
 /**
  * Created by cxu on 2017/1/19.
  */
-@Component("h2UrlProducer")
+
 public class H2UrlProducer extends UrlProducer {
 
-    @Autowired
     private H2UrlQueueMapper h2UrlQueueMapper;
 
     @Override

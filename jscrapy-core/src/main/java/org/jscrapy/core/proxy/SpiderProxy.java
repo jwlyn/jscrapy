@@ -1,4 +1,4 @@
-package org.jscrapy.common.http;
+package org.jscrapy.core.proxy;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -6,20 +6,27 @@ import org.apache.commons.lang3.StringUtils;
  * Created by cxu on 2015/9/29.
  */
 public class SpiderProxy {
-    private final String user;
+
+    public enum ProxyType{
+        SOCKS, SOCKS5, HTTP
+    }
+
+    private final Enum proxyType;
+    private final String userName;
     private final String password;
     private final String host;
     private final int port;
 
-    public SpiderProxy(String user, String password, String host, int port) {
-        this.user = StringUtils.isBlank(user) ? "" : user;
+    public SpiderProxy(ProxyType proxyType, String userName, String password, String host, int port) {
+        this.proxyType = proxyType;
+        this.userName = StringUtils.isBlank(userName) ? "" : userName;
         this.password = StringUtils.isBlank(password) ? "" : password;
         this.host = host;
         this.port = port;
     }
 
-    public String getUser() {
-        return user;
+    public String getUserName() {
+        return userName;
     }
 
     public String getPassword() {
@@ -36,6 +43,6 @@ public class SpiderProxy {
 
     @Override
     public String toString() {
-        return user + ":" + password + "@" + host + ":" + port;
+        return userName + ":" + password + "@" + host + ":" + port;
     }
 }

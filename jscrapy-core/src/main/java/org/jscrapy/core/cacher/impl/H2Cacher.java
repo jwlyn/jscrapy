@@ -9,14 +9,14 @@ import org.jscrapy.core.request.HttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by cxu on 2015/7/12.
  */
-@Component
+
 public class H2Cacher extends Cacher {
     final static Logger logger = LoggerFactory.getLogger(H2Cacher.class);
+
     @Autowired
     private PageCacheMapper pageCacheMapper;
 
@@ -42,7 +42,7 @@ public class H2Cacher extends Cacher {
     @Override
     public Page loadPage(HttpRequest request) {
         String taskName = getJscrapyConfig().getTaskName();
-        String pageId = request.fp();
+        String pageId = request.uniqId();
         PageCacheDo pageCacheDo = pageCacheMapper.find(taskName, pageId);
         Page page = new Page();
         if (pageCacheDo != null) {
@@ -58,7 +58,7 @@ public class H2Cacher extends Cacher {
     public void cachePage(Page page) {
         String tableName = getJscrapyConfig().getTaskName();
         PageCacheDo pageCacheDo = new PageCacheDo();
-        pageCacheDo.setPageId(page.getRequest().fp());
+        pageCacheDo.setPageId(page.getRequest().uniqId());
         pageCacheDo.setPageContent(page.getRawText());
 
         pageCacheMapper.insert(tableName, pageCacheDo);

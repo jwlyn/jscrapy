@@ -1,6 +1,6 @@
 package org.jscrapy.core.processor;
 
-import org.jscrapy.core.ConfigDriver;
+import org.jscrapy.core.JscrapyComponent;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.data.ProcessResult;
 import org.jscrapy.core.page.Page;
@@ -9,7 +9,7 @@ import org.jscrapy.core.processor.parser.Parser;
 /**
  * Created by cxu on 2014/11/21.
  */
-public abstract class Processor extends ConfigDriver {
+public abstract class Processor extends JscrapyComponent {
     /**
      * [k, v] 列表
      * k: site_id

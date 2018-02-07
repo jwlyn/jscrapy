@@ -4,15 +4,13 @@ import dedup.DeDupTest;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.dal.h2.H2UrlQueueDo;
 import org.jscrapy.core.producer.UrlProducer;
-import org.jscrapy.core.request.RequestContext;
 import org.jscrapy.core.request.HttpRequest;
+import org.jscrapy.core.request.RequestContext;
 import org.jscrapy.core.util.Yaml2BeanUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import util.ResourcePathUtils;
@@ -22,16 +20,12 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.fail;
+import static org.testng.Assert.*;
 
 /**
  * Created by cxu on 2017/1/21.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = UrlProducerTest.class)
-@SpringBootApplication(scanBasePackages = {"org.jscrapy.core"})
 @TestPropertySource("classpath:db.properties")
 public class UrlProducerTest {
     @Autowired

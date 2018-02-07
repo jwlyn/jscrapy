@@ -1,25 +1,18 @@
 package dedup;
 
-import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.dedup.DeDup;
-import org.jscrapy.core.dedup.impl.MongoDedup;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.exception.MySpiderRecoverableException;
 import org.jscrapy.core.request.HttpRequest;
 import org.jscrapy.core.request.HttpRequestMethod;
-import org.jscrapy.core.util.Yaml2BeanUtil;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import util.ResourcePathUtils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
 
 /**
  * Created by cxu on 2015/9/19.
@@ -30,7 +23,7 @@ public class DeDupTest {
     @DataProvider(name = "dp")
     public Object[][] dataProvider() throws IOException, MySpiderFetalException {
         return new DeDup[][]{
-                {initMongoDedup()},
+                {},
         };
     }
 
@@ -59,20 +52,4 @@ public class DeDupTest {
 
     }
 
-    /**
-     * @return
-     */
-    private DeDup initMongoDedup(){
-
-        String path = ResourcePathUtils.getResourceFileAbsPath(DeDupTest.class, "/MongoDedupTest.yaml");
-        JscrapyConfig jscrapyConfig = null;
-        try {
-            jscrapyConfig = (JscrapyConfig) Yaml2BeanUtil.loadAsBean(JscrapyConfig.class, new File(path));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            fail("");
-        }
-        DeDup dp = new MongoDedup(jscrapyConfig);
-        return dp;
-    }
 }

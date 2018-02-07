@@ -1,14 +1,14 @@
-package org.jscrapy.core.pipline.impl;
+package org.jscrapy.ext.pipline;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.config.SysDefaultConfig;
 import org.jscrapy.core.data.DataItem;
 import org.jscrapy.core.exception.MySpiderExceptionCode;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.pipline.Pipline;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

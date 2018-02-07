@@ -6,12 +6,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jscrapy.common.http.HttpHeaderConstant;
+import org.jscrapy.core.proxy.WatchableSpiderProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by cxu on 2014/11/21.
@@ -21,6 +21,11 @@ public class HttpRequest extends Request{
     private String url;//请求的url
     private HttpRequestMethod httpMethod;//请求的http方法，GET|POST等
     private Map<String, String> parameters;//如果是post请求，这里存放请求参数
+
+    private WatchableSpiderProxy proxy;
+    private Map<String,String> header = new HashMap<String, String>();
+    private List<Integer> acceptCode =   new ArrayList<Integer>();;
+    private String charset;//站点的编码
 
     /**
      * 构造函数
@@ -32,6 +37,9 @@ public class HttpRequest extends Request{
         this.url = url;
         this.httpMethod = httpMethod;
         this.parameters = parameters;
+
+        header.put(HttpHeaderConstant.USER_AGENT, "myspider@github");
+        acceptCode.add(200);
     }
 
     public HttpRequest(String url) {
@@ -77,7 +85,7 @@ public class HttpRequest extends Request{
     }
 
     @Override
-    public String fp() {
+    public String uniqId() {
         String s = this.asJson();
         return DigestUtils.sha1Hex(s);
     }

@@ -1,4 +1,4 @@
-package org.jscrapy.common.http;
+package org.jscrapy.core.downloader;
 
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
@@ -8,7 +8,7 @@ import java.util.Collection;
 /**
  * Created by cxu on 2015/9/30.
  */
-public class FetchResponse {
+public class DownloadResponse {
     private MultiValuedMap<String, String> headers = new ArrayListValuedHashMap();
     private boolean success = true;
     private int statusCode;

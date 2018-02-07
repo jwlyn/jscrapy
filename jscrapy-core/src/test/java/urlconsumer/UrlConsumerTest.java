@@ -10,13 +10,9 @@ import org.jscrapy.core.request.RequestContext;
 import org.jscrapy.core.request.UrlStatus;
 import org.jscrapy.core.util.Yaml2BeanUtil;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import util.ResourcePathUtils;
 
 import java.io.File;
@@ -29,9 +25,7 @@ import static org.testng.Assert.*;
 /**
  * Created by cxu on 2017/1/25.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = UrlConsumerTest.class)
-@SpringBootApplication(scanBasePackages = {"org.jscrapy.core"})
+
 @TestPropertySource("classpath:db.properties")
 public class UrlConsumerTest {
     @Autowired

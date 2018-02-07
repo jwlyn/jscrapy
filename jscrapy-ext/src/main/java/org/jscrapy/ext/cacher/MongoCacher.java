@@ -1,4 +1,4 @@
-package org.jscrapy.core.cacher.impl;
+package org.jscrapy.ext.cacher;
 
 import com.mongodb.*;
 import org.jscrapy.core.cacher.Cacher;
@@ -33,7 +33,7 @@ public class MongoCacher extends Cacher {
     @Override
     public Page loadPage(HttpRequest request) {
         BasicDBObject query = new BasicDBObject();
-        query.append(DB_PRIMARY_KEY, request.fp());
+        query.append(DB_PRIMARY_KEY, request.uniqId());
         BasicDBObject obj = (BasicDBObject) collection.findOne(query);
         if (obj != null) {
             Page pg = new Page(obj.getString(DB_CACHE_FIELD_NAME));
@@ -47,7 +47,7 @@ public class MongoCacher extends Cacher {
     @Override
     public void cachePage(Page page) {
         DBObject pageDoc = new BasicDBObject();
-        pageDoc.put(DB_PRIMARY_KEY, page.getRequest().fp());
+        pageDoc.put(DB_PRIMARY_KEY, page.getRequest().uniqId());
         pageDoc.put(DB_CACHE_FIELD_NAME, page.getRawText());
         this.collection.insert(pageDoc);
     }

@@ -1,6 +1,6 @@
 package org.jscrapy.core.dedup;
 
-import org.jscrapy.core.ConfigDriver;
+import org.jscrapy.core.JscrapyComponent;
 import org.jscrapy.core.request.HttpRequest;
 import org.jscrapy.core.request.Request;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * URL去重
  * Created by cxu on 2015/6/22.
  */
-public abstract class DeDup extends ConfigDriver {
+public abstract class DeDup extends JscrapyComponent {
 
     /**
      * 测试是否是重复的

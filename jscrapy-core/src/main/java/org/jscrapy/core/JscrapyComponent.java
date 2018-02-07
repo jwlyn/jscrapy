@@ -3,20 +3,18 @@ package org.jscrapy.core;
 import org.jscrapy.core.config.JscrapyConfig;
 
 /**
- * Created by cxu on 2016/7/26.
+ * Created by cxu on 2018/2/5.
  */
-public class ConfigDriver {
+public class JscrapyComponent implements ConfigAble {
 
     private JscrapyConfig JscrapyConfig;
 
-    public ConfigDriver() {
-
-    }
-
+    @Override
     public JscrapyConfig getJscrapyConfig() {
         return JscrapyConfig;
     }
 
+    @Override
     public void setJscrapyConfig(JscrapyConfig jscrapyConfig) {
         JscrapyConfig = jscrapyConfig;
     }

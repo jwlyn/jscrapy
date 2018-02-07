@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+
+    <tx:annotation-driven />
+
+    <!-- 配置第一步： datasource -->
+    <!-- 第二部：事务处理器 -->
+    <!-- 第三步： sqlSessionFactory -->
+    <!--<jdbc:initialize-database>-->
+        <!--<jdbc:script/>-->
+    <!--</jdbc:initialize-database>-->
+
+    <!-- 定义h2页面缓存 -->
+    <bean id="h2PageCacheDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${jdbc.h2.driverClassName}" />
+        <property name="url" value="${jdbc.h2.pageCacheUrl}" />
+        <property name="username" value="${jdbc.h2.pageCacheUrl.username}" />
+        <property name="password" value="${jdbc.h2.pageCacheUrl.password}" />
+    </bean>
+
+    <!-- 页面缓存操作不存在事务因此可以不用定义 -->
+
+    <!-- define the SqlSessionFactory -->
+    <bean id="h2PageCacheSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="h2PageCacheDataSource" />
+        <property name="mapperLocations" value="classpath*:mapper/h2pagecache.xml"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="org.jscrapy.core.dal.cache"/>
+        <property name="sqlSessionFactoryBeanName" value="h2PageCacheSqlSessionFactory"/>
+    </bean>
+
+    <!-- 下面定义h2队列 -->
+    <bean id="h2QueueDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${jdbc.h2.driverClassName}" />
+        <property name="url" value="${jdbc.h2.pageCacheUrl}" />
+        <property name="username" value="${jdbc.h2.pageCacheUrl.username}" />
+        <property name="password" value="${jdbc.h2.pageCacheUrl.password}" />
+    </bean>
+
+    <!-- 队列事务管理 -->
+    <bean id="h2QueueTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="h2QueueDataSource" />
+    </bean>
+
+    <!-- define the SqlSessionFactory -->
+    <bean id="h2QueueSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="h2PageCacheDataSource" />
+        <property name="mapperLocations" value="classpath*:mapper/h2queue.xml"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="org.jscrapy.core.dal.h2"/>
+        <property name="sqlSessionFactoryBeanName" value="h2PageCacheSqlSessionFactory"/>
+    </bean>
+
+    <!-- scan for mappers and let them be autowired -->
+    <!--<mybatis:scan base-package="org.jscrapy.core.dal"/>-->
+
+</beans>

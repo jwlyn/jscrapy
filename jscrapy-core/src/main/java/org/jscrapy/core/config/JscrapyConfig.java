@@ -1,12 +1,8 @@
 package org.jscrapy.core.config;
 
-import org.jscrapy.core.config.modulecfg.TaskBaseConfig;
-import org.jscrapy.core.config.modulecfg.TaskComponentConfig;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by cxu on 2015/6/21.
@@ -14,35 +10,94 @@ import java.util.Map;
 public class JscrapyConfig {
     final static Logger logger = LoggerFactory.getLogger(JscrapyConfig.class);
 
-    public TaskBaseConfig getTaskBaseConfig() {
-        return taskBaseConfig;
+    private String taskWorkDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
+    private String taskId;//任务id,元数据里的唯一标示
+    private String taskName;//任务名称
+    private int urlFetchFromQueueSize;//任务每次从集中队列里取出多少个URL
+    private int threadCount;//每个节点上并发的线程数目
+    private int waitOnQueueEmptyMs;//当队列空的时候睡眠等待多少毫秒
+
+    private String virtualId;//虚拟的ID，用于集群分组，伪分布式
+
+    public void setTaskWorkDir(String taskWorkDir) {
+        this.taskWorkDir = taskWorkDir;
     }
 
-    private TaskBaseConfig taskBaseConfig;//基本任务配置
-    private Map<ComponentName, TaskComponentConfig> taskComponentConfigs;//基本组件配置
-
-    public JscrapyConfig() {
-        taskComponentConfigs = new HashMap<>();
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setTaskBaseConfig(TaskBaseConfig taskBaseConfig) {
-        this.taskBaseConfig = taskBaseConfig;
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
-    public void setTaskComponentConfig(ComponentName key, TaskComponentConfig taskComponentConfig) {
-        taskComponentConfigs.put(key, taskComponentConfig);
+    public String getTaskName() {
+        return taskName;
     }
 
-    public Map<ComponentName, TaskComponentConfig> getTaskComponentConfigs() {
-        return taskComponentConfigs;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
-    public void setTaskComponentConfigs(Map<ComponentName, TaskComponentConfig> taskComponentConfigs) {
-        this.taskComponentConfigs = taskComponentConfigs;
+    public int getUrlFetchFromQueueSize() {
+        return urlFetchFromQueueSize;
     }
 
-    public TaskComponentConfig get(ComponentName componentName) {
-        return taskComponentConfigs.get(componentName);
+    public void setUrlFetchFromQueueSize(int urlFetchFromQueueSize) {
+        this.urlFetchFromQueueSize = urlFetchFromQueueSize;
+    }
+
+    public int getThreadCount() {
+        return threadCount;
+    }
+
+    public void setThreadCount(int threadCount) {
+        this.threadCount = threadCount;
+    }
+
+    public int getWaitOnQueueEmptyMs() {
+        return waitOnQueueEmptyMs;
+    }
+
+    public void setWaitOnQueueEmptyMs(int waitOnQueueEmptyMs) {
+        this.waitOnQueueEmptyMs = waitOnQueueEmptyMs;
+    }
+
+    public void setVirtualId(String virtualId) {
+        this.virtualId = virtualId;
+    }
+
+    public String getVirtualId() {
+        if (StringUtils.isBlank(virtualId)) {
+            virtualId = SysDefaultConfig.VIRTUAL_ID;
+        }
+        return virtualId;
+    }
+
+    /**
+     * 本机唯一任务标示
+     *
+     * @return
+     */
+    public String getTaskFp() {
+        StringBuffer buf = new StringBuffer(50);
+        buf.append("_")
+                .append(formatIp(SysDefaultConfig.HOST))
+                .append("_")
+                .append(getVirtualId())//使用jvm进程Id可以在一台机器上模拟分布式
+                .append("_")
+                .append(getTaskName())
+                .append("_")
+                .append(getTaskId());
+
+        return buf.toString();
+    }
+
+    /**
+     * 将ip中的特殊符号替换成下划线
+     */
+    private String formatIp(String ip) {
+        return StringUtils.replace(ip, ".", "_");
     }
 
 //    /**
@@ -83,22 +138,6 @@ public class JscrapyConfig {
 //        }
 //    }
 
-    public String getTaskId() {
-        return taskBaseConfig.getTaskId();
-    }
-
-    public String getTaskName() {
-        return taskBaseConfig.getTaskName();
-    }
-
-    public int getThreadCount() {
-        return taskBaseConfig.getThreadCount();
-    }
-    ////////////////////////////////////////////////////////////////
-
-    public String getTaskFp() {
-        return taskBaseConfig.getTaskFp();
-    }
 
     public String getMongoCacheHost() {
         return getString(ConfigKeys.CACHER_MONGODB_HOST);
@@ -162,21 +201,12 @@ public class JscrapyConfig {
         return SysDefaultConfig.APP_NAME;
     }
 
-//    public void setGroovyScript(String groovyCode) {
-//        if (StringUtils.isNotBlank(groovyCode)) {
-//            GroovyObject o = instanceClass(groovyCode);
-//            taskSharedObject.put(ConfigKeys._GROOVY_SCRIPT_OBJ, o);
-//        } else {
-//            logger.error("groovyCode is empty!");
-//        }
-//    }
-
     /**
      * 工作目录，放配置，缓存等的目录位置
      *
      * @return
      */
-    public static String getJscrapyWorkDir() {
+    private static String getJscrapyWorkDir() {
         return SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
     }
 
@@ -185,32 +215,4 @@ public class JscrapyConfig {
         return taskWorkDir;
     }
 
-//    /**
-//     * 从Groovy脚本实例化对象
-//     *
-//     * @param scriptCode
-//     * @return
-//     */
-//    private GroovyObject instanceClass(String scriptCode) {
-//        Class<Script> klass = null;
-//        GroovyObject parser = null;
-//        try {
-//            klass = new GroovyClassLoader().parseClass(scriptCode);
-//        } catch (Exception e) {
-//            logger.error("groovyCode编译异常{}", e);
-//
-//        }
-//
-//        try {
-//            if (klass == null) {
-//                throw new Exception("ERROR ## 脚本加载异常.");
-//            } else {
-//                parser = (GroovyObject) klass.newInstance();
-//            }
-//        } catch (Exception e) {//经过校验之后，这里是很可能不发生的
-//            logger.error("groovy脚本实例化异常{}", e);
-//        }
-//
-//        return parser;
-//    }
 }

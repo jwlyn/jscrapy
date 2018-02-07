@@ -1,12 +1,11 @@
 package org.jscrapy.ext.scheduler;
 
 import com.alibaba.fastjson.JSONException;
-import org.jscrapy.ext.modulecfg.RedisSchedulerConfig;
-import org.jscrapy.core.ConfigDriver;
-import org.jscrapy.core.config.ComponentName;
+import org.jscrapy.core.JscrapyComponent;
 import org.jscrapy.core.config.JscrapyConfig;
-import org.jscrapy.core.request.Request;
 import org.jscrapy.core.request.HttpRequest;
+import org.jscrapy.core.request.Request;
+import org.jscrapy.ext.modulecfg.RedisSchedulerConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
@@ -19,13 +18,13 @@ import java.util.List;
 /**
  * Created by cxu on 2015/6/21.
  */
-public class RedisScheduler extends ConfigDriver {
+public class RedisScheduler extends JscrapyComponent {
     final static Logger logger = LoggerFactory.getLogger(RedisScheduler.class);
     private JedisPool pool;
 
     public RedisScheduler(JscrapyConfig jscrapyConfig) {
         setJscrapyConfig(jscrapyConfig);
-        RedisSchedulerConfig redisDedupConfig = (RedisSchedulerConfig) jscrapyConfig.get(ComponentName.DEDUP_REDIS);
+        RedisSchedulerConfig redisDedupConfig = null;//RedisSchedulerConfig) jscrapyConfig.get(ComponentName.DEDUP_REDIS);
         String redisHost = redisDedupConfig.getHost();
         this.pool = new JedisPool(new JedisPoolConfig(), redisHost);
     }
