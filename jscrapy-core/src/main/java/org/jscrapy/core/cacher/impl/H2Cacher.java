@@ -2,18 +2,19 @@ package org.jscrapy.core.cacher.impl;
 
 import org.jscrapy.core.cacher.Cacher;
 import org.jscrapy.core.config.JscrapyConfig;
-import org.jscrapy.core.dal.cache.PageCacheDo;
-import org.jscrapy.core.dal.cache.PageCacheMapper;
+import org.jscrapy.core.dal.PageCacheDo;
+import org.jscrapy.core.dal.PageCacheMapper;
 import org.jscrapy.core.page.Page;
 import org.jscrapy.core.request.HttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Created by cxu on 2015/7/12.
  */
-
+@Configuration
 public class H2Cacher extends Cacher {
     final static Logger logger = LoggerFactory.getLogger(H2Cacher.class);
 

@@ -1,4 +1,4 @@
-package org.jscrapy.core.dal.h2;
+package org.jscrapy.core.dal.h2queue;
 
 import org.jscrapy.core.dal.UrlQueueDo;
 import org.jscrapy.core.request.UrlStatus;

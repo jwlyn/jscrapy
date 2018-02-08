@@ -1,4 +1,4 @@
-package org.jscrapy.core.dal.pg;
+package org.jscrapy.core.dal.pgqueue;
 
 import org.jscrapy.core.dal.UrlQueueDo;
 import org.jscrapy.core.request.UrlStatus;

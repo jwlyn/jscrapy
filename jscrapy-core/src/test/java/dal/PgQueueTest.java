@@ -1,7 +1,7 @@
 package dal;
 
 import org.jscrapy.core.dal.UrlQueueMapper;
-import org.jscrapy.core.dal.pg.PgUrlQueueMapper;
+import org.jscrapy.core.dal.pgqueue.PgUrlQueueMapper;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestPropertySource;

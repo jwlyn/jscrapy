@@ -3,7 +3,7 @@ package urlconsumer;
 import dedup.DeDupTest;
 import org.jscrapy.core.comsumer.UrlConsumer;
 import org.jscrapy.core.config.JscrapyConfig;
-import org.jscrapy.core.dal.h2.H2UrlQueueDo;
+import org.jscrapy.core.dal.h2queue.H2UrlQueueDo;
 import org.jscrapy.core.producer.UrlProducer;
 import org.jscrapy.core.request.HttpRequest;
 import org.jscrapy.core.request.RequestContext;

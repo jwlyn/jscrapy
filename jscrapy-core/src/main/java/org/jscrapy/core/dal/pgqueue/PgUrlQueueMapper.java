@@ -1,4 +1,4 @@
-package org.jscrapy.core.dal.pg;
+package org.jscrapy.core.dal.pgqueue;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.jscrapy.core.dal.UrlQueueMapper;

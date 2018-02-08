@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.jscrapy.core.dal.pg.PgUrlQueueMapper">
+<mapper namespace="org.jscrapy.core.dal.pgqueue.PgUrlQueueMapper">
 
     <update id="createNewQueue" parameterType="java.lang.String">
         CREATE TABLE IF NOT EXISTS ${queue_name}
@@ -14,7 +14,7 @@
         url_status CHAR(5), -- 种子状态[NEW:新进入, OUT:出队列, ERR:出错]
         retry_times SMALLINT,  -- 重试次数
         url_type CHAR(10), -- 种子类型[SEED:种子(Seed), LIST:列表(List), DETAIL: 详情页(Detail)]
-        site_id INT,  -- 站点ID
+        site_id VARCHAR(64),  -- 站点ID
         gmt_created TIMESTAMP, -- url插入时间
         gmt_access TIMESTAMP, -- 被访问时间
         error_code CHAR(20), -- 错误编码
@@ -26,7 +26,7 @@
         DROP TABLE IF EXISTS  ${queue_name}
     </update>
 
-    <insert id="batchInsert" parameterType="org.jscrapy.core.dal.pg.PgUrlQueueDo">
+    <insert id="batchInsert" parameterType="org.jscrapy.core.dal.pgqueue.PgUrlQueueDo">
         INSERT INTO ${queue_name} (url, url_status, retry_times, url_type, site_id, gmt_created, gmt_access, error_code, error_msg)
         VALUES
         <foreach collection="urls" index="index" item="url" separator=",">
@@ -35,7 +35,7 @@
             #{url.urlStatus,jdbcType=VARCHAR},
             #{url.retryTimes,jdbcType=BIGINT},
             #{url.urlType,jdbcType=VARCHAR},
-            #{url.siteId,jdbcType=INTEGER},
+            #{url.siteId,jdbcType=VARCHAR},
             NOW(),
             NOW(),
             #{url.errorCode,jdbcType=VARCHAR},
@@ -44,11 +44,11 @@
         </foreach>
     </insert>
 
-    <select id="selectUrlByStatus" parameterType="map" resultType="org.jscrapy.core.dal.pg.PgUrlQueueDo">
+    <select id="selectUrlByStatus" parameterType="map" resultType="org.jscrapy.core.dal.pgqueue.PgUrlQueueDo">
         SELECT * FROM ${queue_name} WHERE url_status = #{url_status} LIMIT #{limit}
     </select>
 
-    <update id="batchUpdate" parameterType="org.jscrapy.core.dal.pg.PgUrlQueueDo">
+    <update id="batchUpdate" parameterType="org.jscrapy.core.dal.pgqueue.PgUrlQueueDo">
         INSERT INTO ${queue_name} (id, url, gmt_access)
         VALUES
         <foreach collection="urls" index="index" item="u" separator=",">
@@ -61,7 +61,7 @@
         ON CONFLICT(id) DO UPDATE SET url=EXCLUDED.url
     </update>
 
-    <delete id="batchDelete" parameterType="org.jscrapy.core.dal.pg.PgUrlQueueDo">
+    <delete id="batchDelete" parameterType="org.jscrapy.core.dal.pgqueue.PgUrlQueueDo">
         DELETE FROM ${queue_name}
         WHERE id IN
         <foreach close=")" collection="urls" index="index" item="urlQueueDo" open="(" separator=",">

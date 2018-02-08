@@ -1,4 +1,4 @@
-package org.jscrapy.core.dal.cache;
+package org.jscrapy.core.dal;
 
 import java.util.Date;
 
@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class PageCacheDo {
     private Long id;// record id
-    private String pageId;
+    private String pageId; //去重ID
     private Date gmtCreated;
     private Date gmtAccess;//服务器返回的最后修改时间
     private String etag;//服务器返回的etag

@@ -2,8 +2,8 @@ package org.jscrapy.core.producer.impl;
 
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.dal.UrlQueueDo;
-import org.jscrapy.core.dal.h2.H2UrlQueueDo;
-import org.jscrapy.core.dal.h2.H2UrlQueueMapper;
+import org.jscrapy.core.dal.h2queue.H2UrlQueueDo;
+import org.jscrapy.core.dal.h2queue.H2UrlQueueMapper;
 import org.jscrapy.core.producer.UrlProducer;
 import org.jscrapy.core.request.RequestContext;
 import org.jscrapy.core.request.UrlStatus;

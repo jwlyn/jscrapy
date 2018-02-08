@@ -2,7 +2,7 @@ package dal;
 
 import org.jscrapy.core.dal.UrlQueueDo;
 import org.jscrapy.core.dal.UrlQueueMapper;
-import org.jscrapy.core.dal.h2.H2UrlQueueDo;
+import org.jscrapy.core.dal.h2queue.H2UrlQueueDo;
 import org.jscrapy.core.request.UrlStatus;
 import org.junit.After;
 import org.junit.Before;

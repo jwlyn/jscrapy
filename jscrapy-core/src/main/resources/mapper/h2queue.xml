@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.jscrapy.core.dal.h2.H2UrlQueueMapper">
+<mapper namespace="org.jscrapy.core.dal.h2queue.H2UrlQueueMapper">
     <resultMap id="BaseResultMap" type="org.jscrapy.core.dal.UrlQueueDo">
         <constructor>
             <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
@@ -40,7 +40,7 @@
         DROP TABLE IF EXISTS  ${queue_name}
     </update>
 
-    <insert id="batchInsert" parameterType="org.jscrapy.core.dal.h2.H2UrlQueueDo">
+    <insert id="batchInsert" parameterType="org.jscrapy.core.dal.h2queue.H2UrlQueueDo">
         INSERT INTO ${queue_name} (url, sched_id, url_status, retry_times, url_type, site_id, gmt_created, gmt_access, error_code, error_msg)
         VALUES
         <foreach collection="urls" index="index" item="url" separator=",">
@@ -59,12 +59,12 @@
         </foreach>
     </insert>
 
-    <!--resultType="org.jscrapy.core.dal.h2.H2UrlQueueDo"-->
+    <!--resultType="org.jscrapy.core.dal.h2queuequeue.H2UrlQueueDo"-->
     <select id="selectUrlByStatus" parameterType="map" resultMap="BaseResultMap" >
         SELECT * FROM ${queue_name} WHERE url_status = #{url_status} LIMIT #{limit}
     </select>
 
-    <update id="batchUpdate" parameterType="org.jscrapy.core.dal.h2.H2UrlQueueDo">
+    <update id="batchUpdate" parameterType="org.jscrapy.core.dal.h2queue.H2UrlQueueDo">
         INSERT INTO ${queue_name} (id, url, url_status, gmt_access)
         VALUES
         <foreach collection="urls" index="index" item="url" separator=",">
@@ -81,7 +81,7 @@
         gmt_access=CURRENT_TIMESTAMP();
     </update>
 
-    <update id="batchUpdateUrlStatus" parameterType="org.jscrapy.core.dal.h2.H2UrlQueueDo">
+    <update id="batchUpdateUrlStatus" parameterType="org.jscrapy.core.dal.h2queue.H2UrlQueueDo">
         INSERT INTO ${queue_name} (id, url_status, gmt_access)
         VALUES
         <foreach collection="urls" index="index" item="url" separator=",">
@@ -96,7 +96,7 @@
         gmt_access=CURRENT_TIMESTAMP();
     </update>
 
-    <delete id="batchDelete" parameterType="org.jscrapy.core.dal.h2.H2UrlQueueDo">
+    <delete id="batchDelete" parameterType="org.jscrapy.core.dal.h2queue.H2UrlQueueDo">
         DELETE FROM ${queue_name}
         WHERE id IN
         <foreach close=")" collection="urls" index="index" item="urlQueueDo" open="(" separator=",">

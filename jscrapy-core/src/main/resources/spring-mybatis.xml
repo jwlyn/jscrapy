@@ -32,7 +32,7 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="org.jscrapy.core.dal.cache"/>
+        <property name="basePackage" value="org.jscrapy.core.dal.h2cache"/>
         <property name="sqlSessionFactoryBeanName" value="h2PageCacheSqlSessionFactory"/>
     </bean>
 
@@ -40,9 +40,9 @@
     <bean id="h2QueueDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="${jdbc.h2.driverClassName}" />
-        <property name="url" value="${jdbc.h2.pageCacheUrl}" />
-        <property name="username" value="${jdbc.h2.pageCacheUrl.username}" />
-        <property name="password" value="${jdbc.h2.pageCacheUrl.password}" />
+        <property name="url" value="${jdbc.h2.queueUrl}" />
+        <property name="username" value="${jdbc.h2.queue.username}" />
+        <property name="password" value="${jdbc.h2.queue.password}" />
     </bean>
 
     <!-- 队列事务管理 -->
@@ -57,7 +57,7 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="org.jscrapy.core.dal.h2"/>
+        <property name="basePackage" value="org.jscrapy.core.dal.h2queue"/>
         <property name="sqlSessionFactoryBeanName" value="h2PageCacheSqlSessionFactory"/>
     </bean>
 

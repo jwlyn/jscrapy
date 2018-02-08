@@ -58,7 +58,7 @@ public class Spider extends JscrapyComponent implements Runnable {
                 if (pg != null) {//缓存命中了
                     if (pg.isFromCache()) {
 //                        status.addCacheUrl(1);
-//                        status.addPageSizeKb(pg.sizeInKb());
+//                        status.addPageSizeKb(pgqueue.sizeInKb());
                     }
                 } else {//缓存没有命中，从网络下载
                     pg = downloader.download(req);
@@ -66,7 +66,7 @@ public class Spider extends JscrapyComponent implements Runnable {
 //                        status.addFailedUrl(1);
                     } else {
 //                        status.addNetUrl(1);
-//                        status.addPageSizeKb(pg.sizeInKb());
+//                        status.addPageSizeKb(pgqueue.sizeInKb());
                     }
                 }
                 if (pg == null) {

@@ -1,7 +1,8 @@
-package org.jscrapy.core.dal.cache;
+package org.jscrapy.core.dal;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  * Created by cxu on 2017/1/8.
  */
 @Mapper
+@Configuration
 public interface PageCacheMapper {
 
     /**

@@ -1,7 +1,7 @@
 package dal;
 
 import org.jscrapy.core.dal.UrlQueueMapper;
-import org.jscrapy.core.dal.h2.H2UrlQueueMapper;
+import org.jscrapy.core.dal.h2queue.H2UrlQueueMapper;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestPropertySource;
