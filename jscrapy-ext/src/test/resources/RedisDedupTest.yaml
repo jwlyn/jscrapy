@@ -2,7 +2,7 @@
 taskBaseConfig:
   taskId: test-id
   taskName: test-task_name
-  virtualId: TASK.VIRTUAL.ID
+  groupId: TASK.VIRTUAL.ID
 
 taskComponentConfigs:
   DEDUP_REDIS: !!org.jscrapy.ext.modulecfg.RedisDedupConfig

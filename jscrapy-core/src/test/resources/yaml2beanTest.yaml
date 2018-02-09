@@ -1,8 +1,8 @@
 taskBaseConfig:
   taskId: task.id
   taskName: task.name
-  urlFetchFromQueueSize: 5
+  urlFetchSize: 5
   threadCount: 1
   waitOnQueueEmptyMs: 200
-  virtualId: TASK.VIRTUAL.ID
+  groupId: TASK.VIRTUAL.ID
 

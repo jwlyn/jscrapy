@@ -2,148 +2,63 @@ package org.jscrapy.core.spider;
 
 import org.jscrapy.core.JscrapyComponent;
 import org.jscrapy.core.cacher.Cacher;
+import org.jscrapy.core.comsumer.UrlConsumer;
 import org.jscrapy.core.config.JscrapyConfig;
-import org.jscrapy.core.data.ProcessResult;
 import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.downloader.Downloader;
-import org.jscrapy.core.exception.MySpiderFetalException;
-import org.jscrapy.core.page.Page;
-import org.jscrapy.core.pipline.PipList;
+import org.jscrapy.core.pipline.Pipline;
 import org.jscrapy.core.processor.Processor;
 import org.jscrapy.core.producer.UrlProducer;
-import org.jscrapy.core.request.HttpRequest;
-import org.jscrapy.core.status.TaskStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 一个线程要做的事情
  * Created by cxu on 2015/6/20.
  */
-public class Spider extends JscrapyComponent implements Runnable {
+public abstract class Spider extends JscrapyComponent implements Runnable {
     final static Logger logger = LoggerFactory.getLogger(Spider.class);
 
-    private DeDup dedup;
-    private Cacher cacher;
-    private Downloader downloader;
-    private PipList piplines;
-    private Processor processor;
-    private UrlProducer urlProducer;
+    @Autowired
+    protected DeDup dedup;
+    @Autowired
+    protected Cacher cacher;
+    @Autowired
+    protected Downloader downloader;
+    /**
+     * 这里为什么没有采用webmagic一样的存到多个存储里？
+     * 1，作者认为一份数据存多个地方是多此一举，不是爬虫的核心功能，核心应该尽量
+     * 简单易理解维护，因为爬虫面临的情况太多了。
+     * 2，存储多个数据源可以利用其他工具进行同步。
+     * 3，与其存储到多个地方，不如开发存储成功之后发消息的方式更实用
+     */
+    @Autowired
+    protected Pipline pipline;
+    @Autowired
+    protected Processor processor;
+    @Autowired
+    protected UrlProducer urlProducer;
+    @Autowired
+    protected UrlConsumer urlConsumer;
 
-    public Spider(JscrapyConfig JscrapyConfig) {
-        setJscrapyConfig(JscrapyConfig);
+    public Spider(JscrapyConfig jscrapyConfig) {
+        setJscrapyConfig(jscrapyConfig);
     }
 
     @Override
     public void run() {
 
-        while (!Thread.currentThread().isInterrupted()) {
+        while (!Thread.currentThread().isInterrupted() && canRun()) {
 
-            //TaskStatus status = getJscrapyConfig().getTaskStatusObject();
-            List<HttpRequest> requests = null;
+            mainLoop();
 
-                //requests = scheduler.poll(1);
-
-
-            for (HttpRequest req : requests) {//处理每一个请求
-                Page pg = null;
-                try {
-                    pg = cacher.loadPage(req);
-                } catch (Throwable e) {
-                    logger.error("读取缓存页面文件失败{}", e);
-                }
-                if (pg != null) {//缓存命中了
-                    if (pg.isFromCache()) {
-//                        status.addCacheUrl(1);
-//                        status.addPageSizeKb(pgqueue.sizeInKb());
-                    }
-                } else {//缓存没有命中，从网络下载
-                    pg = downloader.download(req);
-                    if (pg == null) {
-//                        status.addFailedUrl(1);
-                    } else {
-//                        status.addNetUrl(1);
-//                        status.addPageSizeKb(pgqueue.sizeInKb());
-                    }
-                }
-                if (pg == null) {
-                    logger.error("页面下载失败 page=null");
-                    continue;
-                }
-                ProcessResult result = processor.process(pg);
-                //处理链接
-                List<HttpRequest> newLinks = result.getLinks();
-                newLinks = dedup.deDup(newLinks);
-
-                    urlProducer.push(null);
-
-
-                //存储数据
-                try{
-                    piplines.save(result.getData());
-                }catch (MySpiderFetalException e) {
-                    logger.error("保存文件时出错 {}", e);
-                    //TODO 数据保存出错统计
-                }
-
-                if (!pg.isFromCache()) {//sleep
-                    try {
-                        TimeUnit.MILLISECONDS.sleep(1000);//TODO 参数化
-                    } catch (InterruptedException e) {
-                        logger.info("等待新的URL过程中发生InterruptedException");
-                        break;
-                    }
-                }
-            }
-
-            if (requests.size() == 0) {//睡眠一段等待命令或者新的url到来
-                int sleepTimeMs = 1;//getJscrapyConfig().getWaitUrlSleepTimeMs();
-                try {
-                    TimeUnit.MILLISECONDS.sleep(sleepTimeMs);
-                } catch (InterruptedException e) {
-                    logger.info("等待新的URL过程中发生InterruptedException");
-                    break;
-                }
-                logger.info("睡眠{}秒，等待新的URL", sleepTimeMs);
-            }
-        }
-
-        String taskStatus = null;//getJscrapyConfig().getTaskStatus();
-        if (TaskStatus.Status.CANCEL.name().equalsIgnoreCase(taskStatus)) {
-            //这种情况下，任务取消，删除：dedup队列，网页缓存，存储的数据，请求队列
-            logger.info("任务{}被取消", getJscrapyConfig().getTaskFp());
-//            try {
-//                this.cleanTaskEnv();
-//            } catch (MySpiderRecoverableException e) {
-//                logger.info("清除任务相关文件失败 {}", e);
-//            }
-        } else if (TaskStatus.Status.PAUSE.name().equalsIgnoreCase(taskStatus)) {
-            logger.info("任务{}暂停", getJscrapyConfig().getTaskFp());
-        } else if (!TaskStatus.Status.RUN.name().equalsIgnoreCase(taskStatus)) {
-            logger.error("任务{}状态{}不能被识别", getJscrapyConfig().getTaskFp(), taskStatus);
         }
     }
 
-    public void setDedup(DeDup dedup) {
-        this.dedup = dedup;
+    private boolean canRun(){
+        return true;//TODO
     }
 
-    public void setDownloader(Downloader downloader) {
-        this.downloader = downloader;
-    }
-
-    public void setPiplines(PipList piplines) {
-        this.piplines = piplines;
-    }
-
-    public void setProcessor(Processor processor) {
-        this.processor = processor;
-    }
-
-    public void setCacher(Cacher cacher) {
-        this.cacher = cacher;
-    }
+    protected abstract void mainLoop();
 }

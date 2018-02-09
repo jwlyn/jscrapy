@@ -2,7 +2,7 @@
 taskBaseConfig:
   taskId: task_id
   taskName: task_name
-  virtualId: TASK_VIRTUAL_ID
+  groupId: TASK_VIRTUAL_ID
 
 taskComponentConfigs:
   QUEUE_H2: !!org.jscrapy.core.config.modulecfg.H2QueueConfig

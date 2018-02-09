@@ -13,11 +13,11 @@ public class JscrapyConfig {
     private String taskWorkDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
     private String taskId;//任务id,元数据里的唯一标示
     private String taskName;//任务名称
-    private int urlFetchFromQueueSize;//任务每次从集中队列里取出多少个URL
+    private int urlFetchSize;//任务每次从集中队列里取出多少个URL
     private int threadCount;//每个节点上并发的线程数目
     private int waitOnQueueEmptyMs;//当队列空的时候睡眠等待多少毫秒
 
-    private String virtualId;//虚拟的ID，用于集群分组，伪分布式
+    private String groupId;//虚拟的ID，用于集群分组，伪分布式
 
     public void setTaskWorkDir(String taskWorkDir) {
         this.taskWorkDir = taskWorkDir;
@@ -39,12 +39,12 @@ public class JscrapyConfig {
         this.taskName = taskName;
     }
 
-    public int getUrlFetchFromQueueSize() {
-        return urlFetchFromQueueSize;
+    public int getUrlFetchSize() {
+        return urlFetchSize;
     }
 
-    public void setUrlFetchFromQueueSize(int urlFetchFromQueueSize) {
-        this.urlFetchFromQueueSize = urlFetchFromQueueSize;
+    public void setUrlFetchSize(int urlFetchSize) {
+        this.urlFetchSize = urlFetchSize;
     }
 
     public int getThreadCount() {
@@ -63,15 +63,12 @@ public class JscrapyConfig {
         this.waitOnQueueEmptyMs = waitOnQueueEmptyMs;
     }
 
-    public void setVirtualId(String virtualId) {
-        this.virtualId = virtualId;
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
-    public String getVirtualId() {
-        if (StringUtils.isBlank(virtualId)) {
-            virtualId = SysDefaultConfig.VIRTUAL_ID;
-        }
-        return virtualId;
+    public String getGroupId() {
+        return groupId;
     }
 
     /**
@@ -84,7 +81,7 @@ public class JscrapyConfig {
         buf.append("_")
                 .append(formatIp(SysDefaultConfig.HOST))
                 .append("_")
-                .append(getVirtualId())//使用jvm进程Id可以在一台机器上模拟分布式
+                .append(getGroupId())//使用groupId可以在一台机器上启动多个实例，也可集群模式下对集群按照需求进行分组
                 .append("_")
                 .append(getTaskName())
                 .append("_")
