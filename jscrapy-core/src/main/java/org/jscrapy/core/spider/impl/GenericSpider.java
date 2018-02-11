@@ -63,51 +63,7 @@ public class GenericSpider extends Spider{
     private void processMemQueue() {
         HttpRequest request = null;
         while ((request = getRequest()) != null) {//处理内存里的request，直到结束
-            Page pg = null;
-            try {
-                pg = cacher.loadPage(request);
-            } catch (Throwable e) {
-                logger.error("读取缓存页面文件失败{}", e);
-                //TODO
-            }
-            if (pg == null) {//缓存么有命中或者缓存出错
-                pg = downloader.download(request);
-                if (pg != null) {
-                    logger.debug("网络下载成功{}", pg);
-                } else {
-                    logger.error("网络下载失败{}", pg);
-                }
-
-            } else {//缓存命中了
-                logger.debug("命中缓存{}", request);
-            }
-            if (pg == null) {
-                logger.error("页面未命中缓存且下载失败 page=null");
-                //TODO 这里出错时候考虑一下是否要调整速率
-                continue;
-            }
-            ProcessResult result = processor.process(pg);
-            //处理链接
-            List<HttpRequest> newLinks = result.getLinks();
-            urlProducer.push(null);
-
-
-            //存储数据
-            try{
-                pipline.save(result.getData());
-            }catch (MySpiderFetalException e) {
-                logger.error("保存文件时出错 {}", e);
-                //TODO 数据保存出错统计
-            }
-
-            if (!pg.isFromCache()) {//sleep
-                try {
-                    TimeUnit.MILLISECONDS.sleep(1000);//TODO 参数化
-                } catch (InterruptedException e) {
-                    logger.info("等待新的URL过程中发生InterruptedException");
-                    break;
-                }
-            }
+            processOneRequest(request);
         }
     }
 
@@ -117,5 +73,57 @@ public class GenericSpider extends Spider{
      */
     private HttpRequest getRequest() {
         return urlConsumer.getMemQueue().poll();
+    }
+
+    /**
+     *
+     * @param httpRequest
+     */
+    private void processOneRequest(HttpRequest httpRequest) {
+        Page pg = null;
+        try {
+            pg = cacher.loadPage(httpRequest);
+        } catch (Throwable e) {
+            logger.error("读取缓存页面文件失败{}", e);
+            //TODO 这个错误可以跳过，如果缓存没有直接网上下载也可以
+        }
+        if (pg == null) {//缓存么有命中或者缓存出错
+            pg = downloader.download(httpRequest);
+            if (pg != null) {
+                logger.debug("网络下载成功{}", pg);
+            } else {
+                logger.info("网络下载失败{}", pg);
+            }
+
+        } else {//缓存命中了
+            logger.debug("命中缓存{}", httpRequest);
+        }
+        if (pg == null) {
+            logger.error("页面未命中缓存且下载失败 page=null");
+            //TODO 这里出错时候考虑一下是否要调整速率
+            return;
+        }
+        ProcessResult result = processor.process(pg);
+        //处理链接
+        List<HttpRequest> newLinks = result.getLinks();
+        urlProducer.push(null);
+
+
+        //存储数据
+        try{
+            pipline.save(result.getData());
+        }catch (MySpiderFetalException e) {
+            logger.error("保存文件时出错 {}", e);
+            //TODO 数据保存出错统计
+        }
+
+        if (!pg.isFromCache()) {//sleep
+            try {
+                TimeUnit.MILLISECONDS.sleep(1000);//TODO 参数化
+            } catch (InterruptedException e) {
+                logger.info("等待新的URL过程中发生InterruptedException");
+                return;
+            }
+        }
     }
 }

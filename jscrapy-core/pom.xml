@@ -41,6 +41,12 @@
             <artifactId>commons-dbcp2</artifactId>
             <version>${commons-dbcp.version}</version>
         </dependency>
+        <!-- AspectJ支持 -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectjweaver.version}</version>
+        </dependency>
 
 
         <dependency>
