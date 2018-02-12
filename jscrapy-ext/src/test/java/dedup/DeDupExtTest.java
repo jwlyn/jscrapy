@@ -1,8 +1,6 @@
 package dedup;
 
 import org.jscrapy.ext.dedup.RedisDedup;
-import org.jscrapy.ext.modulecfg.RedisDedupConfig;
-import org.jscrapy.core.config.ComponentName;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.dedup.DeDup;
 import org.jscrapy.core.exception.MySpiderFetalException;

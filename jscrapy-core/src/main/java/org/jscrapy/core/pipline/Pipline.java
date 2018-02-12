@@ -3,7 +3,6 @@ package org.jscrapy.core.pipline;
 import org.jscrapy.core.JscrapyComponent;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.data.DataItem;
-import org.jscrapy.core.exception.MySpiderFetalException;
 
 import java.util.List;
 
@@ -25,6 +24,6 @@ public abstract class Pipline extends JscrapyComponent {
      *
      * @param dataItems 要保存的数据
      */
-    public abstract void save(List<DataItem> dataItems) throws MySpiderFetalException;
+    public abstract void save(List<DataItem> dataItems);
 
 }

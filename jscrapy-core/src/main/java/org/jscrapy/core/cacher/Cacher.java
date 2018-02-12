@@ -1,7 +1,6 @@
 package org.jscrapy.core.cacher;
 
 import org.jscrapy.core.JscrapyComponent;
-import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.page.Page;
 import org.jscrapy.core.request.HttpRequest;
 
@@ -20,6 +19,6 @@ public abstract class Cacher extends JscrapyComponent {
      */
     public abstract Page loadPage(HttpRequest request);
 
-    public abstract void cachePage(Page page) throws MySpiderFetalException;
+    public abstract void cachePage(Page page);
 
 }

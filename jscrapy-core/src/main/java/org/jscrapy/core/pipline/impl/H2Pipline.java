@@ -1,7 +1,6 @@
 package org.jscrapy.core.pipline.impl;
 
 import org.jscrapy.core.data.DataItem;
-import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.pipline.Pipline;
 
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
  */
 public class H2Pipline extends Pipline {
     @Override
-    public void save(List<DataItem> dataItems) throws MySpiderFetalException {
+    public void save(List<DataItem> dataItems) {
 
     }
 }

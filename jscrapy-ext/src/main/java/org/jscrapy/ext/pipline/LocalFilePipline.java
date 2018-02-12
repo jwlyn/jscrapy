@@ -6,7 +6,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.config.SysDefaultConfig;
 import org.jscrapy.core.data.DataItem;
-import org.jscrapy.core.exception.MySpiderExceptionCode;
+import org.jscrapy.core.exp.ExceptionCode;
 import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.pipline.Pipline;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ public class LocalFilePipline extends Pipline {
             FileUtils.forceMkdir(new File(baseDir));
         } catch (IOException e) {
 
-            MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.LOCAL_PIPLINE_MK_DIR_ERROR);
+            MySpiderFetalException exp = new MySpiderFetalException(ExceptionCode.LOCAL_PIPLINE_MK_DIR_ERROR);
             exp.setErrorMessage(e.getLocalizedMessage());
             throw exp;
         }
@@ -57,7 +57,7 @@ public class LocalFilePipline extends Pipline {
                     }
                 } catch (IOException e) {
 
-                    MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.LOCAL_PIPLINE_WRITE_FILE_ERROR);
+                    MySpiderFetalException exp = new MySpiderFetalException(ExceptionCode.LOCAL_PIPLINE_WRITE_FILE_ERROR);
                     exp.setErrorMessage(e.getLocalizedMessage());
                     throw exp;
                 }

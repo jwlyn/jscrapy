@@ -14,7 +14,7 @@
         <!--<jdbc:script/>-->
     <!--</jdbc:initialize-database>-->
 
-    <!-- 定义h2页面缓存 -->
+    <!-- ==================================定义h2页面缓存=============================== -->
     <bean id="h2PageCacheDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="${jdbc.h2.driverClassName}" />
@@ -36,7 +36,7 @@
         <property name="sqlSessionFactoryBeanName" value="h2PageCacheSqlSessionFactory"/>
     </bean>
 
-    <!-- 下面定义h2队列 -->
+    <!-- ==================================下面定义h2队列================================== -->
     <bean id="h2QueueDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="${jdbc.h2.driverClassName}" />
@@ -52,7 +52,7 @@
 
     <!-- define the SqlSessionFactory -->
     <bean id="h2QueueSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="h2PageCacheDataSource" />
+        <property name="dataSource" ref="h2QueueDataSource" />
         <property name="mapperLocations" value="classpath*:mapper/h2queue.xml"/>
     </bean>
 
@@ -63,5 +63,29 @@
 
     <!-- scan for mappers and let them be autowired -->
     <!--<mybatis:scan base-package="org.jscrapy.core.dal"/>-->
+    <!-- ==================================下面定义h2队列================================== -->
+    <bean id="h2QueueLockDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${jdbc.h2.driverClassName}" />
+        <property name="url" value="${jdbc.h2.queueLockUrl}" />
+        <property name="username" value="${jdbc.h2.queueLock.username}" />
+        <property name="password" value="${jdbc.h2.queueLock.password}" />
+    </bean>
+
+    <!-- 队列事务管理 -->
+    <bean id="h2QueueLockTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="h2QueueLockDataSource" />
+    </bean>
+
+    <!-- define the SqlSessionFactory -->
+    <bean id="h2QueueLockSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="h2QueueLockDataSource" />
+        <property name="mapperLocations" value="classpath*:mapper/queue_lock.xml"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="org.jscrapy.core.dal"/>
+        <property name="sqlSessionFactoryBeanName" value="h2QueueLockSqlSessionFactory"/>
+    </bean>
 
 </beans>

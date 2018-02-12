@@ -13,6 +13,7 @@ public class JscrapyConfig {
     private String taskWorkDir = SysDefaultConfig.DEFAULT_SPIDER_WORK_DIR;
     private String taskId;//任务id,元数据里的唯一标示
     private String taskName;//任务名称
+    private String pluginJarUrl;
     private int urlFetchSize;//任务每次从集中队列里取出多少个URL
     private int threadCount;//每个节点上并发的线程数目
     private int waitOnQueueEmptyMs;//当队列空的时候睡眠等待多少毫秒
@@ -37,6 +38,14 @@ public class JscrapyConfig {
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
+    }
+
+    public String getPluginJarUrl() {
+        return pluginJarUrl;
+    }
+
+    public void setPluginJarUrl(String pluginJarUrl) {
+        this.pluginJarUrl = pluginJarUrl;
     }
 
     public int getUrlFetchSize() {
@@ -129,7 +138,7 @@ public class JscrapyConfig {
 //            }
 //        } catch (IOException e) {
 //            logger.error("加载Groovy文件失败 {}", e);
-//            MySpiderFetalException exp = new MySpiderFetalException(MySpiderExceptionCode.GROOVY_PARSER_NOT_FOUND);
+//            MySpiderFetalException exp = new MySpiderFetalException(ExceptionCode.GROOVY_PARSER_NOT_FOUND);
 //            exp.setErrorMessage(e.getLocalizedMessage());
 //            throw exp;
 //        }

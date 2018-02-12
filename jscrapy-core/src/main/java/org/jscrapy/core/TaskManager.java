@@ -1,7 +1,6 @@
 package org.jscrapy.core;
 
 import org.jscrapy.core.config.JscrapyConfig;
-import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.task.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,44 +17,42 @@ public class TaskManager {
 
     private static TaskManager TASK_MANAGER = new TaskManager();
 
-    private Map<String, Task> tasks = new ConcurrentHashMap<String, Task>();;
+    private Map<String, Task> tasks = new ConcurrentHashMap<String, Task>();
+    ;
 
-    public static TaskManager instance(){
+    public static TaskManager instance() {
         return TASK_MANAGER;
     }
 
-    public void runTask(JscrapyConfig JscrapyConfig) throws MySpiderFetalException {
+    public void runTask(JscrapyConfig JscrapyConfig) {
         String taskId = JscrapyConfig.getTaskId();
         Task task = tasks.get(taskId);
         if (task != null) {
             logger.warn("task {} 已经存在，不能再次调度启动", task);
-        }
-        else {
+        } else {
             task = new Task(JscrapyConfig);
             tasks.put(taskId, task);
             task.run();
         }
     }
 
-    public void cancelTask(JscrapyConfig JscrapyConfig) throws MySpiderFetalException {
+    public void cancelTask(JscrapyConfig JscrapyConfig) {
         String taskId = JscrapyConfig.getTaskId();
         Task task = tasks.get(taskId);
         if (task == null) {
             logger.warn("task {} 不存在，不能取消", task);
-        }
-        else {
+        } else {
             task.cancel();
             tasks.remove(taskId);
         }
     }
 
-    public void pauseTask(JscrapyConfig JscrapyConfig) throws MySpiderFetalException {
+    public void pauseTask(JscrapyConfig JscrapyConfig) {
         String taskId = JscrapyConfig.getTaskId();
         Task task = tasks.get(taskId);
         if (task == null) {
             logger.warn("task {} 不存在，不能暂停", task);
-        }
-        else {
+        } else {
             task.pause();
             tasks.remove(taskId);
         }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.jscrapy.core.dal.QueueLockMapper">
+
+    <resultMap id="BaseResultMap" type="org.jscrapy.core.dal.QueueLockDo">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+            <arg column="task_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
+        </constructor>
+    </resultMap>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from jscrapy_queue_lock
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="org.jscrapy.core.dal.QueueLockDo">
+        insert into jscrapy_queue_lock (id, gmt_create, gmt_modified,
+        task_id, description
+        )
+        values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},
+        #{taskId,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="org.jscrapy.core.dal.QueueLockDo">
+        update jscrapy_queue_lock
+        set gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+        task_id = #{taskId,jdbcType=VARCHAR},
+        description = #{description,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select id, gmt_create, gmt_modified, task_id, description
+        from jscrapy_queue_lock
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id, gmt_create, gmt_modified, task_id, description
+        from jscrapy_queue_lock
+    </select>
+
+    <select id="selectForUpdate" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select id, gmt_create, gmt_modified, task_id, description
+        from jscrapy_queue_lock where task_id = #{taskId,jdbcType=VARCHAR} for update
+    </select>
+
+    <delete id="deleteByTaskid" parameterType="java.lang.String">
+        delete from jscrapy_queue_lock
+        where task_id = #{taskId,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>

@@ -2,7 +2,6 @@ package org.jscrapy.core.spider.impl;
 
 import org.jscrapy.core.config.JscrapyConfig;
 import org.jscrapy.core.data.ProcessResult;
-import org.jscrapy.core.exception.MySpiderFetalException;
 import org.jscrapy.core.page.Page;
 import org.jscrapy.core.request.HttpRequest;
 import org.jscrapy.core.request.RequestContext;
@@ -112,7 +111,7 @@ public class GenericSpider extends Spider{
         //存储数据
         try{
             pipline.save(result.getData());
-        }catch (MySpiderFetalException e) {
+        }catch (Throwable e) {
             logger.error("保存文件时出错 {}", e);
             //TODO 数据保存出错统计
         }

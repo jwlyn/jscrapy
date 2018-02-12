@@ -2,7 +2,6 @@ package org.jscrapy.core.task;
 
 import org.jscrapy.core.JscrapyComponent;
 import org.jscrapy.core.config.JscrapyConfig;
-import org.jscrapy.core.exception.MySpiderFetalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,11 +22,11 @@ public class Task extends JscrapyComponent {
         threads = Executors.newFixedThreadPool(threadCount);
     }
 
-    public void cancel() throws MySpiderFetalException {
+    public void cancel() {
 
     }
 
-    public void run() throws MySpiderFetalException {
+    public void run() {
 //        JscrapyConfig cfg = getJscrapyConfig();
 //        cfg.setTaskStatus(TaskStatus.Status.RUN);
 //
@@ -65,11 +64,11 @@ public class Task extends JscrapyComponent {
 //        }
     }
 
-    public void pause() throws MySpiderFetalException {
+    public void pause() {
 //        getJscrapyConfig().setTaskStatus(TaskStatus.Status.PAUSE);
 //        threads.shutdown();
     }
-    
+
     @Override
     public String toString() {
         JscrapyConfig cfg = getJscrapyConfig();
