@@ -44,6 +44,7 @@
         <spring-framework-test.version>5.0.3.RELEASE</spring-framework-test.version>
         <postgresql.version>9.4.1208</postgresql.version>
         <aspectjweaver.version>1.8.13</aspectjweaver.version>
+        <hutool.version>4.0.5</hutool.version>
         <!-- runtime -->
         <h2.version>1.4.192</h2.version>
         <!-- provided scope -->

@@ -112,6 +112,12 @@
             <scope>runtime</scope>
             <version>${h2.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-core -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>us.codecraft</groupId>
