@@ -18,7 +18,6 @@ public class TaskManager {
     private static TaskManager TASK_MANAGER = new TaskManager();
 
     private Map<String, Task> tasks = new ConcurrentHashMap<String, Task>();
-    ;
 
     public static TaskManager instance() {
         return TASK_MANAGER;
