@@ -72,7 +72,6 @@
     <modules>
         <module>jscrapy-common</module>
         <module>jscrapy-core</module>
-        <module>jscrapy-ext</module>
         <module>jscrapy-admin</module>
         <module>jscrapy-service</module>
     </modules>

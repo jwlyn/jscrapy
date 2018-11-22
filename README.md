@@ -1,6 +1,5 @@
 # Jscrapy
 [![Build Status](https://travis-ci.org/jscrapy/jscrapy.svg?branch=master)](https://travis-ci.org/jscrapy/jscrapy)
-[![Build Status](https://drone.io/github.com/jscrapy/jscrapy/status.png)](https://drone.io/github.com/jscrapy/jscrapy/latest)
 
 ## 功能
 - 用户友好,一个管控界面解决全部问题
